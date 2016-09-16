@@ -10,7 +10,20 @@
     tools:context="com.github.sveyrat.spaceoutbreak.HomeActivity">
 
     <TextView
+        android:id="@+id/home.welcome_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/home.welcome" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/home.welcome_text"
+        android:text="@string/home.new_game"
+        android:onClick="newGame"/>
+
 </RelativeLayout>
