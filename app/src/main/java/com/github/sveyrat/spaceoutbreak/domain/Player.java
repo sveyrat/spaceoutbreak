@@ -3,8 +3,6 @@ package com.github.sveyrat.spaceoutbreak.domain;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.Date;
-
 @DatabaseTable(tableName = "player")
 public class Player {
 
@@ -24,7 +22,7 @@ public class Player {
     private Genome genome = Genome.NORMAL;
 
     @DatabaseField(canBeNull = false)
-    private boolean infected = false;
+    private boolean mutant = false;
 
     // Required by the ORM to create instances
     public Player() {
@@ -43,12 +41,12 @@ public class Player {
         this.id = id;
     }
 
-    public boolean isInfected() {
-        return infected;
+    public boolean isMutant() {
+        return mutant;
     }
 
-    public void setInfected(boolean infected) {
-        this.infected = infected;
+    public void setMutant(boolean mutant) {
+        this.mutant = mutant;
     }
 
     public Role getRole() {

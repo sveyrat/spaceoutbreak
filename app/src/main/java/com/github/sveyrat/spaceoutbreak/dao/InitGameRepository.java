@@ -60,6 +60,7 @@ public class InitGameRepository {
             for (Player player : players) {
                 player.setRole(Role.ASTRONAUT);
                 player.setGenome(Genome.NORMAL);
+                player.setMutant(false);
                 databaseOpenHelper.playerDao().update(player);
             }
             drawRoles(players, additionalRoles);
@@ -76,7 +77,11 @@ public class InitGameRepository {
         List<Player> playersWithoutRole = new ArrayList<>(players);
 
         // Draw base mutant role
-        affectRoleToRandomPlayer(playersWithoutRole, Role.BASE_MUTANT);
+        Player baseMutant = affectRoleToRandomPlayer(playersWithoutRole, Role.BASE_MUTANT);
+        // Base mutant is always host
+        baseMutant.setGenome(Genome.HOST);
+        baseMutant.setMutant(true);
+        databaseOpenHelper.playerDao().update(baseMutant);
         // Draw 2 doctors
         affectRoleToRandomPlayer(playersWithoutRole, Role.DOCTOR);
         affectRoleToRandomPlayer(playersWithoutRole, Role.DOCTOR);
@@ -86,13 +91,14 @@ public class InitGameRepository {
         }
     }
 
-    private void affectRoleToRandomPlayer(List<Player> players, Role role) throws SQLException {
+    private Player affectRoleToRandomPlayer(List<Player> players, Role role) throws SQLException {
         int randomIndex = new Random().nextInt(players.size());
         Player selectedPlayer = players.get(randomIndex);
         selectedPlayer.setRole(role);
         databaseOpenHelper.playerDao().update(selectedPlayer);
         players.remove(randomIndex);
         Log.i(InitGameRepository.class.getName(), "Affected role " + role + " to player " + selectedPlayer.getName());
+        return selectedPlayer;
     }
 
     private void drawGenomes(Collection<Player> players) throws SQLException {
@@ -109,7 +115,7 @@ public class InitGameRepository {
 
         // Draw resistant and sensitive genomes
         affectGenome(eligiblePlayers, Genome.RESISTANT);
-        affectGenome(eligiblePlayers, Genome.HYPER_SENSITIVE);
+        affectGenome(eligiblePlayers, Genome.HOST);
     }
 
     private void affectGenome(List<Player> players, Genome genome) throws SQLException {
