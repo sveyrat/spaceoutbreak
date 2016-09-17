@@ -12,9 +12,6 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DatabaseOpenHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "SpaceOutbreak.sqlite";

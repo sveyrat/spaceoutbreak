@@ -1,9 +1,11 @@
 package com.github.sveyrat.spaceoutbreak.domain;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
+@DatabaseTable(tableName = "player")
 public class Player {
 
     @DatabaseField(generatedId = true)
