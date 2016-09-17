@@ -71,7 +71,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@mipmap/informatician"
+                android:src="@mipmap/computer_scientist"
                 android:layout_margin="3sp"
                 />
 
@@ -98,7 +98,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@mipmap/genetician"
+                android:src="@mipmap/geneticist"
                 android:layout_margin="3sp"
                 />
 
