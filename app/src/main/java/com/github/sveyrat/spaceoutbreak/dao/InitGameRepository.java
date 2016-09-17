@@ -56,6 +56,12 @@ public class InitGameRepository {
         try {
             Game game = databaseOpenHelper.gameDao().queryForId(gameId);
             Collection<Player> players = game.getPlayers();
+            // Reset roles and genomes to avoid weird situations if this method is called multiple times on the same game
+            for (Player player : players) {
+                player.setRole(Role.ASTRONAUT);
+                player.setGenome(Genome.NORMAL);
+                databaseOpenHelper.playerDao().update(player);
+            }
             drawRoles(players, additionalRoles);
             if (useGenomes) {
                 drawGenomes(players);
