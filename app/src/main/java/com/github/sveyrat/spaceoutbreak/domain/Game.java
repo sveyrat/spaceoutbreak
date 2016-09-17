@@ -14,7 +14,7 @@ public class Game {
     @DatabaseField(generatedId = true)
     private Long id;
 
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     private Date creationDate;
 
     @ForeignCollectionField

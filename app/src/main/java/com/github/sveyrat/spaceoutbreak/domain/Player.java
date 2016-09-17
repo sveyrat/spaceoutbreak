@@ -11,20 +11,20 @@ public class Player {
     @DatabaseField(generatedId = true)
     private Long id;
 
-    @DatabaseField(foreign=true, foreignAutoRefresh=true)
+    @DatabaseField(foreign=true, foreignAutoRefresh=true, canBeNull = false)
     private Game game;
 
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     private String name;
 
-    @DatabaseField
-    private Role role;
+    @DatabaseField(canBeNull = false)
+    private Role role = Role.ASTRONAUT;
 
-    @DatabaseField
-    private Genome genome;
+    @DatabaseField(canBeNull = false)
+    private Genome genome = Genome.NORMAL;
 
-    @DatabaseField
-    private boolean infected;
+    @DatabaseField(canBeNull = false)
+    private boolean infected = false;
 
     // Required by the ORM to create instances
     public Player() {

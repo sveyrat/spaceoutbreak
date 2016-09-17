@@ -74,7 +74,7 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
     }
 
     public void validatePlayerList(View view) {
-        RepositoryManager.getInstance().createGameWithPlayers(players);
+        RepositoryManager.getInstance().initGameRepository().createGameWithPlayers(players);
         Intent newGameSettingsIntent = new Intent(this, NewGameSettingsActivity.class);
         startActivity(newGameSettingsIntent);
     }

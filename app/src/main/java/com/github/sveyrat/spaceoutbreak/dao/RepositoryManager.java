@@ -4,14 +4,22 @@ import android.content.Context;
 import android.util.Log;
 
 import com.github.sveyrat.spaceoutbreak.domain.Game;
+import com.github.sveyrat.spaceoutbreak.domain.Genome;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
+import com.github.sveyrat.spaceoutbreak.domain.Role;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class RepositoryManager {
 
     private static RepositoryManager instance;
+
+    private static InitGameRepository initGameRepository;
 
     public static void init(Context ctx) {
         if (instance == null) {
@@ -27,24 +35,10 @@ public class RepositoryManager {
 
     private RepositoryManager(Context ctx) {
         helper = new DatabaseOpenHelper(ctx);
+        initGameRepository = new InitGameRepository(helper);
     }
 
-    /**
-     * Creates and persists a game with the given player names
-     * @param playerNames the name of the players taking part in the game
-     * @return the identifier of the game created
-     */
-    public Long createGameWithPlayers(List<String> playerNames) {
-        try {
-            Game game = new Game();
-            helper.gameDao().create(game);
-            for (String playerName : playerNames) {
-                helper.playerDao().create(new Player(game, playerName));
-            }
-            return game.getId();
-        } catch (SQLException e) {
-            Log.e(RepositoryManager.class.getName(), "Error while attempting to create a game", e);
-            throw new RuntimeException(e);
-        }
+    public InitGameRepository initGameRepository() {
+        return initGameRepository;
     }
 }
