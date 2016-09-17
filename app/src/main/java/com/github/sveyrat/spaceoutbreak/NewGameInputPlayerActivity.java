@@ -1,6 +1,7 @@
 package com.github.sveyrat.spaceoutbreak;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -76,7 +77,8 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
     }
 
     public void validatePlayerList(View view) {
-        // TODO
         RepositoryManager.getInstance().createGameWithPlayers(players);
+        Intent newGameSettingsIntent = new Intent(this, NewGameSettingsActivity.class);
+        startActivity(newGameSettingsIntent);
     }
 }

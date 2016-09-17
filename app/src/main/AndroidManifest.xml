@@ -9,8 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".HomeActivity"
-            android:label="@string/home.name">
+        <activity android:name=".HomeActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +19,10 @@
 
         <activity android:name=".NewGameInputPlayerActivity"
             android:label="@string/new_game_player_input.name"></activity>
+
+
+        <activity android:name=".NewGameSettingsActivity"
+        android:label="@string/new_game_settings.name"></activity>
 
     </application>
 

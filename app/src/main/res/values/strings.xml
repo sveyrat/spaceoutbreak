@@ -10,4 +10,18 @@
     <string name="new_game_player_input.delete_message">Supprimer %1$s ?</string>
     <string name="new_game_player_input.yes">Oui</string>
     <string name="new_game_player_input.no">Non</string>
+    <string name="new_game_settings.name">Paramètrage de la partie</string>
+    <string name="new_game_settings.role_choice_box">Choix des rôles</string>
+    <string name="new_game_settings.various_box">Divers</string>
+
+    <string name="role_astronaut.name">Astronaute</string>
+    <string name="role_doctor.name">Médecin</string>
+    <string name="role_base_mutant.name">Infecté 0</string>
+    <string name="role_geneticist.name">Généticien</string>
+    <string name="role_psychologist.name">Psychologue</string>
+    <string name="role_computer_scientist.name">Informaticien</string>
+    <string name="role_spy.name">Espion</string>
+    <string name="role_hacker.name">Hacker</string>
+    <string name="role_fanatic.name">Fanatique</string>
+
 </resources>
