@@ -13,6 +13,8 @@
     <string name="new_game_settings.name">Paramètrage de la partie</string>
     <string name="new_game_settings.role_choice_box">Choix des rôles</string>
     <string name="new_game_settings.various_box">Divers</string>
+    <string name="new_game_settings.is_genotype">Jouer avec les génotypes ?</string>
+    <string name="new_game_settings.randomize_game">Tirer les rôles aléatoirement ?</string>
 
     <string name="role_astronaut.name">Astronaute</string>
     <string name="role_doctor.name">Médecin</string>
