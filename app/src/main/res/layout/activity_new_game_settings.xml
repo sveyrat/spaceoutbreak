@@ -51,7 +51,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton_psychologist"/>
+                android:id="@+id/checkBox_psychologist"/>
 
 
         </LinearLayout>
@@ -78,7 +78,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton_computer_scientist"/>
+                android:id="@+id/checkBox_computer_scientist"/>
 
 
         </LinearLayout>
@@ -105,7 +105,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton_geneticist"/>
+                android:id="@+id/checkBox_geneticist"/>
 
 
         </LinearLayout>
@@ -133,7 +133,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton_spy"/>
+                android:id="@+id/checkBox_spy"/>
 
 
         </LinearLayout>
@@ -161,7 +161,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton_hacker"/>
+                android:id="@+id/checkBox_hacker"/>
 
 
         </LinearLayout>
@@ -190,7 +190,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton_fanatic"/>
+                android:id="@+id/checkBox_fanatic"/>
 
 
         </LinearLayout>
@@ -235,7 +235,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton_genotype"
+                android:id="@+id/checkBox_genotype"
                 android:checked="true"/>
         </LinearLayout>
 
@@ -257,7 +257,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton_randomize"
+                android:id="@+id/checkBox_randomize"
                 android:checked="true"/>
 
 
