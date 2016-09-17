@@ -25,8 +25,8 @@ import java.util.List;
 
 public class NewGameInputPlayerActivity extends AppCompatActivity {
 
-    private List<String> players = new ArrayList<>();
     ArrayAdapter<String> adapter;
+    private List<String> players = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +49,6 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
                 adb.setNegativeButton(getResources().getString(R.string.new_game_player_input_no), null);
                 adb.setPositiveButton(getResources().getString(R.string.new_game_player_input_yes), new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        //MyDataObject.remove(position); // delete from database
-                        //adapter.notifyDataSetChanged();  //necessary if using datastore
                         adapter.remove(itemName);
                     }
                 });
@@ -60,18 +58,17 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
     }
 
     public void addPlayer(View view) {
-        // TODO here : handle already existing player name and empty input cases
         EditText playerNameEditText = (EditText) findViewById(R.id.new_game_input_player_player_name);
         String playerName = playerNameEditText.getText().toString();
-        if(!playerName.isEmpty()) {
-            if(!StringUtil.containsIgnoreCase(players,playerName)) {
-                adapter.add(playerName);
-            }
-            else{
-                Toast toast = Toast.makeText(NewGameInputPlayerActivity.this, getResources().getString(R.string.new_game_player_input_same_player_error), Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-            }
+        if(playerName.isEmpty()) {
+            return;
+        }
+        if(!StringUtil.containsIgnoreCase(players,playerName)) {
+            adapter.add(playerName);
+        } else {
+            Toast toast = Toast.makeText(NewGameInputPlayerActivity.this, getResources().getString(R.string.new_game_player_input_same_player_error), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         }
         playerNameEditText.setText("");
     }
