@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import com.github.sveyrat.spaceoutbreak.util.StringUtil;
 
+import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
+import com.github.sveyrat.spaceoutbreak.domain.Role;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +30,9 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        RepositoryManager.init(this);
+
         setContentView(R.layout.activity_new_game_input_player);
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
@@ -71,5 +77,6 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
 
     public void validatePlayerList(View view) {
         // TODO
+        RepositoryManager.getInstance().createGameWithPlayers(players);
     }
 }

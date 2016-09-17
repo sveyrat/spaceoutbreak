@@ -1,18 +1,44 @@
 package com.github.sveyrat.spaceoutbreak.domain;
 
+import com.j256.ormlite.field.DatabaseField;
+
 import java.util.Date;
 
 public class Player {
 
+    @DatabaseField(generatedId = true)
+    private Long id;
+
+    @DatabaseField(foreign=true, foreignAutoRefresh=true)
     private Game game;
+
+    @DatabaseField
     private String name;
+
+    @DatabaseField
     private Role role;
+
+    @DatabaseField
     private Genome genome;
+
+    @DatabaseField
     private boolean infected;
+
+    // Required by the ORM to create instances
+    public Player() {
+    }
 
     public Player(Game game, String name) {
         this.game = game;
         this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public boolean isInfected() {
