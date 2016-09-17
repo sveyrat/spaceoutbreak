@@ -33,4 +33,8 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
         adapter.add(playerName);
         playerNameEditText.setText("");
     }
+
+    public void validatePlayerList(View view) {
+        // TODO
+    }
 }
