@@ -4,4 +4,6 @@
     <string name="home.welcome">Bienvenue dans Space Outbreak</string>
     <string name="home.new_game">Nouvelle partie</string>
     <string name="new_game_player_input.add">Ajouter</string>
+    <string name="home.name">Accueil</string>
+    <string name="new_game_player_input.name">Ajouter des joueurs</string>
 </resources>

@@ -9,14 +9,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".HomeActivity">
+        <activity android:name=".HomeActivity"
+            android:label="@string/home.name">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".NewGameInputPlayerActivity"></activity>
+        <activity android:name=".NewGameInputPlayerActivity"
+            android:label="@string/new_game_player_input.name"></activity>
 
     </application>
 
