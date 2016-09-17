@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import com.github.sveyrat.spaceoutbreak.dao.InitGameRepository;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.domain.Role;
+import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,9 @@ public class NewGameSettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        RepositoryManager.init(this);
+
         setContentView(R.layout.activity_new_game_settings);
         psychologistBox = (CheckBox) findViewById(R.id.checkBox_psychologist);
         computerScientistBox = (CheckBox) findViewById(R.id.checkBox_computer_scientist);
@@ -44,10 +48,8 @@ public class NewGameSettingsActivity extends AppCompatActivity {
         if(spyBox.isChecked()){additionalRoles.add(Role.SPY);}
         if(hackerBox.isChecked()){additionalRoles.add(Role.HACKER);}
         if(fanaticBox.isChecked()){additionalRoles.add(Role.FANATIC);}
-        InitGameRepository.initializeRoles(gameId, additionalRoles, genotype.isChecked(), randomize.isChecked());
 
+        Long gameId = DataHolderUtil.getInstance().getCurrentGameId();
+        RepositoryManager.getInstance().initGameRepository().initializeRoles(gameId, additionalRoles, randomize.isChecked(), genotype.isChecked());
     }
-
-
-
 }

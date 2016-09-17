@@ -92,6 +92,7 @@ public class InitGameRepository {
         selectedPlayer.setRole(role);
         databaseOpenHelper.playerDao().update(selectedPlayer);
         players.remove(randomIndex);
+        Log.i(InitGameRepository.class.getName(), "Affected role " + role + " to player " + selectedPlayer.getName());
     }
 
     private void drawGenomes(Collection<Player> players) throws SQLException {
@@ -117,5 +118,6 @@ public class InitGameRepository {
         selectedPlayer.setGenome(genome);
         databaseOpenHelper.playerDao().update(selectedPlayer);
         players.remove(randomIndex);
+        Log.i(InitGameRepository.class.getName(), "Affected genome " + genome + " to player " + selectedPlayer.getName());
     }
 }
