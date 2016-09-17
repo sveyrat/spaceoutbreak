@@ -21,4 +21,8 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
+
+    // ORM Lite
+    compile 'com.j256.ormlite:ormlite-core:5.0'
+    compile 'com.j256.ormlite:ormlite-android:5.0'
 }
