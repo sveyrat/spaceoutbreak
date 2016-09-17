@@ -6,4 +6,8 @@
     <string name="new_game_player_input.add">Ajouter</string>
     <string name="home.name">Accueil</string>
     <string name="new_game_player_input.name">Ajouter des joueurs</string>
+    <string name="new_game_player_input.same_player_error">Joueur déjà ajouté</string>
+    <string name="new_game_player_input.delete_message">Supprimer %1$s ?</string>
+    <string name="new_game_player_input.yes">Oui</string>
+    <string name="new_game_player_input.no">Non</string>
 </resources>

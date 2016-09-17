@@ -19,6 +19,7 @@
 
         <EditText
             android:id="@+id/new_game_input_player_player_name"
+            android:inputType="textCapWords"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
