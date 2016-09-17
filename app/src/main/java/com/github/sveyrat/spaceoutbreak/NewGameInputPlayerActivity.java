@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
 import com.github.sveyrat.spaceoutbreak.util.StringUtil;
 
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
@@ -74,7 +75,9 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
     }
 
     public void validatePlayerList(View view) {
-        RepositoryManager.getInstance().initGameRepository().createGameWithPlayers(players);
+        Long createdGameId = RepositoryManager.getInstance().initGameRepository().createGameWithPlayers(players);
+        DataHolderUtil.getInstance().setCurrentGameId(createdGameId);
+
         Intent newGameSettingsIntent = new Intent(this, NewGameSettingsActivity.class);
         startActivity(newGameSettingsIntent);
     }
