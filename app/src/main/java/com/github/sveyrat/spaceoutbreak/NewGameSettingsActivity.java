@@ -18,7 +18,7 @@ public class NewGameSettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_game_settings);
     }
 
-    public void validatePlayerList(View view) {
+    public void validateGameSettings(View view) {
         // TODO
     }
 }
