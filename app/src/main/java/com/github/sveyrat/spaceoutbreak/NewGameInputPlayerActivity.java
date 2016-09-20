@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,7 +18,6 @@ import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
 import com.github.sveyrat.spaceoutbreak.util.StringUtil;
 
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
-import com.github.sveyrat.spaceoutbreak.domain.Role;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +63,7 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
             return;
         }
         if(!StringUtil.containsIgnoreCase(players,playerName)) {
-            adapter.add(playerName);
+            adapter.insert(playerName,0);
         } else {
             Toast toast = Toast.makeText(NewGameInputPlayerActivity.this, getResources().getString(R.string.new_game_player_input_same_player_error), Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
@@ -75,10 +73,16 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
     }
 
     public void validatePlayerList(View view) {
-        Long createdGameId = RepositoryManager.getInstance().initGameRepository().createGameWithPlayers(players);
-        DataHolderUtil.getInstance().setCurrentGameId(createdGameId);
 
-        Intent newGameSettingsIntent = new Intent(this, NewGameSettingsActivity.class);
-        startActivity(newGameSettingsIntent);
+        if(players.size()>=getResources().getInteger(R.integer.min_players)) {
+            Long createdGameId = RepositoryManager.getInstance().initGameRepository().createGameWithPlayers(players);
+            DataHolderUtil.getInstance().setCurrentGameId(createdGameId);
+            Intent newGameSettingsIntent = new Intent(this, NewGameSettingsActivity.class);
+            startActivity(newGameSettingsIntent);
+        }else{
+            Toast toast = Toast.makeText(NewGameInputPlayerActivity.this, getResources().getString(R.string.new_game_player_input_not_enough_players_error), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
     }
 }

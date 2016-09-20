@@ -126,4 +126,17 @@ public class InitGameRepository {
         players.remove(randomIndex);
         Log.i(InitGameRepository.class.getName(), "Affected genome " + genome + " to player " + selectedPlayer.getName());
     }
+
+    public int countPlayers(Long gameId){
+        Game game = null;
+        int nbPlayers = 0;
+        try {
+            game = databaseOpenHelper.gameDao().queryForId(gameId);
+            Collection<Player> players = game.getPlayers();
+            nbPlayers = players.size();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nbPlayers;
+    }
 }

@@ -7,6 +7,7 @@
     <string name="home.name">Accueil</string>
     <string name="new_game_player_input.name">Ajouter des joueurs</string>
     <string name="new_game_player_input.same_player_error">Joueur déjà ajouté</string>
+    <string name="new_game_player_input.not_enough_players_error">Pas assez de joueurs !</string>
     <string name="new_game_player_input.delete_message">Supprimer %1$s ?</string>
     <string name="new_game_player_input.yes">Oui</string>
     <string name="new_game_player_input.no">Non</string>
@@ -15,6 +16,7 @@
     <string name="new_game_settings.various_box">Divers</string>
     <string name="new_game_settings.is_genotype">Jouer avec les génotypes ?</string>
     <string name="new_game_settings.randomize_game">Tirer les rôles aléatoirement ?</string>
+    <string name="new_game_settings.too_many_roles">Trop de rôles additionnels !</string>
 
     <string name="role_astronaut.name">Astronaute</string>
     <string name="role_doctor.name">Médecin</string>

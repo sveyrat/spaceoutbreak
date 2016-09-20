@@ -1,12 +1,12 @@
 package com.github.sveyrat.spaceoutbreak;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
-import com.github.sveyrat.spaceoutbreak.dao.InitGameRepository;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.domain.Role;
 import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
@@ -42,14 +42,33 @@ public class NewGameSettingsActivity extends AppCompatActivity {
     public void validateGameSettings(View view) {
         // TODO
         List<Role> additionalRoles = new ArrayList<>();
-        if(psychologistBox.isChecked()){additionalRoles.add(Role.PSYCHOLOGIST);}
-        if(computerScientistBox.isChecked()){additionalRoles.add(Role.COMPUTER_SCIENTIST);}
-        if(geneticistBox.isChecked()){additionalRoles.add(Role.GENETICIST);}
-        if(spyBox.isChecked()){additionalRoles.add(Role.SPY);}
-        if(hackerBox.isChecked()){additionalRoles.add(Role.HACKER);}
-        if(fanaticBox.isChecked()){additionalRoles.add(Role.FANATIC);}
+        if (psychologistBox.isChecked()) {
+            additionalRoles.add(Role.PSYCHOLOGIST);
+        }
+        if (computerScientistBox.isChecked()) {
+            additionalRoles.add(Role.COMPUTER_SCIENTIST);
+        }
+        if (geneticistBox.isChecked()) {
+            additionalRoles.add(Role.GENETICIST);
+        }
+        if (spyBox.isChecked()) {
+            additionalRoles.add(Role.SPY);
+        }
+        if (hackerBox.isChecked()) {
+            additionalRoles.add(Role.HACKER);
+        }
+        if (fanaticBox.isChecked()) {
+            additionalRoles.add(Role.FANATIC);
+        }
+
 
         Long gameId = DataHolderUtil.getInstance().getCurrentGameId();
-        RepositoryManager.getInstance().initGameRepository().initializeRoles(gameId, additionalRoles, randomize.isChecked(), genotype.isChecked());
+        if (RepositoryManager.getInstance().initGameRepository().countPlayers(gameId) >= getResources().getInteger(R.integer.required_roles_number) + additionalRoles.size()) {
+            RepositoryManager.getInstance().initGameRepository().initializeRoles(gameId, additionalRoles, randomize.isChecked(), genotype.isChecked());
+        }else{
+            Toast toast = Toast.makeText(NewGameSettingsActivity.this, getResources().getString(R.string.new_game_settings_too_many_roles), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
     }
 }
