@@ -28,4 +28,7 @@
     <string name="role_hacker.name">Hacker</string>
     <string name="role_fanatic.name">Fanatique</string>
 
+
+    <string name="night_basis.name">Tour de nuit</string>
+
 </resources>

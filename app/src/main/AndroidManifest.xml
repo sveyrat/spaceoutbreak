@@ -24,6 +24,8 @@
         <activity android:name=".NewGameSettingsActivity"
         android:label="@string/new_game_settings.name"></activity>
 
+        <activity android:name=".NightBasisActivity"
+            android:label="@string/night_basis.name"></activity>
     </application>
 
 </manifest>
