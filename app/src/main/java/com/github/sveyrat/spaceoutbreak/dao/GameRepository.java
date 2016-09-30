@@ -3,6 +3,7 @@ package com.github.sveyrat.spaceoutbreak.dao;
 import android.util.Log;
 
 import com.github.sveyrat.spaceoutbreak.domain.Game;
+import com.github.sveyrat.spaceoutbreak.domain.Genome;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
 import com.github.sveyrat.spaceoutbreak.domain.NightActionType;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
@@ -21,7 +22,7 @@ public class GameRepository extends AbstractRepository {
     }
 
     /**
-     * Counts the total number of players in a game.
+     * Counts the total number of players in the current game.
      *
      * @return the number of players in the current game
      */
@@ -84,6 +85,7 @@ public class GameRepository extends AbstractRepository {
             return;
         }
         try {
+            playerDao().refresh(player);
             if (!player.resistant()) {
                 player.setMutant(true);
                 playerDao().update(player);
@@ -115,6 +117,7 @@ public class GameRepository extends AbstractRepository {
             return;
         }
         try {
+            playerDao().refresh(player);
             player.setAlive(false);
             playerDao().update(player);
 
@@ -139,6 +142,7 @@ public class GameRepository extends AbstractRepository {
             return;
         }
         try {
+            playerDao().refresh(player);
             player.setParalysed(true);
             playerDao().update(player);
 
@@ -163,6 +167,7 @@ public class GameRepository extends AbstractRepository {
             return;
         }
         try {
+            playerDao().refresh(player);
             player.setInfected(true);
             playerDao().update(player);
 
@@ -171,6 +176,88 @@ public class GameRepository extends AbstractRepository {
             nightActionDao().create(nightAction);
         } catch (SQLException e) {
             String message = "Error while attempting to paralyse player " + player.getName() + " with id " + player.getId();
+            Log.e(GameRepository.class.getName(), message);
+            throw new RuntimeException(message, e);
+        }
+    }
+
+    /**
+     * Heals the player if possible.
+     *
+     * @param player the player to heal.
+     */
+    public void heal(Player player){
+        if (!player.isAlive()) {
+            Log.e(GameRepository.class.getName(), "Can not heal player " + player.getName() + " with id " + player.getId() + " because he is dead.");
+            return;
+        }
+        try {
+            playerDao().refresh(player);
+            if (player.isMutant() && !player.host()) {
+                player.setMutant(false);
+                playerDao().update(player);
+            }
+
+            Round round = currentRound();
+            NightAction nightAction = new NightAction(round, Role.DOCTOR, NightActionType.HEAL, player);
+            nightActionDao().create(nightAction);
+        } catch (SQLException e) {
+            String message = "Error while attempting to heal player " + player.getName() + " with id " + player.getId();
+            Log.e(GameRepository.class.getName(), message);
+            throw new RuntimeException(message, e);
+        }
+    }
+
+    /**
+     * @return the number of mutants alive in the current game
+     */
+    public int countMutants() {
+        Game currentGame = currentGame();
+        int numberOfMutants = 0;
+        for (Player player : currentGame.getPlayers()) {
+            if (player.isMutant() && player.isAlive()) {
+                numberOfMutants++;
+            }
+        }
+        try {
+            Round round = currentRound();
+            NightAction nightAction = new NightAction(round, Role.COMPUTER_SCIENTIST, NightActionType.INSPECT, null);
+            nightActionDao().create(nightAction);
+        } catch (SQLException e) {
+            String message = "Error while attempting to save computer scientist count mutants action";
+            Log.e(GameRepository.class.getName(), message);
+            throw new RuntimeException(message, e);
+        }
+        return numberOfMutants;
+    }
+
+    public boolean testIfMutant(Player player) {
+        try {
+            playerDao().refresh(player);
+
+            Round round = currentRound();
+            NightAction nightAction = new NightAction(round, Role.PSYCHOLOGIST, NightActionType.INSPECT, player);
+            nightActionDao().create(nightAction);
+
+            return player.isMutant();
+        } catch (SQLException e) {
+            String message = "Error while attempting to test if player with id " + player.getId() + " is a mutant";
+            Log.e(GameRepository.class.getName(), message);
+            throw new RuntimeException(message, e);
+        }
+    }
+
+    public Genome testGenome(Player player) {
+        try {
+            playerDao().refresh(player);
+
+            Round round = currentRound();
+            NightAction nightAction = new NightAction(round, Role.GENETICIST, NightActionType.INSPECT, player);
+            nightActionDao().create(nightAction);
+
+            return player.getGenome();
+        } catch (SQLException e) {
+            String message = "Error while attempting to test genome of player with id " + player.getId();
             Log.e(GameRepository.class.getName(), message);
             throw new RuntimeException(message, e);
         }
