@@ -5,38 +5,21 @@ import android.util.Log;
 import com.github.sveyrat.spaceoutbreak.dao.DatabaseOpenHelper;
 import com.github.sveyrat.spaceoutbreak.dao.dto.SpyInspectionResult;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
-import com.github.sveyrat.spaceoutbreak.domain.constant.Genome;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
-import com.github.sveyrat.spaceoutbreak.domain.constant.NightActionType;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
-import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.github.sveyrat.spaceoutbreak.domain.Round;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Genome;
+import com.github.sveyrat.spaceoutbreak.domain.constant.NightActionType;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class NightActionRepository extends AbstractRepository {
 
     public NightActionRepository(DatabaseOpenHelper databaseOpenHelper) {
         super(databaseOpenHelper);
-    }
-
-    /**
-     * Loads all the players that are still alive.
-     *
-     * @return a list of all alive players in the current game
-     */
-    public List<Player> loadAlivePlayers() {
-        Game game = currentGame();
-        List<Player> alivePlayers = new ArrayList<>();
-        for (Player player : game.getPlayers()) {
-            if (player.isAlive()) {
-                alivePlayers.add(player);
-            }
-        }
-        return alivePlayers;
     }
 
     /**
@@ -233,7 +216,7 @@ public class NightActionRepository extends AbstractRepository {
      * @param player the player to test
      * @return whether the player is a mutant
      */
-    public boolean testIfMutant(Player player) {
+    public boolean testIfMutantForPsychologist(Player player) {
         try {
             playerDao().refresh(player);
 
@@ -255,7 +238,7 @@ public class NightActionRepository extends AbstractRepository {
      * @param player the player to test
      * @return the genome of the player
      */
-    public Genome testGenome(Player player) {
+    public Genome testGenomeForGeneticist(Player player) {
         try {
             playerDao().refresh(player);
 
