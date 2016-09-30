@@ -74,6 +74,7 @@ public class NewGameSettingsActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(NewGameSettingsActivity.this, getResources().getString(R.string.new_game_settings_too_many_roles), Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
+            return;
         }
         RepositoryManager.getInstance().initGameRepository().initializeRoles(gameId, additionalRoles, randomize.isChecked(), genotype.isChecked());
     }
