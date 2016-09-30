@@ -1,4 +1,4 @@
-package com.github.sveyrat.spaceoutbreak.domain;
+package com.github.sveyrat.spaceoutbreak.domain.constant;
 
 import com.github.sveyrat.spaceoutbreak.R;
 

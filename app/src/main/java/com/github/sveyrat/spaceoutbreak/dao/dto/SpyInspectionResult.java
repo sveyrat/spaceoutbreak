@@ -1,8 +1,7 @@
 package com.github.sveyrat.spaceoutbreak.dao.dto;
 
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
-import com.github.sveyrat.spaceoutbreak.domain.NightActionType;
-import com.github.sveyrat.spaceoutbreak.domain.Role;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 
 import java.util.List;
 

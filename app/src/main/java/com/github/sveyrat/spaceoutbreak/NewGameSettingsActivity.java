@@ -8,7 +8,7 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
-import com.github.sveyrat.spaceoutbreak.domain.Role;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,7 @@ public class NewGameSettingsActivity extends AppCompatActivity {
             additionalRoles.add(Role.FANATIC);
         }
 
-        int numberOfPlayers = RepositoryManager.getInstance().gameRepository().countPlayers();
+        int numberOfPlayers = RepositoryManager.getInstance().gameInformationRepository().countPlayers();
         int numberOfRoles = getResources().getInteger(R.integer.required_roles_number) + additionalRoles.size();
         if (numberOfPlayers < numberOfRoles) {
             Toast toast = Toast.makeText(NewGameSettingsActivity.this, getResources().getString(R.string.new_game_settings_too_many_roles), Toast.LENGTH_SHORT);
@@ -75,6 +75,6 @@ public class NewGameSettingsActivity extends AppCompatActivity {
             return;
         }
         RepositoryManager.getInstance().initGameRepository().initializeRoles(additionalRoles, randomize.isChecked(), genotype.isChecked());
-        RepositoryManager.getInstance().gameRepository().newRound();
+        RepositoryManager.getInstance().nightActionRepository().newRound();
     }
 }

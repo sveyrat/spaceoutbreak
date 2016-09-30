@@ -1,11 +1,12 @@
-package com.github.sveyrat.spaceoutbreak.dao;
+package com.github.sveyrat.spaceoutbreak.dao.repository;
 
 import android.util.Log;
 
+import com.github.sveyrat.spaceoutbreak.dao.DatabaseOpenHelper;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
-import com.github.sveyrat.spaceoutbreak.domain.Genome;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Genome;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
-import com.github.sveyrat.spaceoutbreak.domain.Role;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
 
 import java.sql.SQLException;

@@ -1,5 +1,7 @@
 package com.github.sveyrat.spaceoutbreak.domain;
 
+import com.github.sveyrat.spaceoutbreak.domain.constant.Genome;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 

@@ -1,7 +1,8 @@
-package com.github.sveyrat.spaceoutbreak.dao;
+package com.github.sveyrat.spaceoutbreak.dao.repository;
 
 import android.util.Log;
 
+import com.github.sveyrat.spaceoutbreak.dao.DatabaseOpenHelper;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
