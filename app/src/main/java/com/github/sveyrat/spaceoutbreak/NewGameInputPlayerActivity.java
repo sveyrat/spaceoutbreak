@@ -56,7 +56,7 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
         });
 
         // TODO remove : populate list for testing purposes only
-//        adapter.addAll("Annie", "Braum", "Caitlyn", "Dr Mundo", "Ezreal", "Fiddlesticks", "Gragas", "Hecarim", "Illaoi", "Jarvan IV");
+        adapter.addAll("Annie", "Braum", "Caitlyn", "Dr Mundo", "Ezreal", "Fiddlesticks", "Gragas", "Hecarim", "Illaoi", "Jarvan IV");
     }
 
     public void addPlayer(View view) {

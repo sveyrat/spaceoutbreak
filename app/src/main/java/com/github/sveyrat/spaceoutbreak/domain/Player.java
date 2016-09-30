@@ -9,7 +9,7 @@ public class Player {
     @DatabaseField(generatedId = true)
     private Long id;
 
-    @DatabaseField(foreign=true, foreignAutoRefresh=true, canBeNull = false)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, canBeNull = false)
     private Game game;
 
     @DatabaseField(canBeNull = false)
@@ -23,6 +23,9 @@ public class Player {
 
     @DatabaseField(canBeNull = false)
     private boolean mutant = false;
+
+    @DatabaseField(canBeNull = false)
+    private boolean alive = true;
 
     // Required by the ORM to create instances
     public Player() {
@@ -79,5 +82,13 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 }

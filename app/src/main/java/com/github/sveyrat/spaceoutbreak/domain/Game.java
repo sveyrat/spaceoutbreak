@@ -20,6 +20,9 @@ public class Game {
     @ForeignCollectionField
     private ForeignCollection<Player> players;
 
+    @ForeignCollectionField(orderColumnName = "order")
+    private ForeignCollection<Round> rounds;
+
     public Game() {
         this.creationDate = new Date();
     }
