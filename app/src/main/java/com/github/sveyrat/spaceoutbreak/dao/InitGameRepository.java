@@ -23,6 +23,7 @@ public class InitGameRepository {
 
     /**
      * Creates and persists a game with the given player names
+     *
      * @param playerNames the name of the players taking part in the game
      * @return the identifier of the game created
      */
@@ -44,10 +45,10 @@ public class InitGameRepository {
     /**
      * Initializes the roles and genomes randomly, and saves the results.
      *
-     * @param gameId the identifier of the game
+     * @param gameId          the identifier of the game
      * @param additionalRoles the roles to use, other than base mutant and doctor
-     * @param drawRoles whether to randomly affect roles. If empty, method will not do anything
-     * @param useGenomes whether to use genomes
+     * @param drawRoles       whether to randomly affect roles. If empty, method will not do anything
+     * @param useGenomes      whether to use genomes
      */
     public void initializeRoles(Long gameId, List<Role> additionalRoles, boolean drawRoles, boolean useGenomes) {
         if (!drawRoles) {
@@ -125,18 +126,5 @@ public class InitGameRepository {
         databaseOpenHelper.playerDao().update(selectedPlayer);
         players.remove(randomIndex);
         Log.i(InitGameRepository.class.getName(), "Affected genome " + genome + " to player " + selectedPlayer.getName());
-    }
-
-    public int countPlayers(Long gameId){
-        Game game = null;
-        int nbPlayers = 0;
-        try {
-            game = databaseOpenHelper.gameDao().queryForId(gameId);
-            Collection<Player> players = game.getPlayers();
-            nbPlayers = players.size();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return nbPlayers;
     }
 }

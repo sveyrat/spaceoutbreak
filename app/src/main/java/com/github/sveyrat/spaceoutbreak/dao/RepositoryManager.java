@@ -7,6 +7,7 @@ public class RepositoryManager {
     private static RepositoryManager instance;
 
     private static InitGameRepository initGameRepository;
+    private static GameRepository gameRepository;
 
     public static void init(Context ctx) {
         if (instance == null) {
@@ -18,14 +19,17 @@ public class RepositoryManager {
         return instance;
     }
 
-    private DatabaseOpenHelper helper;
-
     private RepositoryManager(Context ctx) {
-        helper = new DatabaseOpenHelper(ctx);
+        DatabaseOpenHelper helper = new DatabaseOpenHelper(ctx);
         initGameRepository = new InitGameRepository(helper);
+        gameRepository = new GameRepository(helper);
     }
 
     public InitGameRepository initGameRepository() {
         return initGameRepository;
+    }
+
+    public GameRepository gameRepository() {
+        return gameRepository;
     }
 }

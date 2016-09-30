@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="min_players">8</integer>
+    <!-- 1 base mutant, 2 doctors-->
     <integer name="required_roles_number">3</integer>
 </resources>

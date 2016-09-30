@@ -20,7 +20,14 @@ import java.util.List;
  */
 public class NewGameSettingsActivity extends AppCompatActivity {
 
-    CheckBox psychologistBox, computerScientistBox, geneticistBox, spyBox, hackerBox, fanaticBox, genotype, randomize;
+    private CheckBox psychologistBox;
+    private CheckBox computerScientistBox;
+    private CheckBox geneticistBox;
+    private CheckBox spyBox;
+    private CheckBox hackerBox;
+    private CheckBox fanaticBox;
+    private CheckBox genotype;
+    private CheckBox randomize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +47,6 @@ public class NewGameSettingsActivity extends AppCompatActivity {
     }
 
     public void validateGameSettings(View view) {
-        // TODO
         List<Role> additionalRoles = new ArrayList<>();
         if (psychologistBox.isChecked()) {
             additionalRoles.add(Role.PSYCHOLOGIST);
@@ -61,14 +67,14 @@ public class NewGameSettingsActivity extends AppCompatActivity {
             additionalRoles.add(Role.FANATIC);
         }
 
-
         Long gameId = DataHolderUtil.getInstance().getCurrentGameId();
-        if (RepositoryManager.getInstance().initGameRepository().countPlayers(gameId) >= getResources().getInteger(R.integer.required_roles_number) + additionalRoles.size()) {
-            RepositoryManager.getInstance().initGameRepository().initializeRoles(gameId, additionalRoles, randomize.isChecked(), genotype.isChecked());
-        }else{
+        int numberOfPlayers = RepositoryManager.getInstance().gameRepository().countPlayers(gameId);
+        int numberOfRoles = getResources().getInteger(R.integer.required_roles_number) + additionalRoles.size();
+        if (numberOfPlayers < numberOfRoles) {
             Toast toast = Toast.makeText(NewGameSettingsActivity.this, getResources().getString(R.string.new_game_settings_too_many_roles), Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
+        RepositoryManager.getInstance().initGameRepository().initializeRoles(gameId, additionalRoles, randomize.isChecked(), genotype.isChecked());
     }
 }

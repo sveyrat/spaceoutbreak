@@ -41,7 +41,7 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                final String itemName = ((TextView)v).getText().toString();
+                final String itemName = ((TextView) v).getText().toString();
                 AlertDialog.Builder adb = new AlertDialog.Builder(NewGameInputPlayerActivity.this);
                 String message = String.format(getResources().getString(R.string.new_game_player_input_delete_message), itemName);
                 adb.setMessage(message);
@@ -54,35 +54,37 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
                 adb.show();
             }
         });
+
+        // TODO remove : populate list for testing purposes only
+//        adapter.addAll("Annie", "Braum", "Caitlyn", "Dr Mundo", "Ezreal", "Fiddlesticks", "Gragas", "Hecarim", "Illaoi", "Jarvan IV");
     }
 
     public void addPlayer(View view) {
         EditText playerNameEditText = (EditText) findViewById(R.id.new_game_input_player_player_name);
         String playerName = playerNameEditText.getText().toString();
-        if(playerName.isEmpty()) {
+        if (playerName.isEmpty()) {
             return;
         }
-        if(!StringUtil.containsIgnoreCase(players,playerName)) {
-            adapter.insert(playerName,0);
-        } else {
+        if (StringUtil.containsIgnoreCase(players, playerName)) {
             Toast toast = Toast.makeText(NewGameInputPlayerActivity.this, getResources().getString(R.string.new_game_player_input_same_player_error), Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
+            return;
         }
+        adapter.insert(playerName, 0);
         playerNameEditText.setText("");
     }
 
     public void validatePlayerList(View view) {
-
-        if(players.size()>=getResources().getInteger(R.integer.min_players)) {
-            Long createdGameId = RepositoryManager.getInstance().initGameRepository().createGameWithPlayers(players);
-            DataHolderUtil.getInstance().setCurrentGameId(createdGameId);
-            Intent newGameSettingsIntent = new Intent(this, NewGameSettingsActivity.class);
-            startActivity(newGameSettingsIntent);
-        }else{
+        if (players.size() < getResources().getInteger(R.integer.min_players)) {
             Toast toast = Toast.makeText(NewGameInputPlayerActivity.this, getResources().getString(R.string.new_game_player_input_not_enough_players_error), Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
+            return;
         }
+        Long createdGameId = RepositoryManager.getInstance().initGameRepository().createGameWithPlayers(players);
+        DataHolderUtil.getInstance().setCurrentGameId(createdGameId);
+        Intent newGameSettingsIntent = new Intent(this, NewGameSettingsActivity.class);
+        startActivity(newGameSettingsIntent);
     }
 }
