@@ -2,6 +2,7 @@ package com.github.sveyrat.spaceoutbreak.dao;
 
 import android.util.Log;
 
+import com.github.sveyrat.spaceoutbreak.dao.dto.SpyInspectionResult;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.Genome;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
@@ -10,6 +11,7 @@ import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.Role;
 import com.github.sveyrat.spaceoutbreak.domain.Round;
 import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -59,7 +61,7 @@ public class GameRepository extends AbstractRepository {
             roundDao().create(round);
 
             for (Player player : round.getGame().getPlayers()) {
-                player.setParalysed(false);
+                player.setParalyzed(false);
                 player.setInfected(false);
                 playerDao().update(player);
             }
@@ -136,14 +138,14 @@ public class GameRepository extends AbstractRepository {
      *
      * @param player the player to paralyse
      */
-    public void paralyse(Player player) {
+    public void paralyze(Player player) {
         if (!player.isAlive()) {
             Log.e(GameRepository.class.getName(), "Can not paralyse player " + player.getName() + " with id " + player.getId() + " because he is dead.");
             return;
         }
         try {
             playerDao().refresh(player);
-            player.setParalysed(true);
+            player.setParalyzed(true);
             playerDao().update(player);
 
             Round round = currentRound();
@@ -186,7 +188,7 @@ public class GameRepository extends AbstractRepository {
      *
      * @param player the player to heal.
      */
-    public void heal(Player player){
+    public void heal(Player player) {
         if (!player.isAlive()) {
             Log.e(GameRepository.class.getName(), "Can not heal player " + player.getName() + " with id " + player.getId() + " because he is dead.");
             return;
@@ -231,6 +233,12 @@ public class GameRepository extends AbstractRepository {
         return numberOfMutants;
     }
 
+    /**
+     * Tests if a player is a mutant.
+     *
+     * @param player the player to test
+     * @return whether the player is a mutant
+     */
     public boolean testIfMutant(Player player) {
         try {
             playerDao().refresh(player);
@@ -247,6 +255,12 @@ public class GameRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * Tests the genome of a player
+     *
+     * @param player the player to test
+     * @return the genome of the player
+     */
     public Genome testGenome(Player player) {
         try {
             playerDao().refresh(player);
@@ -258,6 +272,29 @@ public class GameRepository extends AbstractRepository {
             return player.getGenome();
         } catch (SQLException e) {
             String message = "Error while attempting to test genome of player with id " + player.getId();
+            Log.e(GameRepository.class.getName(), message);
+            throw new RuntimeException(message, e);
+        }
+    }
+
+    /**
+     * Retrieves what happened to the given player during the current round.
+     *
+     * @param player the player to inspect
+     * @return the results of the inspection
+     */
+    public SpyInspectionResult inspectAsSpy(Player player) {
+        try {
+            Round round = currentRound();
+            NightAction nightAction = new NightAction(round, Role.SPY, NightActionType.INSPECT, player);
+            nightActionDao().create(nightAction);
+
+            List<NightAction> actions = nightActionDao().queryBuilder()//
+                    .where().eq("target_player_id", player.getId())//
+                    .query();
+            return new SpyInspectionResult(actions);
+        } catch (SQLException e) {
+            String message = "Error while attempting to inspect actions targeted at player with id " + player.getId();
             Log.e(GameRepository.class.getName(), message);
             throw new RuntimeException(message, e);
         }

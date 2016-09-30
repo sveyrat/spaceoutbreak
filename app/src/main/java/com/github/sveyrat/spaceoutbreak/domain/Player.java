@@ -28,7 +28,7 @@ public class Player {
     private boolean alive = true;
 
     @DatabaseField(canBeNull = false)
-    private boolean paralysed = false;
+    private boolean paralyzed = false;
 
     @DatabaseField(canBeNull = false)
     private boolean infected = false;
@@ -106,12 +106,12 @@ public class Player {
         return Genome.HOST == this.genome;
     }
 
-    public boolean isParalysed() {
-        return paralysed;
+    public boolean isParalyzed() {
+        return paralyzed;
     }
 
-    public void setParalysed(boolean paralysed) {
-        this.paralysed = paralysed;
+    public void setParalyzed(boolean paralyzed) {
+        this.paralyzed = paralyzed;
     }
 
     public boolean isInfected() {
