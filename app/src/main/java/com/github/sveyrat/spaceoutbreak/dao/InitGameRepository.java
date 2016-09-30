@@ -6,6 +6,7 @@ import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.Genome;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.Role;
+import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,64 +14,63 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-public class InitGameRepository {
-
-    private DatabaseOpenHelper databaseOpenHelper;
+public class InitGameRepository extends AbstractRepository {
 
     public InitGameRepository(DatabaseOpenHelper databaseOpenHelper) {
-        this.databaseOpenHelper = databaseOpenHelper;
+        super(databaseOpenHelper);
     }
 
     /**
-     * Creates and persists a game with the given player names
+     * Creates and persists a game with the given player names.
+     * Created game automatically becomes the current game.
      *
      * @param playerNames the name of the players taking part in the game
-     * @return the identifier of the game created
      */
-    public Long createGameWithPlayers(List<String> playerNames) {
+    public void createGameWithPlayers(List<String> playerNames) {
         try {
             Game game = new Game();
-            databaseOpenHelper.gameDao().create(game);
+            gameDao().create(game);
             for (String playerName : playerNames) {
-                databaseOpenHelper.playerDao().create(new Player(game, playerName));
+                playerDao().create(new Player(game, playerName));
             }
+            DataHolderUtil.getInstance().setCurrentGameId(game.getId());
             Log.i(InitGameRepository.class.getName(), "Created game " + game.getId() + " with " + playerNames.size() + " players");
-            return game.getId();
         } catch (SQLException e) {
-            Log.e(InitGameRepository.class.getName(), "Error while attempting to create a game", e);
-            throw new RuntimeException(e);
+            String message = "Error while attempting to create a game";
+            Log.e(InitGameRepository.class.getName(), message, e);
+            throw new RuntimeException(message, e);
         }
     }
 
     /**
      * Initializes the roles and genomes randomly, and saves the results.
      *
-     * @param gameId          the identifier of the game
      * @param additionalRoles the roles to use, other than base mutant and doctor
      * @param drawRoles       whether to randomly affect roles. If empty, method will not do anything
      * @param useGenomes      whether to use genomes
      */
-    public void initializeRoles(Long gameId, List<Role> additionalRoles, boolean drawRoles, boolean useGenomes) {
+    public void initializeRoles(List<Role> additionalRoles, boolean drawRoles, boolean useGenomes) {
         if (!drawRoles) {
             return;
         }
         try {
-            Game game = databaseOpenHelper.gameDao().queryForId(gameId);
+            Game game = currentGame();
             Collection<Player> players = game.getPlayers();
             // Reset roles and genomes to avoid weird situations if this method is called multiple times on the same game
             for (Player player : players) {
                 player.setRole(Role.ASTRONAUT);
                 player.setGenome(Genome.NORMAL);
                 player.setMutant(false);
-                databaseOpenHelper.playerDao().update(player);
+                playerDao().update(player);
             }
             drawRoles(players, additionalRoles);
             if (useGenomes) {
                 drawGenomes(players);
             }
         } catch (SQLException e) {
-            Log.e(InitGameRepository.class.getName(), "Error while attempting to initialize a game", e);
-            throw new RuntimeException(e);
+            String message = "Error while attempting to initialize a game";
+            Log.e(InitGameRepository.class.getName(), message, e);
+            throw new RuntimeException(message, e);
         }
     }
 
@@ -82,7 +82,7 @@ public class InitGameRepository {
         // Base mutant is always host
         baseMutant.setGenome(Genome.HOST);
         baseMutant.setMutant(true);
-        databaseOpenHelper.playerDao().update(baseMutant);
+        playerDao().update(baseMutant);
         // Draw 2 doctors
         affectRoleToRandomPlayer(playersWithoutRole, Role.DOCTOR);
         affectRoleToRandomPlayer(playersWithoutRole, Role.DOCTOR);
@@ -96,7 +96,7 @@ public class InitGameRepository {
         int randomIndex = new Random().nextInt(players.size());
         Player selectedPlayer = players.get(randomIndex);
         selectedPlayer.setRole(role);
-        databaseOpenHelper.playerDao().update(selectedPlayer);
+        playerDao().update(selectedPlayer);
         players.remove(randomIndex);
         Log.i(InitGameRepository.class.getName(), "Affected role " + role + " to player " + selectedPlayer.getName());
         return selectedPlayer;
@@ -123,7 +123,7 @@ public class InitGameRepository {
         int randomIndex = new Random().nextInt(players.size());
         Player selectedPlayer = players.get(randomIndex);
         selectedPlayer.setGenome(genome);
-        databaseOpenHelper.playerDao().update(selectedPlayer);
+        playerDao().update(selectedPlayer);
         players.remove(randomIndex);
         Log.i(InitGameRepository.class.getName(), "Affected genome " + genome + " to player " + selectedPlayer.getName());
     }

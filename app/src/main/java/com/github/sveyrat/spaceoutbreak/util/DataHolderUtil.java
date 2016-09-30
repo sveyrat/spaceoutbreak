@@ -12,6 +12,7 @@ public class DataHolderUtil {
     }
 
     private Long currentGameId;
+    private Long currentRoundId;
 
     private DataHolderUtil() {
     }
@@ -22,5 +23,13 @@ public class DataHolderUtil {
 
     public void setCurrentGameId(Long currentGameId) {
         this.currentGameId = currentGameId;
+    }
+
+    public Long getCurrentRoundId() {
+        return currentRoundId;
+    }
+
+    public void setCurrentRoundId(Long currentRoundId) {
+        this.currentRoundId = currentRoundId;
     }
 }

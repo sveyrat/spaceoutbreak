@@ -27,6 +27,12 @@ public class Player {
     @DatabaseField(canBeNull = false)
     private boolean alive = true;
 
+    @DatabaseField(canBeNull = false)
+    private boolean paralysed = false;
+
+    @DatabaseField(canBeNull = false)
+    private boolean infected = false;
+
     // Required by the ORM to create instances
     public Player() {
     }
@@ -90,5 +96,29 @@ public class Player {
 
     public void setAlive(boolean alive) {
         this.alive = alive;
+    }
+
+    public boolean resistant() {
+        return Genome.RESISTANT == this.genome;
+    }
+
+    public boolean host() {
+        return Genome.HOST == this.genome;
+    }
+
+    public boolean isParalysed() {
+        return paralysed;
+    }
+
+    public void setParalysed(boolean paralysed) {
+        this.paralysed = paralysed;
+    }
+
+    public boolean isInfected() {
+        return infected;
+    }
+
+    public void setInfected(boolean infected) {
+        this.infected = infected;
     }
 }

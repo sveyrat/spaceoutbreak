@@ -2,9 +2,9 @@ package com.github.sveyrat.spaceoutbreak;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,10 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
-import com.github.sveyrat.spaceoutbreak.util.StringUtil;
-
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
+import com.github.sveyrat.spaceoutbreak.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,8 +80,7 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
             toast.show();
             return;
         }
-        Long createdGameId = RepositoryManager.getInstance().initGameRepository().createGameWithPlayers(players);
-        DataHolderUtil.getInstance().setCurrentGameId(createdGameId);
+        RepositoryManager.getInstance().initGameRepository().createGameWithPlayers(players);
         Intent newGameSettingsIntent = new Intent(this, NewGameSettingsActivity.class);
         startActivity(newGameSettingsIntent);
     }

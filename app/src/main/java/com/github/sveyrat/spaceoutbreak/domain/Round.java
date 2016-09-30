@@ -20,6 +20,14 @@ public class Round {
     @ForeignCollectionField(orderColumnName = "order")
     private ForeignCollection<NightAction> nightActions;
 
+    public Round() {
+    }
+
+    public Round(Game game) {
+        this.game = game;
+        this.order = game.getRounds().size() + 1;
+    }
+
     public Long getId() {
         return id;
     }

@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.domain.Role;
-import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +66,7 @@ public class NewGameSettingsActivity extends AppCompatActivity {
             additionalRoles.add(Role.FANATIC);
         }
 
-        Long gameId = DataHolderUtil.getInstance().getCurrentGameId();
-        int numberOfPlayers = RepositoryManager.getInstance().gameRepository().countPlayers(gameId);
+        int numberOfPlayers = RepositoryManager.getInstance().gameRepository().countPlayers();
         int numberOfRoles = getResources().getInteger(R.integer.required_roles_number) + additionalRoles.size();
         if (numberOfPlayers < numberOfRoles) {
             Toast toast = Toast.makeText(NewGameSettingsActivity.this, getResources().getString(R.string.new_game_settings_too_many_roles), Toast.LENGTH_SHORT);
@@ -76,6 +74,7 @@ public class NewGameSettingsActivity extends AppCompatActivity {
             toast.show();
             return;
         }
-        RepositoryManager.getInstance().initGameRepository().initializeRoles(gameId, additionalRoles, randomize.isChecked(), genotype.isChecked());
+        RepositoryManager.getInstance().initGameRepository().initializeRoles(additionalRoles, randomize.isChecked(), genotype.isChecked());
+        RepositoryManager.getInstance().gameRepository().newRound();
     }
 }

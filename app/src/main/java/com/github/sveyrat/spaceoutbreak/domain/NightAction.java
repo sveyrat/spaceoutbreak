@@ -29,6 +29,17 @@ public class NightAction {
     @DatabaseField(canBeNull = true)
     private Role hackedRole;
 
+    public NightAction() {
+    }
+
+    public NightAction(Round round, Role actingPlayerRole, NightActionType type, Player targetPlayer) {
+        this.round = round;
+        this.order = round.getNightActions().size() + 1;
+        this.actingPlayerRole = actingPlayerRole;
+        this.type = type;
+        this.targetPlayer = targetPlayer;
+    }
+
     public Long getId() {
         return id;
     }

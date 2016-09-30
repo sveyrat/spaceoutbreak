@@ -6,7 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.github.sveyrat.spaceoutbreak.domain.Game;
+import com.github.sveyrat.spaceoutbreak.domain.NightAction;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
+import com.github.sveyrat.spaceoutbreak.domain.Round;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -19,6 +21,8 @@ public class DatabaseOpenHelper extends OrmLiteSqliteOpenHelper {
 
     private Dao<Game, Long> gameDao = null;
     private Dao<Player, Long> playerDao = null;
+    private Dao<Round, Long> roundDao = null;
+    private Dao<NightAction, Long> nightActionDao = null;
 
     public DatabaseOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,6 +33,8 @@ public class DatabaseOpenHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.createTable(connectionSource, Game.class);
             TableUtils.createTable(connectionSource, Player.class);
+            TableUtils.createTable(connectionSource, Round.class);
+            TableUtils.createTable(connectionSource, NightAction.class);
         } catch (SQLException e) {
             Log.e(DatabaseOpenHelper.class.getName(), "Could not create database", e);
             throw new RuntimeException(e);
@@ -81,5 +87,29 @@ public class DatabaseOpenHelper extends OrmLiteSqliteOpenHelper {
             }
         }
         return playerDao;
+    }
+
+    public Dao<Round, Long> roundDao() {
+        if (roundDao == null) {
+            try {
+                roundDao = getDao(Round.class);
+            }catch (java.sql.SQLException e) {
+                Log.e(DatabaseOpenHelper.class.getName(), "Could not create Round DAO", e);
+                throw new RuntimeException(e);
+            }
+        }
+        return roundDao;
+    }
+
+    public Dao<NightAction, Long> nightActionDao() {
+        if (nightActionDao == null) {
+            try {
+                nightActionDao = getDao(NightAction.class);
+            }catch (java.sql.SQLException e) {
+                Log.e(DatabaseOpenHelper.class.getName(), "Could not create Night Action DAO", e);
+                throw new RuntimeException(e);
+            }
+        }
+        return nightActionDao;
     }
 }

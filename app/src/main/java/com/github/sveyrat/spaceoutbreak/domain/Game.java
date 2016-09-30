@@ -50,4 +50,12 @@ public class Game {
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
+
+    public ForeignCollection<Round> getRounds() {
+        return rounds;
+    }
+
+    public void setRounds(ForeignCollection<Round> rounds) {
+        this.rounds = rounds;
+    }
 }
