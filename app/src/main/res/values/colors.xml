@@ -3,4 +3,6 @@
     <color name="colorPrimary">#439124</color>
     <color name="colorPrimaryDark">#1f711d</color>
     <color name="colorAccent">#000000</color>
+    <color name="colorMutant">#cc0033</color>
+    <color name="colorBackgroundMutant">#50cc0033</color>
 </resources>

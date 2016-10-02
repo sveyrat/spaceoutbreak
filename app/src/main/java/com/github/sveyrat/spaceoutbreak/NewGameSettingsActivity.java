@@ -1,5 +1,6 @@
 package com.github.sveyrat.spaceoutbreak;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -76,5 +77,7 @@ public class NewGameSettingsActivity extends AppCompatActivity {
         }
         RepositoryManager.getInstance().initGameRepository().initializeRoles(additionalRoles, randomize.isChecked(), genotype.isChecked());
         RepositoryManager.getInstance().nightActionRepository().newRound();
+        Intent nightBasisActivityIntent = new Intent(this, NightBasisActivity.class);
+        startActivity(nightBasisActivityIntent);
     }
 }

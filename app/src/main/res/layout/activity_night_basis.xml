@@ -10,4 +10,71 @@
     android:background="@mipmap/background"
     tools:context="com.github.sveyrat.spaceoutbreak.NightBasisActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36sp">
+
+        <TextView
+            android:id="@+id/night_basis_step_tv"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/general_border"
+            android:gravity="center_vertical"
+            android:text="BASE"
+            android:alpha="0.9"
+            android:paddingLeft="6sp"
+            android:layout_marginRight="6sp"/>
+
+        <TextView
+            android:layout_width="36sp"
+            android:layout_height="match_parent"
+            android:background="@mipmap/mutant"
+            android:gravity="center"
+            android:id="@+id/mutant_counter"
+            android:text="0"
+            android:textAppearance="@android:style/TextAppearance.Holo.Large"
+            android:typeface="serif"
+            android:textStyle="normal|bold"
+            android:textColor="@color/colorMutant" />
+
+    </LinearLayout>
+
+    <GridView
+        android:layout_margin="6sp"
+        android:layout_width="match_parent"
+        android:background="@drawable/general_border"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:numColumns="2"
+        android:horizontalSpacing="3sp"
+        android:verticalSpacing="3sp"
+        android:id="@+id/night_basis_list_players"
+        android:alpha="0.9"
+        android:padding="6sp">
+
+    </GridView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/common.return"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/common.validate"
+
+            android:onClick="" />
+    </LinearLayout>
+    
 </LinearLayout>
