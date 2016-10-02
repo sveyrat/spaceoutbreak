@@ -38,7 +38,7 @@ public class PlayerAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Player getItem(int position) {
         return players.get(position);
     }
 
@@ -87,9 +87,11 @@ public class PlayerAdapter extends BaseAdapter {
         }
 
         // TODO Dynamically change background color for mutant (but keeping borders !)
-        /*if(player.isMutant()){
-            playerView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackgroundMutant));
-        }*/
+        if(player.isMutant()){
+            playerView.setBackground(ContextCompat.getDrawable(context, R.drawable.mutant_small_border));
+        }else{
+            playerView.setBackground(ContextCompat.getDrawable(context, R.drawable.small_border));
+        }
 
         return playerView;
     }

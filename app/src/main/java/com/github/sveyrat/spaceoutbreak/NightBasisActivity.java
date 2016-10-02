@@ -1,7 +1,11 @@
 package com.github.sveyrat.spaceoutbreak;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -34,6 +38,28 @@ public class NightBasisActivity extends AppCompatActivity {
         GridView gridView = (GridView) findViewById(R.id.night_basis_list_players);
         gridView.setAdapter(adapter);
         updateView();
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                //final String itemName = ((TextView) v).getText().toString();
+                final Player player = adapter.getItem(position);
+                AlertDialog.Builder adb = new AlertDialog.Builder(NightBasisActivity.this);
+                String message = "Joueur "+ player.getName();
+                adb.setMessage(message);
+                adb.setNegativeButton("Muter ?",new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        RepositoryManager.getInstance().nightActionRepository().mutate(player);
+                        updateView();
+                    }
+                });
+                adb.setPositiveButton("Soigner ?", new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        RepositoryManager.getInstance().nightActionRepository().heal(player);
+                        updateView();
+                    }
+                });
+                adb.show();
+            }
+        });
     }
 
 

@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:paddingLeft="2sp"
         android:id="@+id/name_player_tv"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
