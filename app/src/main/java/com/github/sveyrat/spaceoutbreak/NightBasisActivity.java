@@ -6,10 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
@@ -34,7 +31,7 @@ public class NightBasisActivity extends AppCompatActivity {
         setContentView(R.layout.activity_night_basis);
         mutantCounter = (TextView) findViewById(R.id.mutant_counter);
 
-        adapter = new PlayerAdapter(this,players);
+        adapter = new PlayerAdapter(this, players);
         GridView gridView = (GridView) findViewById(R.id.night_basis_list_players);
         gridView.setAdapter(adapter);
         updateView();
@@ -43,9 +40,9 @@ public class NightBasisActivity extends AppCompatActivity {
                 //final String itemName = ((TextView) v).getText().toString();
                 final Player player = adapter.getItem(position);
                 AlertDialog.Builder adb = new AlertDialog.Builder(NightBasisActivity.this);
-                String message = "Joueur "+ player.getName();
+                String message = "Joueur " + player.getName();
                 adb.setMessage(message);
-                adb.setNegativeButton("Muter ?",new AlertDialog.OnClickListener() {
+                adb.setNegativeButton("Muter ?", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         RepositoryManager.getInstance().nightActionRepository().mutate(player);
                         updateView();
@@ -62,16 +59,10 @@ public class NightBasisActivity extends AppCompatActivity {
         });
     }
 
-
-
-
-
-
-    void updateView(){
+    void updateView() {
         players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
         adapter.notifyDataSetChanged();
-        int nbMutants= RepositoryManager.getInstance().nightActionRepository().countMutantsForComputerScientist();
-        mutantCounter.setText(""+nbMutants);
-
+        Integer nbMutants = RepositoryManager.getInstance().nightActionRepository().countMutantsForComputerScientist();
+        mutantCounter.setText(nbMutants.toString());
     }
 }
