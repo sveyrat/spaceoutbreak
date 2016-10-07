@@ -58,6 +58,9 @@ public class PlayerAdapter extends BaseAdapter {
         TextView playerName = (TextView) playerView.findViewById(R.id.name_player_tv);
         playerName.setText(player.getName());
 
+        ImageView selectedIndicatorImageView = (ImageView) playerView.findViewById(R.id.selected_image);
+        selectedIndicatorImageView.setVisibility(View.GONE);
+
         ImageView playerRolePicto = (ImageView) playerView.findViewById(R.id.player_role_picto);
         switch (player.getRole()) {
             case BASE_MUTANT:

@@ -10,10 +10,20 @@ import com.github.sveyrat.spaceoutbreak.domain.Player;
 
 public abstract class StepManager {
 
+    private int headerTextStringResourceId;
+    private StepManager nextStep;
+
+    public StepManager(int headerTextStringResourceId, StepManager nextStep) {
+        this.headerTextStringResourceId = headerTextStringResourceId;
+        this.nextStep = nextStep;
+    }
+
     /**
      * @return the text to be displayed in the view header for this step
      */
-    public abstract String headerText(Context context);
+    public final String headerText(Context context) {
+        return context.getResources().getString(headerTextStringResourceId);
+    }
 
     /**
      * Handle a click on a player item in the night action view.
@@ -36,9 +46,11 @@ public abstract class StepManager {
     /**
      * @return the step manager for the step following this one
      */
-    public abstract StepManager nextStep();
+    public final StepManager nextStep() {
+        return nextStep;
+    }
 
-    protected void showErrorToast(Context context, int stringResourceId) {
+    protected final void showErrorToast(Context context, int stringResourceId) {
         Toast toast = Toast.makeText(context, context.getResources().getString(stringResourceId), Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();

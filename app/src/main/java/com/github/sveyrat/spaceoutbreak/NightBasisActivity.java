@@ -62,7 +62,7 @@ public class NightBasisActivity extends AppCompatActivity {
         players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
         adapter.notifyDataSetChanged();
 
-        Integer nbMutants = RepositoryManager.getInstance().nightActionRepository().countMutantsForComputerScientist();
+        Integer nbMutants = RepositoryManager.getInstance().gameInformationRepository().countMutantsInCurrentGame();
         mutantCounter.setText(nbMutants.toString());
 
         TextView headerTextView = (TextView) findViewById(R.id.night_basis_step_tv);
