@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="36sp">
+        android:layout_height="54sp">
 
         <TextView
             android:id="@+id/night_basis_step_tv"
@@ -21,16 +21,16 @@
             android:layout_height="match_parent"
             android:background="@drawable/general_border"
             android:gravity="center_vertical"
-            android:text="BASE"
+            android:text=""
             android:alpha="0.9"
             android:paddingLeft="6sp"
             android:layout_marginRight="6sp"/>
 
         <TextView
-            android:layout_width="36sp"
-            android:layout_height="match_parent"
-            android:background="@drawable/circle_mutant_counter"
+            android:layout_width="54sp"
+            android:layout_height="54sp"
             android:gravity="center"
+            android:background="@drawable/circle_mutant_counter"
             android:id="@+id/mutant_counter"
             android:text="0"
             android:textAppearance="@android:style/TextAppearance.Holo.Large"

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.display.PlayerAdapter;
 import com.github.sveyrat.spaceoutbreak.display.nightaction.MutantsMutateOrKillStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.StepManager;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class NightBasisActivity extends AppCompatActivity {
     private List<Player> players;
     private TextView mutantCounter;
 
-    private MutantsMutateOrKillStepManager stepManager = new MutantsMutateOrKillStepManager();
+    private StepManager stepManager = new MutantsMutateOrKillStepManager();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,14 +52,20 @@ public class NightBasisActivity extends AppCompatActivity {
     }
 
     public void confirm(View view) {
-        // TODO call step manager
-        // TODO go to the next step
+        if (stepManager.validateStep(this)) {
+            stepManager = stepManager.nextStep();
+            updateView();
+        }
     }
 
     private void updateView() {
         players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
         adapter.notifyDataSetChanged();
+
         Integer nbMutants = RepositoryManager.getInstance().nightActionRepository().countMutantsForComputerScientist();
         mutantCounter.setText(nbMutants.toString());
+
+        TextView headerTextView = (TextView) findViewById(R.id.night_basis_step_tv);
+        headerTextView.setText(stepManager.headerText(this));
     }
 }
