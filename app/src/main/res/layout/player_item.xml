@@ -21,6 +21,16 @@
         android:layout_gravity="center_vertical"
         android:layout_width="24sp"
         android:layout_height="24sp"
-        android:id="@+id/picto_player"/>
+        android:visibility="gone"
+        android:src="@mipmap/selected"
+        android:id="@+id/selected_image"/>
+
+    <ImageView
+        android:layout_gravity="center_vertical"
+        android:layout_width="24sp"
+        android:layout_height="24sp"
+        android:paddingRight="2sp"
+        android:paddingLeft="2sp"
+        android:id="@+id/player_role_picto"/>
 
 </LinearLayout>

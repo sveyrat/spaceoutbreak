@@ -123,4 +123,24 @@ public class Player {
     public void setInfected(boolean infected) {
         this.infected = infected;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Player)) {
+            return false;
+        }
+        Player that = (Player) obj;
+        if (this.id == null || that.id == null) {
+            return false;
+        }
+        return this.id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        if (this.id == null) {
+            return 0;
+        }
+        return this.id.hashCode();
+    }
 }
