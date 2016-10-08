@@ -32,4 +32,6 @@
 
     <string name="night_basis.name">Tour de nuit</string>
 
+    <string name="vote_activity.name">Vote</string>
+
 </resources>

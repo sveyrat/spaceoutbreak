@@ -26,6 +26,9 @@
 
         <activity android:name=".NightBasisActivity"
             android:label="@string/night_basis.name"></activity>
+
+        <activity android:name=".VoteActivity"
+            android:label="@string/vote_activity.name"></activity>
     </application>
 
 </manifest>

@@ -21,12 +21,12 @@ import java.util.List;
  * Created by Rom on 02/10/2016.
  */
 
-public class PlayerAdapter extends BaseAdapter {
+public class PlayerNightAdapter extends BaseAdapter {
 
     private final Context context;
     private final List<Player> players;
 
-    public PlayerAdapter(Context context, List<Player> players) {
+    public PlayerNightAdapter(Context context, List<Player> players) {
         super();
         this.context = context;
         this.players = players;
