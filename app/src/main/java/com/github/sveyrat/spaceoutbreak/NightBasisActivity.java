@@ -6,9 +6,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.display.PlayerNightAdapter;
+
 import android.widget.ImageView;
+
 import com.github.sveyrat.spaceoutbreak.display.nightaction.MutantsMutateOrKillStepManager;
 import com.github.sveyrat.spaceoutbreak.display.nightaction.StepManager;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
@@ -21,7 +24,6 @@ import java.util.List;
 public class NightBasisActivity extends AppCompatActivity {
 
     private PlayerNightAdapter adapter;
-    private List<Player> players;
     private TextView headerTextView;
     private TextView mutantCounter;
     private TextView afterStepTextView;
@@ -33,14 +35,14 @@ public class NightBasisActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         RepositoryManager.init(this);
-        players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
         setContentView(R.layout.activity_night_basis);
 
         headerTextView = (TextView) findViewById(R.id.night_basis_step_tv);
         mutantCounter = (TextView) findViewById(R.id.mutant_counter);
         afterStepTextView = (TextView) findViewById(R.id.after_step_text);
 
-        adapter = new PlayerNightAdapter(this,players);
+        List<Player> alivePlayers = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
+        adapter = new PlayerNightAdapter(this, alivePlayers);
         playerGrid = (GridView) findViewById(R.id.night_basis_list_players);
         playerGrid.setAdapter(adapter);
         updateView();
@@ -77,7 +79,8 @@ public class NightBasisActivity extends AppCompatActivity {
         afterStepTextView.setVisibility(View.GONE);
         playerGrid.setVisibility(View.VISIBLE);
 
-        players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
+        List<Player> alivePlayers = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
+        adapter.setPlayers(alivePlayers);
         adapter.notifyDataSetChanged();
 
         Integer nbMutants = RepositoryManager.getInstance().gameInformationRepository().countMutantsInCurrentGame();

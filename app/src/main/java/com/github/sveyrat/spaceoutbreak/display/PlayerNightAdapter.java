@@ -24,7 +24,7 @@ import java.util.List;
 public class PlayerNightAdapter extends BaseAdapter {
 
     private final Context context;
-    private final List<Player> players;
+    private List<Player> players;
 
     public PlayerNightAdapter(Context context, List<Player> players) {
         super();
@@ -96,5 +96,9 @@ public class PlayerNightAdapter extends BaseAdapter {
         }
 
         return playerView;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 }
