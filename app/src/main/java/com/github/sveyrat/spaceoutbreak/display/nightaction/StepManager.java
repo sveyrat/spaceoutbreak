@@ -11,11 +11,9 @@ import com.github.sveyrat.spaceoutbreak.domain.Player;
 public abstract class StepManager {
 
     private int headerTextStringResourceId;
-    private StepManager nextStep;
 
-    public StepManager(int headerTextStringResourceId, StepManager nextStep) {
+    public StepManager(int headerTextStringResourceId) {
         this.headerTextStringResourceId = headerTextStringResourceId;
-        this.nextStep = nextStep;
     }
 
     /**
@@ -46,13 +44,20 @@ public abstract class StepManager {
     /**
      * @return the step manager for the step following this one
      */
-    public final StepManager nextStep() {
-        return nextStep;
-    }
+    public abstract StepManager nextStep();
 
     protected final void showErrorToast(Context context, int stringResourceId) {
         Toast toast = Toast.makeText(context, context.getResources().getString(stringResourceId), Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+    }
+
+    /**
+     * Indications for the user on what to do next, like notify players that are concerned with the step actions.
+     *
+     * @return a text that is to be displayed on the view after the step is complete.
+     */
+    public String afterStepText(Context context) {
+        return null;
     }
 }

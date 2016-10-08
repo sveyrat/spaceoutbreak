@@ -40,7 +40,19 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/after_step_text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/general_border"
+        android:alpha="0.9"
+        android:gravity="center"
+        android:layout_margin="6sp"
+        />
+
     <GridView
+        android:id="@+id/night_basis_list_players"
         android:layout_margin="6sp"
         android:layout_width="match_parent"
         android:background="@drawable/general_border"
@@ -49,7 +61,6 @@
         android:numColumns="2"
         android:horizontalSpacing="3sp"
         android:verticalSpacing="3sp"
-        android:id="@+id/night_basis_list_players"
         android:alpha="0.9"
         android:padding="6sp">
 

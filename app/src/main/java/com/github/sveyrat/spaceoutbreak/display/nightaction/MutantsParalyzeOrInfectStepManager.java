@@ -20,9 +20,17 @@ public class MutantsParalyzeOrInfectStepManager extends StepManager {
     private List<Player> paralyzedPlayers = new ArrayList<>();
     private List<Player> infectedPlayers = new ArrayList<>();
 
-    public MutantsParalyzeOrInfectStepManager() {
-        // TODO chain next step
-        super(R.string.night_basis_step_paralyse_headerText, null);
+    /*
+     * Those come from the previous step and are required to display the after step text
+     * (who to mutate or kill)
+     */
+    private Player mutedPlayer;
+    private Player killedPlayer;
+
+    public MutantsParalyzeOrInfectStepManager(Player mutedPlayer, Player killedPlayer) {
+        super(R.string.night_basis_step_paralyse_headerText);
+        this.mutedPlayer = mutedPlayer;
+        this.killedPlayer = killedPlayer;
     }
 
     @Override
@@ -72,5 +80,34 @@ public class MutantsParalyzeOrInfectStepManager extends StepManager {
         }
         nightActionRepository.paralyze(paralyzedPlayers.get(0));
         return true;
+    }
+
+    @Override
+    public StepManager nextStep() {
+        // TODO chain next step here
+        return null;
+    }
+
+    @Override
+    public String afterStepText(Context context) {
+        String instructions = "";
+        if (mutedPlayer != null) {
+            if (mutedPlayer.resistant()) {
+                instructions += context.getResources().getString(R.string.night_basis_action_mutate_resistant) + " " + mutedPlayer.getName();
+            } else {
+                instructions += context.getResources().getString(R.string.night_basis_action_mutate) + " " + mutedPlayer.getName();
+            }
+        } else {
+            instructions += context.getResources().getString(R.string.night_basis_action_kill) + " " + killedPlayer.getName();
+        }
+        instructions += "\n\n";
+        Player paralyzedPlayer = paralyzedPlayers.size() > 0 ? paralyzedPlayers.get(0) : null;
+        Player infectedPlayer = infectedPlayers.size() > 0 ? infectedPlayers.get(0) : null;
+        if (paralyzedPlayer != null) {
+            instructions += context.getResources().getString(R.string.night_basis_action_paralyse) + " " + paralyzedPlayer.getName();
+        }else {
+            instructions += context.getResources().getString(R.string.night_basis_action_infect) + " " + infectedPlayer.getName();
+        }
+        return instructions;
     }
 }

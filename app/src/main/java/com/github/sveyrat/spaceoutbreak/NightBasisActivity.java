@@ -1,4 +1,5 @@
 package com.github.sveyrat.spaceoutbreak;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,9 +19,13 @@ import java.util.List;
  * Created by Rom on 22/09/2016.
  */
 public class NightBasisActivity extends AppCompatActivity {
+
     private PlayerNightAdapter adapter;
     private List<Player> players;
+    private TextView headerTextView;
     private TextView mutantCounter;
+    private TextView afterStepTextView;
+    private GridView playerGrid;
 
     private StepManager stepManager = new MutantsMutateOrKillStepManager();
 
@@ -30,16 +35,17 @@ public class NightBasisActivity extends AppCompatActivity {
         RepositoryManager.init(this);
         players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
         setContentView(R.layout.activity_night_basis);
-        mutantCounter = (TextView) findViewById(R.id.mutant_counter);
 
+        headerTextView = (TextView) findViewById(R.id.night_basis_step_tv);
+        mutantCounter = (TextView) findViewById(R.id.mutant_counter);
+        afterStepTextView = (TextView) findViewById(R.id.after_step_text);
 
         adapter = new PlayerNightAdapter(this,players);
-
-        GridView gridView = (GridView) findViewById(R.id.night_basis_list_players);
-        gridView.setAdapter(adapter);
+        playerGrid = (GridView) findViewById(R.id.night_basis_list_players);
+        playerGrid.setAdapter(adapter);
         updateView();
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        playerGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Player player = adapter.getItem(position);
                 ImageView selectedImageView = (ImageView) v.findViewById(R.id.selected_image);
@@ -50,20 +56,33 @@ public class NightBasisActivity extends AppCompatActivity {
 
 
     public void confirm(View view) {
-        if (stepManager.validateStep(this)) {
-            stepManager = stepManager.nextStep();
-            updateView();
+        String afterStepText = stepManager.afterStepText(this);
+        if (View.GONE == afterStepTextView.getVisibility() && afterStepText != null) {
+            headerTextView.setText(getResources().getString(R.string.night_basis_gameMasterAction_headerText));
+            afterStepTextView.setText(afterStepText);
+            afterStepTextView.setVisibility(View.VISIBLE);
+            playerGrid.setVisibility(View.GONE);
+            return;
         }
+        boolean validationResult = stepManager.validateStep(this);
+        if (!validationResult) {
+            return;
+        }
+        stepManager = stepManager.nextStep();
+        updateView();
     }
 
     private void updateView() {
+        afterStepTextView.setText("");
+        afterStepTextView.setVisibility(View.GONE);
+        playerGrid.setVisibility(View.VISIBLE);
+
         players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
         adapter.notifyDataSetChanged();
 
         Integer nbMutants = RepositoryManager.getInstance().gameInformationRepository().countMutantsInCurrentGame();
         mutantCounter.setText(nbMutants.toString());
 
-        TextView headerTextView = (TextView) findViewById(R.id.night_basis_step_tv);
         headerTextView.setText(stepManager.headerText(this));
     }
 }
