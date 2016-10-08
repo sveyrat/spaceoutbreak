@@ -24,6 +24,22 @@ public class GameInformationRepository extends AbstractRepository {
     }
 
     /**
+     * Counts the total number of mutant players in the current game.
+     *
+     * @return the number of mutant players in the current game
+     */
+    public int countMutantsInCurrentGame() {
+        Game currentGame = currentGame();
+        int numberOfMutants = 0;
+        for (Player player : currentGame.getPlayers()) {
+            if (player.isMutant() && player.isAlive()) {
+                numberOfMutants++;
+            }
+        }
+        return numberOfMutants;
+    }
+
+    /**
      * Loads all the players that are still alive.
      *
      * @return a list of all alive players in the current game

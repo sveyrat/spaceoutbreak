@@ -51,45 +51,47 @@ public class PlayerNightAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Player player = players.get(position);
         View playerView = convertView;
-        if(playerView==null) {
+        if (playerView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             playerView = inflater.inflate(R.layout.player_item, parent, false);
         }
         TextView playerName = (TextView) playerView.findViewById(R.id.name_player_tv);
-        ImageView picto = (ImageView) playerView.findViewById(R.id.picto_player);
         playerName.setText(player.getName());
 
+        ImageView selectedIndicatorImageView = (ImageView) playerView.findViewById(R.id.selected_image);
+        selectedIndicatorImageView.setVisibility(View.GONE);
+
+        ImageView playerRolePicto = (ImageView) playerView.findViewById(R.id.player_role_picto);
         switch (player.getRole()) {
             case BASE_MUTANT:
-                picto.setImageResource(R.mipmap.base_mutant);
+                playerRolePicto.setImageResource(R.mipmap.base_mutant);
                 break;
             case DOCTOR:
-                picto.setImageResource(R.mipmap.doctor);
+                playerRolePicto.setImageResource(R.mipmap.doctor);
                 break;
             case GENETICIST:
-                picto.setImageResource(R.mipmap.geneticist);
+                playerRolePicto.setImageResource(R.mipmap.geneticist);
                 break;
             case PSYCHOLOGIST:
-                picto.setImageResource(R.mipmap.psychologist);
+                playerRolePicto.setImageResource(R.mipmap.psychologist);
                 break;
             case COMPUTER_SCIENTIST:
-                picto.setImageResource(R.mipmap.computer_scientist);
+                playerRolePicto.setImageResource(R.mipmap.computer_scientist);
                 break;
             case HACKER:
-                picto.setImageResource(R.mipmap.hacker);
+                playerRolePicto.setImageResource(R.mipmap.hacker);
                 break;
             case SPY:
-                picto.setImageResource(R.mipmap.spy);
+                playerRolePicto.setImageResource(R.mipmap.spy);
                 break;
             case FANATIC:
-                picto.setImageResource(R.mipmap.fanatic);
+                playerRolePicto.setImageResource(R.mipmap.fanatic);
                 break;
         }
 
-        // TODO Dynamically change background color for mutant (but keeping borders !)
-        if(player.isMutant()){
+        if (player.isMutant()) {
             playerView.setBackground(ContextCompat.getDrawable(context, R.drawable.mutant_small_border));
-        }else{
+        } else {
             playerView.setBackground(ContextCompat.getDrawable(context, R.drawable.small_border));
         }
 

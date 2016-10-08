@@ -1,24 +1,11 @@
 <resources>
     <string name="app_name">Space Outbreak</string>
+
     <string name="common.validate">Valider</string>
     <string name="common.return">Retour</string>
-    <string name="home.welcome"></string>
-    <string name="home.new_game">Nouvelle partie</string>
-    <string name="new_game_player_input.add">Ajouter</string>
-    <string name="home.name">Accueil</string>
-    <string name="new_game_player_input.name">Ajouter des joueurs</string>
-    <string name="new_game_player_input.same_player_error">Joueur déjà ajouté</string>
-    <string name="new_game_player_input.not_enough_players_error">Pas assez de joueurs !</string>
-    <string name="new_game_player_input.delete_message">Supprimer %1$s ?</string>
-    <string name="new_game_player_input.yes">Oui</string>
-    <string name="new_game_player_input.no">Non</string>
-    <string name="new_game_settings.name">Paramètrage de la partie</string>
-    <string name="new_game_settings.role_choice_box">Choix des rôles</string>
-    <string name="new_game_settings.various_box">Divers</string>
-    <string name="new_game_settings.is_genotype">Jouer avec les génotypes ?</string>
-    <string name="new_game_settings.randomize_game">Tirer les rôles aléatoirement ?</string>
-    <string name="new_game_settings.too_many_roles">Trop de rôles additionnels !</string>
+    <string name="common.player_name">Joueur %1$s</string>
 
+    <!-- PLAYER ROLES LABELS -->
     <string name="role_astronaut.name">Astronaute</string>
     <string name="role_doctor.name">Médecin</string>
     <string name="role_base_mutant.name">Infecté 0</string>
@@ -29,8 +16,38 @@
     <string name="role_hacker.name">Hacker</string>
     <string name="role_fanatic.name">Fanatique</string>
 
+    <!-- HOME VIEW -->
+    <string name="home.welcome"></string>
+    <string name="home.new_game">Nouvelle partie</string>
+    <string name="new_game_player_input.add">Ajouter</string>
+    <string name="home.name">Accueil</string>
 
+    <!-- NEW GAME INPUT PLAYERS VIEW -->
+    <string name="new_game_player_input.name">Ajouter des joueurs</string>
+    <string name="new_game_player_input.same_player_error">Joueur déjà ajouté</string>
+    <string name="new_game_player_input.not_enough_players_error">Pas assez de joueurs !</string>
+    <string name="new_game_player_input.delete_message">Supprimer %1$s ?</string>
+    <string name="new_game_player_input.yes">Oui</string>
+    <string name="new_game_player_input.no">Non</string>
+
+    <!-- NEW GAME SETTINGS VIEW -->
+    <string name="new_game_settings.name">Paramètrage de la partie</string>
+    <string name="new_game_settings.role_choice_box">Choix des rôles</string>
+    <string name="new_game_settings.various_box">Divers</string>
+    <string name="new_game_settings.is_genotype">Jouer avec les génotypes ?</string>
+    <string name="new_game_settings.randomize_game">Tirer les rôles aléatoirement ?</string>
+    <string name="new_game_settings.too_many_roles">Trop de rôles additionnels !</string>
+
+    <!-- NIGHT ACTIONS VIEW -->
     <string name="night_basis.name">Tour de nuit</string>
+    <string name="night_basis.common.error.selectAtLeastOne">Veuillez sélectionner au moins un joueur</string>
+    <string name="night_basis.common.error.selectAtMostOne">Veuillez sélectionner au maximumun un joueur</string>
+    <string name="night_basis.step.mutate.headerText">Sélectionner un joueur à muter ou un joueur à tuer :</string>
+    <string name="night_basis.step.paralyse.headerText">Sélectionner un joueur à paralyser ou un joueur à infecter :</string>
+    <string name="night_basis.action.mutate">Muter</string>
+    <string name="night_basis.action.kill">Tuer</string>
+    <string name="night_basis.action.paralyse">Paralyser</string>
+    <string name="night_basis.action.infect">Infecter</string>
 
     <string name="vote_activity.name">Vote</string>
 

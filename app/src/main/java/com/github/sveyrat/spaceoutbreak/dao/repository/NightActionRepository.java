@@ -3,6 +3,7 @@ package com.github.sveyrat.spaceoutbreak.dao.repository;
 import android.util.Log;
 
 import com.github.sveyrat.spaceoutbreak.dao.DatabaseOpenHelper;
+import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.dto.SpyInspectionResult;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
@@ -69,6 +70,8 @@ public class NightActionRepository extends AbstractRepository {
             Round round = currentRound();
             NightAction nightAction = new NightAction(round, Role.BASE_MUTANT, NightActionType.MUTATE, player);
             nightActionDao().create(nightAction);
+
+            Log.i(NightActionRepository.class.getName(), "Mutated " + player.getName());
         } catch (SQLException e) {
             String message = "Error while attempting to mutate player " + player.getName() + " with id " + player.getId();
             Log.e(NightActionRepository.class.getName(), message);
@@ -99,6 +102,8 @@ public class NightActionRepository extends AbstractRepository {
             Round round = currentRound();
             NightAction nightAction = new NightAction(round, killerRole, NightActionType.KILL, player);
             nightActionDao().create(nightAction);
+
+            Log.i(NightActionRepository.class.getName(), "Killed " + player.getName());
         } catch (SQLException e) {
             String message = "Error while attempting to kill player " + player.getName() + " with id " + player.getId();
             Log.e(NightActionRepository.class.getName(), message);
@@ -124,6 +129,8 @@ public class NightActionRepository extends AbstractRepository {
             Round round = currentRound();
             NightAction nightAction = new NightAction(round, Role.BASE_MUTANT, NightActionType.PARALYSE, player);
             nightActionDao().create(nightAction);
+
+            Log.i(NightActionRepository.class.getName(), "Paralyzed " + player.getName());
         } catch (SQLException e) {
             String message = "Error while attempting to paralyse player " + player.getName() + " with id " + player.getId();
             Log.e(NightActionRepository.class.getName(), message);
@@ -149,6 +156,8 @@ public class NightActionRepository extends AbstractRepository {
             Round round = currentRound();
             NightAction nightAction = new NightAction(round, Role.BASE_MUTANT, NightActionType.INFECT, player);
             nightActionDao().create(nightAction);
+
+            Log.i(NightActionRepository.class.getName(), "Infected " + player.getName());
         } catch (SQLException e) {
             String message = "Error while attempting to paralyse player " + player.getName() + " with id " + player.getId();
             Log.e(NightActionRepository.class.getName(), message);
@@ -176,6 +185,8 @@ public class NightActionRepository extends AbstractRepository {
             Round round = currentRound();
             NightAction nightAction = new NightAction(round, Role.DOCTOR, NightActionType.HEAL, player);
             nightActionDao().create(nightAction);
+
+            Log.i(NightActionRepository.class.getName(), "Healed " + player.getName());
         } catch (SQLException e) {
             String message = "Error while attempting to heal player " + player.getName() + " with id " + player.getId();
             Log.e(NightActionRepository.class.getName(), message);
@@ -191,23 +202,14 @@ public class NightActionRepository extends AbstractRepository {
             Round round = currentRound();
             NightAction nightAction = new NightAction(round, Role.COMPUTER_SCIENTIST, NightActionType.INSPECT, null);
             nightActionDao().create(nightAction);
+
+            Log.i(NightActionRepository.class.getName(), "Computer scientist got the mutants count");
         } catch (SQLException e) {
             String message = "Error while attempting to save computer scientist count mutants action";
             Log.e(NightActionRepository.class.getName(), message);
             throw new RuntimeException(message, e);
         }
-        return countMutantsInCurrentGame();
-    }
-
-    private int countMutantsInCurrentGame() {
-        Game currentGame = currentGame();
-        int numberOfMutants = 0;
-        for (Player player : currentGame.getPlayers()) {
-            if (player.isMutant() && player.isAlive()) {
-                numberOfMutants++;
-            }
-        }
-        return numberOfMutants;
+        return RepositoryManager.getInstance().gameInformationRepository().countMutantsInCurrentGame();
     }
 
     /**
@@ -223,6 +225,8 @@ public class NightActionRepository extends AbstractRepository {
             Round round = currentRound();
             NightAction nightAction = new NightAction(round, Role.PSYCHOLOGIST, NightActionType.INSPECT, player);
             nightActionDao().create(nightAction);
+
+            Log.i(NightActionRepository.class.getName(), "Player " + player.getName() + " has been inspected by the psychologist");
 
             return player.isMutant();
         } catch (SQLException e) {
@@ -245,6 +249,8 @@ public class NightActionRepository extends AbstractRepository {
             Round round = currentRound();
             NightAction nightAction = new NightAction(round, Role.GENETICIST, NightActionType.INSPECT, player);
             nightActionDao().create(nightAction);
+
+            Log.i(NightActionRepository.class.getName(), "Player " + player.getName() + " has been inspected by the geneticist");
 
             return player.getGenome();
         } catch (SQLException e) {
@@ -270,6 +276,9 @@ public class NightActionRepository extends AbstractRepository {
                     .where().eq("target_player_id", player.getId())//
                     .and().eq("round_id", currentRound.getId())//
                     .query();
+
+            Log.i(NightActionRepository.class.getName(), "Player " + player.getName() + " has been spied on");
+
             return new SpyInspectionResult(actions);
         } catch (SQLException e) {
             String message = "Error while attempting to inspect actions targeted at player with id " + player.getId();
@@ -289,12 +298,14 @@ public class NightActionRepository extends AbstractRepository {
             NightAction nightAction = new NightAction(round, Role.HACKER, NightActionType.INSPECT, null);
             nightAction.setHackedRole(Role.COMPUTER_SCIENTIST);
             nightActionDao().create(nightAction);
+
+            Log.i(NightActionRepository.class.getName(), "Computer scientist has been hacked");
         } catch (SQLException e) {
             String message = "Error while attempting to hack computer scientist";
             Log.e(NightActionRepository.class.getName(), message);
             throw new RuntimeException(message, e);
         }
-        return countMutantsInCurrentGame();
+        return RepositoryManager.getInstance().gameInformationRepository().countMutantsInCurrentGame();
     }
 
     /**
@@ -322,6 +333,8 @@ public class NightActionRepository extends AbstractRepository {
             NightAction nightAction = new NightAction(currentRound, Role.HACKER, NightActionType.INSPECT, null);
             nightAction.setHackedRole(role);
             nightActionDao().create(nightAction);
+
+            Log.i(NightActionRepository.class.getName(), role.toString() + " has been hacked");
 
             return hackedRoleNightAction == null ? null : hackedRoleNightAction.getTargetPlayer();
         } catch (SQLException e) {
