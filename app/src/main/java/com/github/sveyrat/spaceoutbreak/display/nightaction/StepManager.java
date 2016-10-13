@@ -2,15 +2,21 @@ package com.github.sveyrat.spaceoutbreak.display.nightaction;
 
 import android.content.Context;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class StepManager {
 
     private int headerTextStringResourceId;
+
+    protected List<Player> selectedPlayers = new ArrayList<>();
 
     public StepManager(int headerTextStringResourceId) {
         this.headerTextStringResourceId = headerTextStringResourceId;
@@ -31,7 +37,16 @@ public abstract class StepManager {
      * @param selectedImageView the selected indicator image view
      * @param player the player clicked
      */
-    public abstract void select(Context context, final ImageView selectedImageView, final Player player);
+    public void select(Context context, final ImageView selectedImageView, final Player player) {
+        boolean playerSelected = (View.VISIBLE == selectedImageView.getVisibility());
+        if (playerSelected) {
+            selectedPlayers.remove(player);
+            selectedImageView.setVisibility(View.GONE);
+            return;
+        }
+        selectedPlayers.add(player);
+        selectedImageView.setVisibility(View.VISIBLE);
+    }
 
     /**
      * Executes the actions required by the step, only if the view state is valid.

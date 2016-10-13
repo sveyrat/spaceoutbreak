@@ -16,6 +16,12 @@
     <string name="role_hacker.name">Hacker</string>
     <string name="role_fanatic.name">Fanatique</string>
 
+    <!-- GENOMES LABELS -->
+    <string name="common.genome.resistant">résistant</string>
+    <string name="common.genome.host">hôte</string>
+    <string name="common.genome.normal">normal</string>
+
+
     <!-- HOME VIEW -->
     <string name="home.welcome"></string>
     <string name="home.new_game">Nouvelle partie</string>
@@ -49,6 +55,7 @@
     <string name="night_basis.step.paralyse.headerText">Sélectionner un joueur à paralyser ou un joueur à infecter :</string>
     <string name="night_basis.step.healOrKill.headerText">Sélectionner deux joueurs à soigner ou un joueur à tuer :</string>
     <string name="night_basis.step.psychologist.headerText">Sélectionner un joueur à inspecter par le psychologue :</string>
+    <string name="night_basis.step.geneticist.headerText">Sélectionner un joueur à inspecter par le généticien :</string>
     <string name="night_basis.action.mutate">Muter</string>
     <string name="night_basis.action.mutate.resistant">Muter (en signalant la résistance)</string>
     <string name="night_basis.action.kill">Tuer</string>
@@ -60,6 +67,7 @@
     <string name="night_basis.information.playerStatus">Le joueur %1$s est %2$s</string>
     <string name="night_basis.information.playerStatus.mutant">mutant</string>
     <string name="night_basis.information.playerStatus.sane">sain</string>
+    <string name="night_basis.information.genomeStatus">Le génome du joueur %1$s est %2$s</string>
 
 
     <string name="vote_activity.name">Vote</string>
