@@ -60,6 +60,7 @@ public class DoctorsHealOrKillStepManager extends StepManager {
         }
         if (killedPlayers.size() > 0 && healedPlayers.size() > 0 //
                 || (killedPlayers.size() != 0 && killedPlayers.size() != 1) //
+                // TODO this actually depends on the number of doctors alive
                 || (healedPlayers.size() != 0 && healedPlayers.size() != 2)) {
             showErrorToast(context, R.string.night_basis_doctors_error_healTowOrKillOne);
             return false;
@@ -77,7 +78,7 @@ public class DoctorsHealOrKillStepManager extends StepManager {
 
     @Override
     public StepManager nextStep() {
-        return null;
+        return new ComputerScientistStepManager();
     }
 
     @Override

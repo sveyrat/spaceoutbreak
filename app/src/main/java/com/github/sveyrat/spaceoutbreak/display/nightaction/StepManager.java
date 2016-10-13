@@ -60,4 +60,13 @@ public abstract class StepManager {
     public String afterStepText(Context context) {
         return null;
     }
+
+    /**
+     * Whether the step requires to select players from the grid. This is usefull for the computer scientist step for instance, where no player is inspected.
+     * The activity then switches directly to the text view.
+     * @return true if the step does not require a player selection, false otherwise
+     */
+    public boolean autoValidate() {
+        return false;
+    }
 }

@@ -67,15 +67,22 @@ public class NightBasisActivity extends AppCompatActivity {
 
         String afterStepText = stepManager.afterStepText(this);
         if (View.GONE == afterStepTextView.getVisibility() && afterStepText != null) {
-            headerTextView.setText(getResources().getString(R.string.night_basis_gameMasterAction_headerText));
-            afterStepTextView.setText(afterStepText);
-            afterStepTextView.setVisibility(View.VISIBLE);
-            playerGrid.setVisibility(View.GONE);
+            showAfterStepText(afterStepText);
             return;
         } else {
             stepManager = stepManager.nextStep();
             updateView();
+            if (stepManager.autoValidate()) {
+                showAfterStepText(stepManager.afterStepText(this));
+            }
         }
+    }
+
+    private void showAfterStepText(String afterStepText) {
+        headerTextView.setText(getResources().getString(R.string.night_basis_gameMasterAction_headerText));
+        afterStepTextView.setText(afterStepText);
+        afterStepTextView.setVisibility(View.VISIBLE);
+        playerGrid.setVisibility(View.GONE);
     }
 
     private void updateView() {
