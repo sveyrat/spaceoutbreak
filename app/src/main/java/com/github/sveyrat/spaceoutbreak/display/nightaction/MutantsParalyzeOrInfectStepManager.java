@@ -35,7 +35,7 @@ public class MutantsParalyzeOrInfectStepManager extends StepManager {
 
     @Override
     public void select(Context context, final ImageView selectedImageView, final Player player) {
-        final boolean playerSelected = (View.VISIBLE == selectedImageView.getVisibility());
+        boolean playerSelected = (View.VISIBLE == selectedImageView.getVisibility());
         if (playerSelected) {
             paralyzedPlayers.remove(player);
             infectedPlayers.remove(player);
@@ -84,8 +84,7 @@ public class MutantsParalyzeOrInfectStepManager extends StepManager {
 
     @Override
     public StepManager nextStep() {
-        // TODO chain next step here
-        return null;
+        return new DoctorsHealOrKillStepManager();
     }
 
     @Override
@@ -105,7 +104,7 @@ public class MutantsParalyzeOrInfectStepManager extends StepManager {
         Player infectedPlayer = infectedPlayers.size() > 0 ? infectedPlayers.get(0) : null;
         if (paralyzedPlayer != null) {
             instructions += context.getResources().getString(R.string.night_basis_action_paralyse) + " " + paralyzedPlayer.getName();
-        }else {
+        } else {
             instructions += context.getResources().getString(R.string.night_basis_action_infect) + " " + infectedPlayer.getName();
         }
         return instructions;

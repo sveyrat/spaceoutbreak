@@ -15,20 +15,20 @@ import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MutantsMutateOrKillStepManager extends StepManager {
+public class DoctorsHealOrKillStepManager extends StepManager {
 
-    private List<Player> mutedPlayers = new ArrayList<>();
+    private List<Player> healedPlayers = new ArrayList<>();
     private List<Player> killedPlayers = new ArrayList<>();
 
-    public MutantsMutateOrKillStepManager() {
-        super(R.string.night_basis_step_mutate_headerText);
+    public DoctorsHealOrKillStepManager() {
+        super(R.string.night_basis_step_healOrKill_headerText);
     }
 
     @Override
     public void select(Context context, final ImageView selectedImageView, final Player player) {
         boolean playerSelected = (View.VISIBLE == selectedImageView.getVisibility());
         if (playerSelected) {
-            mutedPlayers.remove(player);
+            healedPlayers.remove(player);
             killedPlayers.remove(player);
             selectedImageView.setVisibility(View.GONE);
             return;
@@ -37,15 +37,15 @@ public class MutantsMutateOrKillStepManager extends StepManager {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         String alertMessage = String.format(context.getResources().getString(R.string.common_player_name), player.getName());
         alertDialogBuilder.setMessage(alertMessage);
-        alertDialogBuilder.setNegativeButton(context.getResources().getString(R.string.night_basis_action_mutate), new AlertDialog.OnClickListener() {
+        alertDialogBuilder.setNegativeButton(context.getResources().getString(R.string.night_basis_action_kill), new AlertDialog.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                mutedPlayers.add(player);
+                killedPlayers.add(player);
                 selectedImageView.setVisibility(View.VISIBLE);
             }
         });
-        alertDialogBuilder.setPositiveButton(context.getResources().getString(R.string.night_basis_action_kill), new AlertDialog.OnClickListener() {
+        alertDialogBuilder.setPositiveButton(context.getResources().getString(R.string.night_basis_action_heal), new AlertDialog.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                killedPlayers.add(player);
+                healedPlayers.add(player);
                 selectedImageView.setVisibility(View.VISIBLE);
             }
         });
@@ -54,29 +54,47 @@ public class MutantsMutateOrKillStepManager extends StepManager {
 
     @Override
     public boolean validateStep(Context context) {
-        int numberOfSelectedPlayers = killedPlayers.size() + mutedPlayers.size();
-        if (numberOfSelectedPlayers == 0) {
+        if (healedPlayers.size() == 0 && killedPlayers.size() == 0) {
             showErrorToast(context, R.string.night_basis_common_error_selectAtLeastOne);
             return false;
         }
-        if (numberOfSelectedPlayers > 1) {
-            showErrorToast(context, R.string.night_basis_common_error_selectAtMostOne);
+        if (killedPlayers.size() > 0 && healedPlayers.size() > 0 //
+                || (killedPlayers.size() != 0 && killedPlayers.size() != 1) //
+                || (healedPlayers.size() != 0 && healedPlayers.size() != 2)) {
+            showErrorToast(context, R.string.night_basis_doctors_error_healTowOrKillOne);
             return false;
         }
 
         NightActionRepository nightActionRepository = RepositoryManager.getInstance().nightActionRepository();
-        if (killedPlayers.size() > 0) {
-            nightActionRepository.kill(killedPlayers.get(0), Role.BASE_MUTANT);
+        if (killedPlayers.size() == 1) {
+            nightActionRepository.kill(killedPlayers.get(0), Role.DOCTOR);
             return true;
         }
-        nightActionRepository.mutate(mutedPlayers.get(0));
+        nightActionRepository.heal(healedPlayers.get(0));
+        nightActionRepository.heal(healedPlayers.get(1));
         return true;
     }
 
     @Override
     public StepManager nextStep() {
-        Player mutedPlayer = mutedPlayers.size() > 0 ? mutedPlayers.get(0) : null;
-        Player killedPlayer = killedPlayers.size() > 0 ? killedPlayers.get(0) : null;
-        return new MutantsParalyzeOrInfectStepManager(mutedPlayer, killedPlayer);
+        return null;
+    }
+
+    @Override
+    public String afterStepText(Context context) {
+        if (killedPlayers.size() == 1) {
+            return context.getResources().getString(R.string.night_basis_action_kill) + " " + killedPlayers.get(0).getName();
+        }
+
+        String instructions = "";
+        for (Player healedPlayer : healedPlayers) {
+            if (healedPlayer.host()) {
+                instructions += context.getResources().getString(R.string.night_basis_action_heal_host) + " " + healedPlayer.getName();
+            } else {
+                instructions += context.getResources().getString(R.string.night_basis_action_heal) + " " + healedPlayer.getName();
+            }
+            instructions += "\n\n";
+        }
+        return instructions;
     }
 }
