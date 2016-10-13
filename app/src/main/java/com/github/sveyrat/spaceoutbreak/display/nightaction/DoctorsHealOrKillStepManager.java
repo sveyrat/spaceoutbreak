@@ -89,7 +89,7 @@ public class DoctorsHealOrKillStepManager extends StepManager {
 
         String instructions = "";
         for (Player healedPlayer : healedPlayers) {
-            if (healedPlayer.host()) {
+            if (healedPlayer.isMutant() && healedPlayer.host()) {
                 instructions += context.getResources().getString(R.string.night_basis_action_heal_host) + " " + healedPlayer.getName();
             } else {
                 instructions += context.getResources().getString(R.string.night_basis_action_heal) + " " + healedPlayer.getName();

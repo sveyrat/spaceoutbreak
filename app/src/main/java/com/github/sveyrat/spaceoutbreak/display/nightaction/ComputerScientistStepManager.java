@@ -29,7 +29,7 @@ public class ComputerScientistStepManager extends StepManager {
 
     @Override
     public StepManager nextStep() {
-        return null;
+        return new PsychologistStepManager();
     }
 
     @Override

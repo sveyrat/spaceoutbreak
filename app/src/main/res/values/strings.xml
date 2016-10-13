@@ -42,12 +42,13 @@
     <string name="night_basis.name">Tour de nuit</string>
     <string name="night_basis.common.error.selectAtLeastOne">Veuillez sélectionner au moins un joueur</string>
     <string name="night_basis.common.error.selectAtMostOne">Veuillez sélectionner au maximumun un joueur</string>
+    <string name="night_basis.common.error.selectExactlyOne">Veuillez sélectionner un et un seul joueur</string>
     <string name="night_basis.doctors.error.healTowOrKillOne">Veuillez soigner 2 joueurs ou en tuer un</string>
-    <string name="night_basis.gameMasterAction.headerText">Joueurs à notifier</string>
+    <string name="night_basis.gameMasterAction.headerText">Action du MJ</string>
     <string name="night_basis.step.mutate.headerText">Sélectionner un joueur à muter ou un joueur à tuer :</string>
     <string name="night_basis.step.paralyse.headerText">Sélectionner un joueur à paralyser ou un joueur à infecter :</string>
     <string name="night_basis.step.healOrKill.headerText">Sélectionner deux joueurs à soigner ou un joueur à tuer :</string>
-    <string name="night_basis.step.computerScientist.headerText">Sélectionner deux joueurs à soigner ou un joueur à tuer :</string>
+    <string name="night_basis.step.psychologist.headerText">Sélectionner un joueur à inspecter par le psychologue :</string>
     <string name="night_basis.action.mutate">Muter</string>
     <string name="night_basis.action.mutate.resistant">Muter (en signalant la résistance)</string>
     <string name="night_basis.action.kill">Tuer</string>
@@ -56,6 +57,10 @@
     <string name="night_basis.action.heal">Soigner</string>
     <string name="night_basis.action.heal.host">Soigner (en signalant l’hôte)</string>
     <string name="night_basis.information.numberOfMutants">Nombre de joueurs mutants :</string>
+    <string name="night_basis.information.playerStatus">Le joueur %1$s est %2$s</string>
+    <string name="night_basis.information.playerStatus.mutant">mutant</string>
+    <string name="night_basis.information.playerStatus.sane">sain</string>
+
 
     <string name="vote_activity.name">Vote</string>
 
