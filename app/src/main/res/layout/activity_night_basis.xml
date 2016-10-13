@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/background"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@mipmap/background"
     tools:context="com.github.sveyrat.spaceoutbreak.NightBasisActivity">
 
     <LinearLayout
@@ -17,26 +18,26 @@
         <TextView
             android:id="@+id/night_basis_step_tv"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_marginRight="6sp"
+            android:layout_weight="1"
+            android:alpha="0.9"
             android:background="@drawable/general_border"
             android:gravity="center_vertical"
-            android:text=""
-            android:alpha="0.9"
             android:paddingLeft="6sp"
-            android:layout_marginRight="6sp"/>
+            android:text="" />
 
         <TextView
+            android:id="@+id/mutant_counter"
             android:layout_width="54sp"
             android:layout_height="54sp"
-            android:gravity="center"
             android:background="@drawable/circle_mutant_counter"
-            android:id="@+id/mutant_counter"
+            android:gravity="center"
             android:text="0"
             android:textAppearance="@android:style/TextAppearance.Holo.Large"
-            android:typeface="serif"
+            android:textColor="@color/colorAccent"
             android:textStyle="normal|bold"
-            android:textColor="@color/colorAccent" />
+            android:typeface="serif" />
 
     </LinearLayout>
 
@@ -44,25 +45,24 @@
         android:id="@+id/after_step_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/general_border"
-        android:alpha="0.9"
-        android:gravity="center"
         android:layout_margin="6sp"
-        />
+        android:layout_weight="1"
+        android:alpha="0.9"
+        android:background="@drawable/general_border"
+        android:gravity="center" />
 
     <GridView
         android:id="@+id/night_basis_list_players"
-        android:layout_margin="6sp"
         android:layout_width="match_parent"
-        android:background="@drawable/general_border"
         android:layout_height="0dp"
+        android:layout_margin="6sp"
         android:layout_weight="1"
-        android:numColumns="2"
-        android:horizontalSpacing="3sp"
-        android:verticalSpacing="3sp"
         android:alpha="0.9"
-        android:padding="6sp">
+        android:background="@drawable/general_border"
+        android:horizontalSpacing="3sp"
+        android:numColumns="2"
+        android:padding="6sp"
+        android:verticalSpacing="3sp">
 
     </GridView>
 
@@ -70,22 +70,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:visibility="gone"
-            android:text="@string/common.return"/>
+        android:orientation="horizontal">
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/common.validate"
-            android:onClick="confirm" />
+            android:onClick="confirm"
+            android:text="@string/common.validate" />
+
     </LinearLayout>
-    
+
 </LinearLayout>

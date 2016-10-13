@@ -273,7 +273,7 @@ public class NightActionRepository extends AbstractRepository {
             nightActionDao().create(nightAction);
 
             List<NightAction> actions = nightActionDao().queryBuilder()//
-                    .where().eq("target_player_id", player.getId())//
+                    .where().eq("targetPlayer_id", player.getId())//
                     .and().eq("round_id", currentRound.getId())//
                     .query();
 

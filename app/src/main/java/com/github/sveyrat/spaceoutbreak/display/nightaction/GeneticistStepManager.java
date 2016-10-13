@@ -30,7 +30,7 @@ public class GeneticistStepManager extends StepManager {
 
     @Override
     public StepManager nextStep() {
-        return null;
+        return new SpyStepManager();
     }
 
     @Override

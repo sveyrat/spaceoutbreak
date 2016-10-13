@@ -4,6 +4,8 @@
     <string name="common.validate">Valider</string>
     <string name="common.return">Retour</string>
     <string name="common.player_name">Joueur %1$s</string>
+    <string name="common.yes">Oui</string>
+    <string name="common.no">Non</string>
 
     <!-- PLAYER ROLES LABELS -->
     <string name="role_astronaut.name">Astronaute</string>
@@ -56,6 +58,7 @@
     <string name="night_basis.step.healOrKill.headerText">Sélectionner deux joueurs à soigner ou un joueur à tuer :</string>
     <string name="night_basis.step.psychologist.headerText">Sélectionner un joueur à inspecter par le psychologue :</string>
     <string name="night_basis.step.geneticist.headerText">Sélectionner un joueur à inspecter par le généticien :</string>
+    <string name="night_basis.step.spy.headerText">Sélectionner un joueur à inspecter par l’espion :</string>
     <string name="night_basis.action.mutate">Muter</string>
     <string name="night_basis.action.mutate.resistant">Muter (en signalant la résistance)</string>
     <string name="night_basis.action.kill">Tuer</string>
@@ -68,6 +71,12 @@
     <string name="night_basis.information.playerStatus.mutant">mutant</string>
     <string name="night_basis.information.playerStatus.sane">sain</string>
     <string name="night_basis.information.genomeStatus">Le génome du joueur %1$s est %2$s</string>
+    <string name="night_basis.information.spy.introduction">Le joueur %1$s a été :</string>
+    <string name="night_basis.information.spy.mutated">Muté :</string>
+    <string name="night_basis.information.spy.paralized">Paralisé :</string>
+    <string name="night_basis.information.spy.healed">Soigné :</string>
+    <string name="night_basis.information.spy.inspectedByPsychologist">Inspecté par le psychologue :</string>
+    <string name="night_basis.information.spy.inspectedByGeneticist">Inspecté par le généticien :</string>
 
 
     <string name="vote_activity.name">Vote</string>
