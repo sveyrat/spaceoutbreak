@@ -10,7 +10,7 @@
     <!-- PLAYER ROLES LABELS -->
     <string name="role_astronaut.name">Astronaute</string>
     <string name="role_doctor.name">Médecin</string>
-    <string name="role_base_mutant.name">Infecté 0</string>
+    <string name="role_base_mutant.name">Mutant 0</string>
     <string name="role_geneticist.name">Généticien</string>
     <string name="role_psychologist.name">Psychologue</string>
     <string name="role_computer_scientist.name">Informaticien</string>
@@ -54,16 +54,15 @@
     <string name="night_basis.doctors.error.healTowOrKillOne">Veuillez soigner 2 joueurs ou en tuer un</string>
     <string name="night_basis.gameMasterAction.headerText">Action du MJ</string>
     <string name="night_basis.step.mutate.headerText">Sélectionner un joueur à muter ou un joueur à tuer :</string>
-    <string name="night_basis.step.paralyse.headerText">Sélectionner un joueur à paralyser ou un joueur à infecter :</string>
+    <string name="night_basis.step.paralyse.headerText">Sélectionner un joueur à paralyser :</string>
     <string name="night_basis.step.healOrKill.headerText">Sélectionner deux joueurs à soigner ou un joueur à tuer :</string>
     <string name="night_basis.step.psychologist.headerText">Sélectionner un joueur à inspecter par le psychologue :</string>
     <string name="night_basis.step.geneticist.headerText">Sélectionner un joueur à inspecter par le généticien :</string>
     <string name="night_basis.step.spy.headerText">Sélectionner un joueur à inspecter par l’espion :</string>
     <string name="night_basis.action.mutate">Muter</string>
     <string name="night_basis.action.mutate.resistant">Muter (en signalant la résistance)</string>
-    <string name="night_basis.action.kill">Tuer</string>
     <string name="night_basis.action.paralyse">Paralyser</string>
-    <string name="night_basis.action.infect">Infecter</string>
+    <string name="night_basis.action.kill">Tuer</string>
     <string name="night_basis.action.heal">Soigner</string>
     <string name="night_basis.action.heal.host">Soigner (en signalant l’hôte)</string>
     <string name="night_basis.information.numberOfMutants">Nombre de joueurs mutants :</string>
@@ -73,7 +72,7 @@
     <string name="night_basis.information.genomeStatus">Le génome du joueur %1$s est %2$s</string>
     <string name="night_basis.information.spy.introduction">Le joueur %1$s a été :</string>
     <string name="night_basis.information.spy.mutated">Muté :</string>
-    <string name="night_basis.information.spy.paralized">Paralisé :</string>
+    <string name="night_basis.information.spy.paralyzed">Paralysé :</string>
     <string name="night_basis.information.spy.healed">Soigné :</string>
     <string name="night_basis.information.spy.inspectedByPsychologist">Inspecté par le psychologue :</string>
     <string name="night_basis.information.spy.inspectedByGeneticist">Inspecté par le généticien :</string>

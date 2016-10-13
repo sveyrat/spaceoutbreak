@@ -77,6 +77,6 @@ public class MutantsMutateOrKillStepManager extends StepManager {
     public StepManager nextStep() {
         Player mutedPlayer = mutedPlayers.size() > 0 ? mutedPlayers.get(0) : null;
         Player killedPlayer = killedPlayers.size() > 0 ? killedPlayers.get(0) : null;
-        return new MutantsParalyzeOrInfectStepManager(mutedPlayer, killedPlayer);
+        return new MutantsParalyzeStepManager(mutedPlayer, killedPlayer);
     }
 }

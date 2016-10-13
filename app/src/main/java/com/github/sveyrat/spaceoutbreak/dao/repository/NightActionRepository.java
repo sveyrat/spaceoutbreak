@@ -25,7 +25,7 @@ public class NightActionRepository extends AbstractRepository {
 
     /**
      * Creates a new round for the current game.
-     * If any players where paralysed or infected, resets its state.
+     * If any players where paralysed, resets its state.
      * The created round automatically becomes the current round.
      */
     public void newRound() {
@@ -36,7 +36,6 @@ public class NightActionRepository extends AbstractRepository {
 
             for (Player player : round.getGame().getPlayers()) {
                 player.setParalyzed(false);
-                player.setInfected(false);
                 playerDao().update(player);
             }
 
@@ -131,33 +130,6 @@ public class NightActionRepository extends AbstractRepository {
             nightActionDao().create(nightAction);
 
             Log.i(NightActionRepository.class.getName(), "Paralyzed " + player.getName());
-        } catch (SQLException e) {
-            String message = "Error while attempting to paralyse player " + player.getName() + " with id " + player.getId();
-            Log.e(NightActionRepository.class.getName(), message);
-            throw new RuntimeException(message, e);
-        }
-    }
-
-    /**
-     * Infect a player. This will be reverted once the round is completed by the round creation method.
-     *
-     * @param player the player to infect
-     */
-    public void infect(Player player) {
-        if (!player.isAlive()) {
-            Log.e(NightActionRepository.class.getName(), "Can not infect player " + player.getName() + " with id " + player.getId() + " because he is dead.");
-            return;
-        }
-        try {
-            playerDao().refresh(player);
-            player.setInfected(true);
-            playerDao().update(player);
-
-            Round round = currentRound();
-            NightAction nightAction = new NightAction(round, Role.BASE_MUTANT, NightActionType.INFECT, player);
-            nightActionDao().create(nightAction);
-
-            Log.i(NightActionRepository.class.getName(), "Infected " + player.getName());
         } catch (SQLException e) {
             String message = "Error while attempting to paralyse player " + player.getName() + " with id " + player.getId();
             Log.e(NightActionRepository.class.getName(), message);

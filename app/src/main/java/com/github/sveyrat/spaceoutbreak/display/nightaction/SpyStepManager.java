@@ -46,7 +46,7 @@ public class SpyStepManager extends StepManager {
         String yes = context.getResources().getString(R.string.common_yes);
         String no = context.getResources().getString(R.string.common_no);
         inspectionResult += context.getResources().getString(R.string.night_basis_information_spy_mutated) + " " + (spyInspectionResult.isMutated() ? yes : no) + "\n";
-        inspectionResult += context.getResources().getString(R.string.night_basis_information_spy_paralized) + " " + (spyInspectionResult.isParalyzed() ? yes : no) + "\n";
+        inspectionResult += context.getResources().getString(R.string.night_basis_information_spy_paralyzed) + " " + (spyInspectionResult.isParalyzed() ? yes : no) + "\n";
         inspectionResult += context.getResources().getString(R.string.night_basis_information_spy_healed) + " " + (spyInspectionResult.isHealed() ? yes : no) + "\n";
         inspectionResult += context.getResources().getString(R.string.night_basis_information_spy_inspectedByPsychologist) + " " + (spyInspectionResult.isInspectedByPsychologist() ? yes : no) + "\n";
         inspectionResult += context.getResources().getString(R.string.night_basis_information_spy_inspectedByGeneticist) + " " + (spyInspectionResult.isInspectedByGeneticist() ? yes : no) + "\n";

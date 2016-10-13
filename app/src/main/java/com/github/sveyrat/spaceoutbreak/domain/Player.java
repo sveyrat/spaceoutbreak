@@ -32,9 +32,6 @@ public class Player {
     @DatabaseField(canBeNull = false)
     private boolean paralyzed = false;
 
-    @DatabaseField(canBeNull = false)
-    private boolean infected = false;
-
     // Required by the ORM to create instances
     public Player() {
     }
@@ -114,14 +111,6 @@ public class Player {
 
     public void setParalyzed(boolean paralyzed) {
         this.paralyzed = paralyzed;
-    }
-
-    public boolean isInfected() {
-        return infected;
-    }
-
-    public void setInfected(boolean infected) {
-        this.infected = infected;
     }
 
     @Override

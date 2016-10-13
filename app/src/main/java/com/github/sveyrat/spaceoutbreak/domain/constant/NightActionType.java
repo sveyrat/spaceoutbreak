@@ -4,7 +4,6 @@ public enum NightActionType {
     MUTATE,
     KILL,
     PARALYSE,
-    INFECT,
     HEAL,
     INSPECT;
 }

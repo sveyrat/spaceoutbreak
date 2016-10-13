@@ -9,7 +9,6 @@ public class SpyInspectionResult {
 
     private boolean mutated = false;
     private boolean paralyzed = false;
-    private boolean infected = false;
     private boolean healed = false;
     private boolean inspectedByPsychologist = false;
     private boolean inspectedByGeneticist = false;
@@ -25,9 +24,6 @@ public class SpyInspectionResult {
                     break;
                 case PARALYSE:
                     paralyzed = true;
-                    break;
-                case INFECT:
-                    infected = true;
                     break;
                 case HEAL:
                     healed = true;
@@ -50,10 +46,6 @@ public class SpyInspectionResult {
 
     public boolean isParalyzed() {
         return paralyzed;
-    }
-
-    public boolean isInfected() {
-        return infected;
     }
 
     public boolean isHealed() {
