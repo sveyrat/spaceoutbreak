@@ -28,10 +28,13 @@
             android:layout_weight="1" />
 
         <Button
+            style="@style/buttonStyle"
+            android:background="@drawable/button"
             android:id="@+id/new_game_input_player_add_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/new_game_player_input.add"
+            android:layout_margin="@dimen/activity_button_margin"
             android:onClick="addPlayer" />
 
     </LinearLayout>
@@ -47,8 +50,11 @@
     </ListView>
 
     <Button
+        style="@style/buttonStyle"
+        android:background="@drawable/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_button_margin"
         android:text="@string/common.validate"
         android:onClick="validatePlayerList" />
 

@@ -77,6 +77,7 @@ public class NewGameSettingsActivity extends AppCompatActivity {
         }
         RepositoryManager.getInstance().initGameRepository().initializeRoles(additionalRoles, randomize.isChecked(), genotype.isChecked());
         RepositoryManager.getInstance().nightActionRepository().newRound();
+
         Intent nightBasisActivityIntent = new Intent(this, NightBasisActivity.class);
         startActivity(nightBasisActivityIntent);
     }

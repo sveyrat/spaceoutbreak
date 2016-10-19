@@ -78,6 +78,13 @@
     <string name="night_basis.information.spy.inspectedByGeneticist">Inspecté par le généticien :</string>
 
 
+    <!-- VOTE VIEW -->
     <string name="vote_activity.name">Vote</string>
+    <string name="vote_activity.correction_button">Corriger</string>
+    <string name="vote_activity.dialog_title">Vote de %1$s</string>
+    <string name="vote_activity.blank_vote">Blanc</string>
+    <string name="vote_activity.null_vote">Nul</string>
+    <string name="vote_activity.dialog_result.title">Résultats du vote</string>
+
 
 </resources>

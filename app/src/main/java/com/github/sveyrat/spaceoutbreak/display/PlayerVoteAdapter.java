@@ -21,7 +21,7 @@ import java.util.List;
 public class PlayerVoteAdapter extends BaseAdapter {
 
     private final Context context;
-    private final List<Player> players;
+    private List<Player> players;
 
     public PlayerVoteAdapter(Context context, List<Player> players) {
         super();
@@ -57,6 +57,10 @@ public class PlayerVoteAdapter extends BaseAdapter {
         playerView.setBackground(ContextCompat.getDrawable(context, R.drawable.small_border));
 
         return playerView;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 
 }

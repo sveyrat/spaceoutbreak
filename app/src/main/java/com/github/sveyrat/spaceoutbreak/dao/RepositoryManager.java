@@ -8,7 +8,7 @@ import com.github.sveyrat.spaceoutbreak.dao.repository.InitGameRepository;
 
 public class RepositoryManager {
 
-    private static RepositoryManager instance;
+      private static RepositoryManager instance;
 
     private static InitGameRepository initGameRepository;
     private static GameInformationRepository gameInformationRepository;

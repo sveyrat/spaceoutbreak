@@ -268,10 +268,13 @@
 
 
     <Button
+        style="@style/buttonStyle"
+        android:background="@drawable/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/common.validate"
         android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/activity_button_margin"
         android:onClick="validateGameSettings" />
 
 

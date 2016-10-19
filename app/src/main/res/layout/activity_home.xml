@@ -19,11 +19,14 @@
         android:text="@string/home.welcome" />
 
     <Button
-        android:layout_width="wrap_content"
+        style="@style/buttonStyle"
+        android:background="@drawable/button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_below="@id/home.welcome_text"
+        android:layout_margin="@dimen/activity_button_margin"
         android:text="@string/home.new_game"
         android:onClick="newGame"/>
 
