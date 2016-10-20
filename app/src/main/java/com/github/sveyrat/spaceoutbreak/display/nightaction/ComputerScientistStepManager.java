@@ -8,11 +8,12 @@ import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 
 public class ComputerScientistStepManager extends StepManager {
 
-    public ComputerScientistStepManager() {
-        super(R.string.night_basis_step_healOrKill_headerText);
+    public ComputerScientistStepManager(boolean fakeStep) {
+        super(fakeStep, R.string.night_basis_step_healOrKill_headerText);
     }
 
     @Override
@@ -28,12 +29,10 @@ public class ComputerScientistStepManager extends StepManager {
     }
 
     @Override
-    public StepManager nextStep() {
-        return new PsychologistStepManager();
-    }
-
-    @Override
     public String afterStepText(Context context) {
+        if (fakeStep) {
+            return context.getResources().getString(R.string.night_basis_fakeStep_computerScientist);
+        }
         NightActionRepository nightActionRepository = RepositoryManager.getInstance().nightActionRepository();
         int numberOfMutants = nightActionRepository.countMutantsForComputerScientist();
         return context.getResources().getString(R.string.night_basis_information_numberOfMutants) + " " + numberOfMutants;
@@ -42,5 +41,10 @@ public class ComputerScientistStepManager extends StepManager {
     @Override
     public boolean autoValidate() {
         return true;
+    }
+
+    @Override
+    public Role currentlyPlayedRole() {
+        return Role.COMPUTER_SCIENTIST;
     }
 }

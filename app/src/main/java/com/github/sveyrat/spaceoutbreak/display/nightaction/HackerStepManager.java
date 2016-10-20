@@ -25,8 +25,8 @@ public class HackerStepManager extends StepManager {
     private Integer numberOfMutants;
     private Player inspectedPlayer;
 
-    public HackerStepManager() {
-        super(R.string.night_basis_step_hacker_headerText);
+    public HackerStepManager(boolean fakeStep) {
+        super(fakeStep, R.string.night_basis_step_hacker_headerText);
     }
 
     @Override
@@ -61,19 +61,18 @@ public class HackerStepManager extends StepManager {
     }
 
     @Override
-    public StepManager nextStep() {
-        return null;
-    }
-
-    @Override
     public String afterStepText(Context context) {
+        if (fakeStep) {
+            return context.getResources().getString(R.string.night_basis_fakeStep_hacker);
+        }
+
         if (numberOfMutants == null && inspectedPlayer == null) {
             return String.format( //
                     context.getResources().getString(R.string.night_basis_information_hacker_roleNotPlayed), //
                     context.getResources().getString(inspectedRole.getLabelResourceId()));
         }
         if (inspectedRole == Role.COMPUTER_SCIENTIST) {
-            return context.getResources().getString(R.string.night_basis_information_numberOfMutants)+ " " + numberOfMutants;
+            return context.getResources().getString(R.string.night_basis_information_numberOfMutants) + " " + numberOfMutants;
         } else if (inspectedRole == Role.PSYCHOLOGIST) {
             String mutantOrSane = inspectedPlayer.isMutant() ? context.getResources().getString(R.string.night_basis_information_playerStatus_mutant) : context.getResources().getString(R.string.night_basis_information_playerStatus_sane);
             return String.format( //
@@ -94,5 +93,10 @@ public class HackerStepManager extends StepManager {
     @Override
     public boolean useRoleSelection() {
         return true;
+    }
+
+    @Override
+    public Role currentlyPlayedRole() {
+        return Role.HACKER;
     }
 }

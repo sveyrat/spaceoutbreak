@@ -7,13 +7,14 @@ import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 
 public class PsychologistStepManager extends StepManager {
 
     private Boolean inspectedPlayerIsMutant;
 
-    public PsychologistStepManager() {
-        super(R.string.night_basis_step_psychologist_headerText);
+    public PsychologistStepManager(boolean fakeStep) {
+        super(fakeStep, R.string.night_basis_step_psychologist_headerText);
     }
 
     @Override
@@ -28,12 +29,11 @@ public class PsychologistStepManager extends StepManager {
     }
 
     @Override
-    public StepManager nextStep() {
-        return new GeneticistStepManager();
-    }
-
-    @Override
     public String afterStepText(Context context) {
+        if (fakeStep) {
+            return context.getResources().getString(R.string.night_basis_fakeStep_psychologist);
+        }
+
         Player inspectedPlayer = selectedPlayers.get(0);
         if (inspectedPlayerIsMutant == null) {
             String message = "Trying to display the psychologist inspection result, when it has not been done";
@@ -42,5 +42,10 @@ public class PsychologistStepManager extends StepManager {
         }
         String mutantOrSane = inspectedPlayerIsMutant ? context.getResources().getString(R.string.night_basis_information_playerStatus_mutant) : context.getResources().getString(R.string.night_basis_information_playerStatus_sane);
         return String.format(context.getResources().getString(R.string.night_basis_information_playerStatus), inspectedPlayer.getName(), mutantOrSane);
+    }
+
+    @Override
+    public Role currentlyPlayedRole() {
+        return Role.PSYCHOLOGIST;
     }
 }

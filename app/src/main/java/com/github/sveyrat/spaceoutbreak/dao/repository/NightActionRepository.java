@@ -5,6 +5,15 @@ import android.util.Log;
 import com.github.sveyrat.spaceoutbreak.dao.DatabaseOpenHelper;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.dto.SpyInspectionResult;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.ComputerScientistStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.DoctorsHealOrKillStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.GeneticistStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.HackerStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.MutantsMutateOrKillStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.MutantsParalyzeStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.PsychologistStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.SpyStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.StepManager;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
@@ -15,6 +24,7 @@ import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NightActionRepository extends AbstractRepository {
@@ -313,5 +323,96 @@ public class NightActionRepository extends AbstractRepository {
 
         Log.i(NightActionRepository.class.getName(), role.toString() + " has been hacked");
         return hackedRoleNightAction;
+    }
+
+    public StepManager nextStep(Role lastPlayedRole) {
+        if (lastPlayedRole == null) {
+            return new MutantsMutateOrKillStepManager();
+        }
+
+        switch (lastPlayedRole) {
+            case BASE_MUTANT:
+                List<NightAction> nightActions = new ArrayList<>(currentRound().getNightActions());
+                NightAction lastAction = nightActions.get(nightActions.size() - 1);
+                if (lastAction.getType() == NightActionType.MUTATE) {
+                    return new MutantsParalyzeStepManager(lastAction.getTargetPlayer(), null);
+                }
+                if (lastAction.getType() == NightActionType.KILL) {
+                    return new MutantsParalyzeStepManager(null, lastAction.getTargetPlayer());
+                }
+                if (canBePlayed(Role.DOCTOR)) {
+                    return new DoctorsHealOrKillStepManager(fakeStep(Role.DOCTOR));
+                }
+                // otherwise, keep going (no break)
+            case DOCTOR:
+                if (canBePlayed(Role.COMPUTER_SCIENTIST)) {
+                    return new ComputerScientistStepManager(fakeStep(Role.COMPUTER_SCIENTIST));
+                }
+                // otherwise, keep going (no break)
+            case COMPUTER_SCIENTIST:
+                if (canBePlayed(Role.PSYCHOLOGIST)) {
+                    return new PsychologistStepManager(fakeStep(Role.PSYCHOLOGIST));
+                }
+                // otherwise, keep going (no break)
+            case PSYCHOLOGIST:
+                if (canBePlayed(Role.GENETICIST)) {
+                    return new GeneticistStepManager(fakeStep(Role.GENETICIST));
+                }
+                // otherwise, keep going (no break)
+            case GENETICIST:
+                if (canBePlayed(Role.SPY)) {
+                    return new SpyStepManager(fakeStep(Role.SPY));
+                }
+                // otherwise, keep going (no break)
+            case SPY:
+                if (canBePlayed(Role.HACKER)) {
+                    return new HackerStepManager(fakeStep(Role.HACKER));
+                }
+                // otherwise, keep going (no break)
+            case HACKER:
+                // No next step : the activity should change
+                return null;
+        }
+
+        String message = "Could not determine the next step of the night round";
+        Log.e(NightActionRepository.class.getName(), message);
+        throw new RuntimeException(message);
+    }
+
+    private boolean canBePlayed(Role role) {
+        GameInformationRepository gameInformationRepository = RepositoryManager.getInstance().gameInformationRepository();
+        for (Player player : gameInformationRepository.loadAlivePlayers()) {
+            // The paralyzed and mutant cases are not handled here, since the GM has to do "fake" rounds to avoid leaking information
+            if (player.getRole() == role) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean fakeStep(Role role) {
+        GameInformationRepository gameInformationRepository = RepositoryManager.getInstance().gameInformationRepository();
+        List<Player> alivePlayers = gameInformationRepository.loadAlivePlayers();
+        // There can be more than one doctor, so here we check if there is at least one that is neither paralyzed nor mutant
+        if (role == Role.DOCTOR) {
+            for (Player player : alivePlayers) {
+                if (player.getRole() == Role.DOCTOR //
+                        && !player.isParalyzed()
+                        && !player.isMutant()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        for (Player player : alivePlayers) {
+            if (player.getRole() != role) {
+                continue;
+            }
+            if (player.isParalyzed()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

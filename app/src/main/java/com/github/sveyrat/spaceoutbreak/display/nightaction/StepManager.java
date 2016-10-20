@@ -18,7 +18,17 @@ public abstract class StepManager {
 
     protected List<Player> selectedPlayers = new ArrayList<>();
 
-    public StepManager(int headerTextStringResourceId) {
+    /**
+     * A step is fake if no one will wake up to do the actions,
+     * but the GM still needs to act as if the role was still being played.
+     *
+     * This is the case when the player(s) that should play has been paralyzed,
+     * or if all the doctors have been mutated in the case of the doctors step.
+     */
+    protected boolean fakeStep;
+
+    public StepManager(boolean fakeStep, int headerTextStringResourceId) {
+        this.fakeStep = fakeStep;
         this.headerTextStringResourceId = headerTextStringResourceId;
     }
 
@@ -69,11 +79,6 @@ public abstract class StepManager {
      */
     public abstract boolean validateStep(Context context);
 
-    /**
-     * @return the step manager for the step following this one
-     */
-    public abstract StepManager nextStep();
-
     protected final void showErrorToast(Context context, int stringResourceId) {
         Toast toast = Toast.makeText(context, context.getResources().getString(stringResourceId), Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
@@ -90,17 +95,20 @@ public abstract class StepManager {
     }
 
     /**
-     * Whether the step requires to select players from the grid. This is usefull for the computer scientist step for instance, where no player is inspected.
+     * Whether the step requires to select players from the grid.
+     * This is usefull for the computer scientist step for instance, where no player is inspected,
+     * or for the fake steps.
      * The activity then switches directly to the text view.
      *
      * @return true if the step does not require a player selection, false otherwise
      */
     public boolean autoValidate() {
-        return false;
+        return fakeStep;
     }
 
     public boolean useRoleSelection() {
         return false;
     }
 
+    public abstract Role currentlyPlayedRole();
 }

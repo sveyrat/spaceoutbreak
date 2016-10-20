@@ -21,7 +21,7 @@ public class MutantsMutateOrKillStepManager extends StepManager {
     private List<Player> killedPlayers = new ArrayList<>();
 
     public MutantsMutateOrKillStepManager() {
-        super(R.string.night_basis_step_mutate_headerText);
+        super(false, R.string.night_basis_step_mutate_headerText);
     }
 
     @Override
@@ -74,9 +74,7 @@ public class MutantsMutateOrKillStepManager extends StepManager {
     }
 
     @Override
-    public StepManager nextStep() {
-        Player mutedPlayer = mutedPlayers.size() > 0 ? mutedPlayers.get(0) : null;
-        Player killedPlayer = killedPlayers.size() > 0 ? killedPlayers.get(0) : null;
-        return new MutantsParalyzeStepManager(mutedPlayer, killedPlayer);
+    public Role currentlyPlayedRole() {
+        return Role.BASE_MUTANT;
     }
 }

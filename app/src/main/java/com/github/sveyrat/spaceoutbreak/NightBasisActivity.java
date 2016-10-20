@@ -8,6 +8,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
+import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.display.PlayerNightAdapter;
 
 import android.widget.ImageView;
@@ -92,7 +93,7 @@ public class NightBasisActivity extends AppCompatActivity {
             showAfterStepText(afterStepText);
             return;
         } else {
-            stepManager = stepManager.nextStep();
+            stepManager = RepositoryManager.getInstance().nightActionRepository().nextStep(stepManager.currentlyPlayedRole());
 
             // TODO handle the case where there is no next step (go to the next activity)
 

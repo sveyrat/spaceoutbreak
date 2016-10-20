@@ -20,8 +20,8 @@ public class DoctorsHealOrKillStepManager extends StepManager {
     private List<Player> healedPlayers = new ArrayList<>();
     private List<Player> killedPlayers = new ArrayList<>();
 
-    public DoctorsHealOrKillStepManager() {
-        super(R.string.night_basis_step_healOrKill_headerText);
+    public DoctorsHealOrKillStepManager(boolean fakeStep) {
+        super(fakeStep, R.string.night_basis_step_healOrKill_headerText);
     }
 
     @Override
@@ -77,12 +77,11 @@ public class DoctorsHealOrKillStepManager extends StepManager {
     }
 
     @Override
-    public StepManager nextStep() {
-        return new ComputerScientistStepManager();
-    }
-
-    @Override
     public String afterStepText(Context context) {
+        if (fakeStep) {
+            return context.getResources().getString(R.string.night_basis_fakeStep_doctors);
+        }
+
         if (killedPlayers.size() == 1) {
             return context.getResources().getString(R.string.night_basis_action_kill) + " " + killedPlayers.get(0).getName();
         }
@@ -97,5 +96,10 @@ public class DoctorsHealOrKillStepManager extends StepManager {
             instructions += "\n\n";
         }
         return instructions;
+    }
+
+    @Override
+    public Role currentlyPlayedRole() {
+        return Role.DOCTOR;
     }
 }

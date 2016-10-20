@@ -8,13 +8,14 @@ import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.dto.SpyInspectionResult;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 
 public class SpyStepManager extends StepManager {
 
     private SpyInspectionResult spyInspectionResult;
 
-    public SpyStepManager() {
-        super(R.string.night_basis_step_spy_headerText);
+    public SpyStepManager(boolean fakeStep) {
+        super(fakeStep, R.string.night_basis_step_spy_headerText);
     }
 
     @Override
@@ -29,12 +30,11 @@ public class SpyStepManager extends StepManager {
     }
 
     @Override
-    public StepManager nextStep() {
-        return new HackerStepManager();
-    }
-
-    @Override
     public String afterStepText(Context context) {
+        if (fakeStep) {
+            return context.getResources().getString(R.string.night_basis_fakeStep_spy);
+        }
+
         Player inspectedPlayer = selectedPlayers.get(0);
         if (spyInspectionResult == null) {
             String message = "Trying to display the spy inspection result, when it has not been done";
@@ -51,5 +51,10 @@ public class SpyStepManager extends StepManager {
         inspectionResult += context.getResources().getString(R.string.night_basis_information_spy_inspectedByPsychologist) + " " + (spyInspectionResult.isInspectedByPsychologist() ? yes : no) + "\n";
         inspectionResult += context.getResources().getString(R.string.night_basis_information_spy_inspectedByGeneticist) + " " + (spyInspectionResult.isInspectedByGeneticist() ? yes : no) + "\n";
         return inspectionResult;
+    }
+
+    @Override
+    public Role currentlyPlayedRole() {
+        return Role.SPY;
     }
 }

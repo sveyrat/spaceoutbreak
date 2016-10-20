@@ -81,6 +81,12 @@
     <string name="night_basis.information.hacker.roleNotPlayed">Le rôle %1$s n’a pas été joué</string>
     <string name="night_basis.information.hacker.psychologistResult">Le psychologue a inspecté %1$s, qui est %2$s</string>
     <string name="night_basis.information.hacker.geneticistResult">Le généticien a inspecté %1$s dont le génome est %2$s</string>
+    <string name="night_basis.fakeStep.doctors">Les médecins sont tous soit mutants, soit paralysés. Faire semblant de réveiller les médecins, demander les personnes à soigner ou la personne à tuer, puis les rendormir et faire un tour de désignation factice.</string>
+    <string name="night_basis.fakeStep.computerScientist">L’informaticien est paralysé. Faire semblant de le réveiller, de lui indiquer le nombre de mutants, et de le rendormir.</string>
+    <string name="night_basis.fakeStep.psychologist">Le psychologue est paralysé. Faire semblant de lui demander de se réveiller, de lui demander de désigner quelqu’un, de lui indiquer l’état d’un joueur et de le rendormir.</string>
+    <string name="night_basis.fakeStep.geneticist">Le généticien est paralysé. Faire semblant de le réveiller, de lui demander de désigner quelqu’un, de lui indiquer le génome d’un joueur, et de le rendormir.</string>
+    <string name="night_basis.fakeStep.spy">L’espion est paralysé. Faire semblant de le réveiller, de lui demander de désigner quelqu’un, de lui indiquer les actions (muté, paralysé, soigné, inspecté par le psychologue, inspecté par le généticien) et de le rendormir.</string>
+    <string name="night_basis.fakeStep.hacker">Le hacker est paralysé. Faire semblant de le réveiller, de lui demander le rôle à inspecter, de lui indiquer le résultat et de le rendormir.</string>
 
 
     <!-- VOTE VIEW -->
