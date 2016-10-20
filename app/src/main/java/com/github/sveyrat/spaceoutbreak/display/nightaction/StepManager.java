@@ -79,8 +79,14 @@ public abstract class StepManager {
      */
     public abstract boolean validateStep(Context context);
 
-    protected final void showErrorToast(Context context, int stringResourceId) {
-        Toast toast = Toast.makeText(context, context.getResources().getString(stringResourceId), Toast.LENGTH_SHORT);
+    protected final void showErrorToast(Context context, int stringResourceId, String... args) {
+        String message = null;
+        if (args != null && args.length > 0) {
+            message = String.format(context.getResources().getString(stringResourceId), args);
+        } else {
+            message = context.getResources().getString(stringResourceId);
+        }
+        Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }

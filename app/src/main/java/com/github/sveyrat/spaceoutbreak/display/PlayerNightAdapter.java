@@ -59,9 +59,11 @@ public class PlayerNightAdapter extends BaseAdapter {
         ImageView selectedIndicatorImageView = (ImageView) playerView.findViewById(R.id.selected_image);
         selectedIndicatorImageView.setVisibility(View.GONE);
 
+        ImageView playerRolePicto = (ImageView) playerView.findViewById(R.id.player_role_picto);
         if (player.getRole() != Role.ASTRONAUT) {
-            ImageView playerRolePicto = (ImageView) playerView.findViewById(R.id.player_role_picto);
             playerRolePicto.setImageResource(player.getRole().getImageResourceId());
+        } else {
+            playerRolePicto.setImageResource(android.R.color.transparent);
         }
 
         if (player.isMutant()) {

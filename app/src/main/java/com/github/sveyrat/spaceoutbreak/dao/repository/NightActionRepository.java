@@ -341,7 +341,8 @@ public class NightActionRepository extends AbstractRepository {
                     return new MutantsParalyzeStepManager(null, lastAction.getTargetPlayer());
                 }
                 if (canBePlayed(Role.DOCTOR)) {
-                    return new DoctorsHealOrKillStepManager(fakeStep(Role.DOCTOR));
+                    int numberOfHeals = numberOfHealsAvailable();
+                    return new DoctorsHealOrKillStepManager(fakeStep(Role.DOCTOR), numberOfHeals);
                 }
                 // otherwise, keep going (no break)
             case DOCTOR:
@@ -414,5 +415,19 @@ public class NightActionRepository extends AbstractRepository {
             }
         }
         return false;
+    }
+
+    private int numberOfHealsAvailable() {
+        GameInformationRepository gameInformationRepository = RepositoryManager.getInstance().gameInformationRepository();
+        List<Player> alivePlayers = gameInformationRepository.loadAlivePlayers();
+        int numberOfDoctorsPlaying = 0;
+        for (Player player : alivePlayers) {
+            if (player.getRole() == Role.DOCTOR
+                    && !player.isMutant()
+                    && !player.isParalyzed()) {
+                numberOfDoctorsPlaying++;
+            }
+        }
+        return numberOfDoctorsPlaying;
     }
 }

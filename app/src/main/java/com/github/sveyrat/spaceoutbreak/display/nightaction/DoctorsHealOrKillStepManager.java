@@ -17,11 +17,14 @@ import java.util.List;
 
 public class DoctorsHealOrKillStepManager extends StepManager {
 
+    private Integer numberOfHeals;
+
     private List<Player> healedPlayers = new ArrayList<>();
     private List<Player> killedPlayers = new ArrayList<>();
 
-    public DoctorsHealOrKillStepManager(boolean fakeStep) {
+    public DoctorsHealOrKillStepManager(boolean fakeStep, int numberOfHeals) {
         super(fakeStep, R.string.night_basis_step_healOrKill_headerText);
+        this.numberOfHeals = numberOfHeals;
     }
 
     @Override
@@ -60,9 +63,8 @@ public class DoctorsHealOrKillStepManager extends StepManager {
         }
         if (killedPlayers.size() > 0 && healedPlayers.size() > 0 //
                 || (killedPlayers.size() != 0 && killedPlayers.size() != 1) //
-                // TODO this actually depends on the number of doctors alive
-                || (healedPlayers.size() != 0 && healedPlayers.size() != 2)) {
-            showErrorToast(context, R.string.night_basis_doctors_error_healTowOrKillOne);
+                || (healedPlayers.size() != 0 && healedPlayers.size() != numberOfHeals)) {
+            showErrorToast(context, R.string.night_basis_doctors_error_healXOrKillOne, numberOfHeals.toString());
             return false;
         }
 
@@ -71,8 +73,9 @@ public class DoctorsHealOrKillStepManager extends StepManager {
             nightActionRepository.kill(killedPlayers.get(0), Role.DOCTOR);
             return true;
         }
-        nightActionRepository.heal(healedPlayers.get(0));
-        nightActionRepository.heal(healedPlayers.get(1));
+        for (Player healedPlayer : healedPlayers) {
+            nightActionRepository.heal(healedPlayer);
+        }
         return true;
     }
 
