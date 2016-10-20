@@ -53,7 +53,7 @@ public class RoleNightAdapter extends BaseAdapter {
         ImageView selectedIndicatorImageView = (ImageView) roleView.findViewById(R.id.selected_image);
         selectedIndicatorImageView.setVisibility(View.GONE);
 
-        ImageView playerRolePicto = (ImageView) roleView.findViewById(R.id.player_role_picto);
+        ImageView playerRolePicto = (ImageView) roleView.findViewById(R.id.role_image);
         playerRolePicto.setImageResource(role.getImageResourceId());
 
         return roleView;

@@ -12,10 +12,13 @@ import com.github.sveyrat.spaceoutbreak.display.PlayerNightAdapter;
 
 import android.widget.ImageView;
 
+import com.github.sveyrat.spaceoutbreak.display.RoleNightAdapter;
 import com.github.sveyrat.spaceoutbreak.display.nightaction.MutantsMutateOrKillStepManager;
 import com.github.sveyrat.spaceoutbreak.display.nightaction.StepManager;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,12 +26,13 @@ import java.util.List;
  */
 public class NightBasisActivity extends AppCompatActivity {
 
-    private PlayerNightAdapter adapter;
     private TextView headerTextView;
     private TextView mutantCounter;
     private TextView afterStepTextView;
     private GridView playerGrid;
     private GridView roleGrid;
+    private PlayerNightAdapter playerAdapter;
+    private RoleNightAdapter roleAdapter;
 
     private StepManager stepManager = new MutantsMutateOrKillStepManager();
 
@@ -43,20 +47,35 @@ public class NightBasisActivity extends AppCompatActivity {
         afterStepTextView = (TextView) findViewById(R.id.after_step_text);
 
         List<Player> alivePlayers = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
-        adapter = new PlayerNightAdapter(this, alivePlayers);
+        playerAdapter = new PlayerNightAdapter(this, alivePlayers);
         playerGrid = (GridView) findViewById(R.id.night_basis_list_players);
-        playerGrid.setAdapter(adapter);
-        updateView();
+        playerGrid.setAdapter(playerAdapter);
 
         playerGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                Player player = adapter.getItem(position);
+                Player player = playerAdapter.getItem(position);
                 ImageView selectedImageView = (ImageView) v.findViewById(R.id.selected_image);
                 stepManager.select(NightBasisActivity.this, selectedImageView, player);
             }
         });
 
+        List<Role> hackableRoles = new ArrayList<>();
+        hackableRoles.add(Role.COMPUTER_SCIENTIST);
+        hackableRoles.add(Role.PSYCHOLOGIST);
+        hackableRoles.add(Role.GENETICIST);
+        roleAdapter = new RoleNightAdapter(this, hackableRoles);
         roleGrid = (GridView) findViewById(R.id.role_list);
+        roleGrid.setAdapter(roleAdapter);
+
+        roleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Role role = roleAdapter.getItem(position);
+                ImageView selectedImageView = (ImageView) v.findViewById(R.id.selected_image);
+                stepManager.select(NightBasisActivity.this, selectedImageView, role);
+            }
+        });
+
+        updateView();
     }
 
 
@@ -74,7 +93,13 @@ public class NightBasisActivity extends AppCompatActivity {
             return;
         } else {
             stepManager = stepManager.nextStep();
+
+            // TODO handle the case where there is no next step (go to the next activity)
+
             updateView();
+            if (stepManager.useRoleSelection()) {
+                showRoleGrid();
+            }
             if (stepManager.autoValidate()) {
                 showAfterStepText(stepManager.afterStepText(this));
             }
@@ -89,6 +114,12 @@ public class NightBasisActivity extends AppCompatActivity {
         roleGrid.setVisibility(View.GONE);
     }
 
+    private void showRoleGrid() {
+        afterStepTextView.setVisibility(View.GONE);
+        playerGrid.setVisibility(View.GONE);
+        roleGrid.setVisibility(View.VISIBLE);
+    }
+
     private void updateView() {
         afterStepTextView.setText("");
         afterStepTextView.setVisibility(View.GONE);
@@ -96,8 +127,8 @@ public class NightBasisActivity extends AppCompatActivity {
         roleGrid.setVisibility(View.GONE);
 
         List<Player> alivePlayers = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
-        adapter.setPlayers(alivePlayers);
-        adapter.notifyDataSetChanged();
+        playerAdapter.setPlayers(alivePlayers);
+        playerAdapter.notifyDataSetChanged();
 
         Integer nbMutants = RepositoryManager.getInstance().gameInformationRepository().countMutantsInCurrentGame();
         mutantCounter.setText(nbMutants.toString());

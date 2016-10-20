@@ -25,7 +25,7 @@ public class MutantsParalyzeStepManager extends StepManager {
     @Override
     public boolean validateStep(Context context) {
         if (selectedPlayers.size() != 1) {
-            showErrorToast(context, R.string.night_basis_common_error_selectExactlyOne);
+            showErrorToast(context, R.string.night_basis_common_error_selectExactlyOnePlayer);
             return false;
         }
 

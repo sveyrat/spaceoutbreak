@@ -264,20 +264,15 @@ public class NightActionRepository extends AbstractRepository {
      *
      * @return the number of mutant alive
      */
-    public int hackComputerScientist() {
+    public Integer hackComputerScientist() {
         try {
-            Round round = currentRound();
-            NightAction nightAction = new NightAction(round, Role.HACKER, NightActionType.INSPECT, null);
-            nightAction.setHackedRole(Role.COMPUTER_SCIENTIST);
-            nightActionDao().create(nightAction);
-
-            Log.i(NightActionRepository.class.getName(), "Computer scientist has been hacked");
+            NightAction hackedRoleNightAction = nightActionForHacker(Role.COMPUTER_SCIENTIST);
+            return hackedRoleNightAction == null ? null : RepositoryManager.getInstance().gameInformationRepository().countMutantsInCurrentGame();
         } catch (SQLException e) {
             String message = "Error while attempting to hack computer scientist";
             Log.e(NightActionRepository.class.getName(), message);
             throw new RuntimeException(message, e);
         }
-        return RepositoryManager.getInstance().gameInformationRepository().countMutantsInCurrentGame();
     }
 
     /**
@@ -296,23 +291,27 @@ public class NightActionRepository extends AbstractRepository {
 
     private Player hack(Role role) {
         try {
-            Round currentRound = currentRound();
-
-            NightAction hackedRoleNightAction = nightActionDao().queryBuilder()//
-                    .where().eq("round_id", currentRound.getId())//
-                    .and().eq("acting_player_role", role).queryForFirst();
-
-            NightAction nightAction = new NightAction(currentRound, Role.HACKER, NightActionType.INSPECT, null);
-            nightAction.setHackedRole(role);
-            nightActionDao().create(nightAction);
-
-            Log.i(NightActionRepository.class.getName(), role.toString() + " has been hacked");
-
+            NightAction hackedRoleNightAction = nightActionForHacker(role);
             return hackedRoleNightAction == null ? null : hackedRoleNightAction.getTargetPlayer();
         } catch (SQLException e) {
             String message = "Error while attempting to hack " + role;
             Log.e(NightActionRepository.class.getName(), message);
             throw new RuntimeException(message, e);
         }
+    }
+
+    private NightAction nightActionForHacker(Role role) throws SQLException {
+        Round currentRound = currentRound();
+
+        NightAction hackedRoleNightAction = nightActionDao().queryBuilder()//
+                .where().eq("round_id", currentRound.getId())//
+                .and().eq("actingPlayerRole", role).queryForFirst();
+
+        NightAction nightAction = new NightAction(currentRound, Role.HACKER, NightActionType.INSPECT, null);
+        nightAction.setHackedRole(role);
+        nightActionDao().create(nightAction);
+
+        Log.i(NightActionRepository.class.getName(), role.toString() + " has been hacked");
+        return hackedRoleNightAction;
     }
 }

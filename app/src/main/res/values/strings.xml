@@ -50,7 +50,8 @@
     <string name="night_basis.name">Tour de nuit</string>
     <string name="night_basis.common.error.selectAtLeastOne">Veuillez sélectionner au moins un joueur</string>
     <string name="night_basis.common.error.selectAtMostOne">Veuillez sélectionner au maximumun un joueur</string>
-    <string name="night_basis.common.error.selectExactlyOne">Veuillez sélectionner un et un seul joueur</string>
+    <string name="night_basis.common.error.selectExactlyOnePlayer">Veuillez sélectionner un et un seul joueur</string>
+    <string name="night_basis.common.error.selectExactlyOneRole">Veuillez sélectionner un et un seul rôle</string>
     <string name="night_basis.doctors.error.healTowOrKillOne">Veuillez soigner 2 joueurs ou en tuer un</string>
     <string name="night_basis.gameMasterAction.headerText">Action du MJ</string>
     <string name="night_basis.step.mutate.headerText">Sélectionner un joueur à muter ou un joueur à tuer :</string>
@@ -59,6 +60,7 @@
     <string name="night_basis.step.psychologist.headerText">Sélectionner un joueur à inspecter par le psychologue :</string>
     <string name="night_basis.step.geneticist.headerText">Sélectionner un joueur à inspecter par le généticien :</string>
     <string name="night_basis.step.spy.headerText">Sélectionner un joueur à inspecter par l’espion :</string>
+    <string name="night_basis.step.hacker.headerText">Sélectionner un rôle à hacker :</string>
     <string name="night_basis.action.mutate">Muter</string>
     <string name="night_basis.action.mutate.resistant">Muter (en signalant la résistance)</string>
     <string name="night_basis.action.paralyse">Paralyser</string>
@@ -76,6 +78,9 @@
     <string name="night_basis.information.spy.healed">Soigné :</string>
     <string name="night_basis.information.spy.inspectedByPsychologist">Inspecté par le psychologue :</string>
     <string name="night_basis.information.spy.inspectedByGeneticist">Inspecté par le généticien :</string>
+    <string name="night_basis.information.hacker.roleNotPlayed">Le rôle %1$s n’a pas été joué</string>
+    <string name="night_basis.information.hacker.psychologistResult">Le psychologue a inspecté %1$s, qui est %2$s</string>
+    <string name="night_basis.information.hacker.geneticistResult">Le généticien a inspecté %1$s dont le génome est %2$s</string>
 
 
     <!-- VOTE VIEW -->

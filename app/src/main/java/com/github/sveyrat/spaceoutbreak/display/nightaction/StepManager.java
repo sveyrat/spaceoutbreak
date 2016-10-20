@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +33,9 @@ public abstract class StepManager {
      * Handle a click on a player item in the night action view.
      * Toggles the image view state between selected and not selected
      *
-     * @param context the view context
+     * @param context           the view context
      * @param selectedImageView the selected indicator image view
-     * @param player the player clicked
+     * @param player            the player clicked
      */
     public void select(Context context, final ImageView selectedImageView, final Player player) {
         boolean playerSelected = (View.VISIBLE == selectedImageView.getVisibility());
@@ -46,6 +46,19 @@ public abstract class StepManager {
         }
         selectedPlayers.add(player);
         selectedImageView.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Handles the click on a role item in the night action view.
+     * Toggles the image view state between selected and not selected.
+     * This should be used only by the hacker step manager, the only step where the selected item is a role instead of a player.
+     *
+     * @param context           the view context
+     * @param selectedImageView the selected indicator image view
+     * @param role              the role clicked
+     */
+    public void select(Context context, final ImageView selectedImageView, final Role role) {
+        // do nothing : only the hacker step manager has a use for this
     }
 
     /**
@@ -79,9 +92,15 @@ public abstract class StepManager {
     /**
      * Whether the step requires to select players from the grid. This is usefull for the computer scientist step for instance, where no player is inspected.
      * The activity then switches directly to the text view.
+     *
      * @return true if the step does not require a player selection, false otherwise
      */
     public boolean autoValidate() {
         return false;
     }
+
+    public boolean useRoleSelection() {
+        return false;
+    }
+
 }
