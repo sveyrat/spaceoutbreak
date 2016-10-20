@@ -28,6 +28,7 @@ public class NightBasisActivity extends AppCompatActivity {
     private TextView mutantCounter;
     private TextView afterStepTextView;
     private GridView playerGrid;
+    private GridView roleGrid;
 
     private StepManager stepManager = new MutantsMutateOrKillStepManager();
 
@@ -54,6 +55,8 @@ public class NightBasisActivity extends AppCompatActivity {
                 stepManager.select(NightBasisActivity.this, selectedImageView, player);
             }
         });
+
+        roleGrid = (GridView) findViewById(R.id.role_list);
     }
 
 
@@ -83,12 +86,14 @@ public class NightBasisActivity extends AppCompatActivity {
         afterStepTextView.setText(afterStepText);
         afterStepTextView.setVisibility(View.VISIBLE);
         playerGrid.setVisibility(View.GONE);
+        roleGrid.setVisibility(View.GONE);
     }
 
     private void updateView() {
         afterStepTextView.setText("");
         afterStepTextView.setVisibility(View.GONE);
         playerGrid.setVisibility(View.VISIBLE);
+        roleGrid.setVisibility(View.GONE);
 
         List<Player> alivePlayers = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
         adapter.setPlayers(alivePlayers);

@@ -1,12 +1,10 @@
 package com.github.sveyrat.spaceoutbreak.display;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,32 +59,9 @@ public class PlayerNightAdapter extends BaseAdapter {
         ImageView selectedIndicatorImageView = (ImageView) playerView.findViewById(R.id.selected_image);
         selectedIndicatorImageView.setVisibility(View.GONE);
 
-        ImageView playerRolePicto = (ImageView) playerView.findViewById(R.id.player_role_picto);
-        switch (player.getRole()) {
-            case BASE_MUTANT:
-                playerRolePicto.setImageResource(R.mipmap.base_mutant);
-                break;
-            case DOCTOR:
-                playerRolePicto.setImageResource(R.mipmap.doctor);
-                break;
-            case GENETICIST:
-                playerRolePicto.setImageResource(R.mipmap.geneticist);
-                break;
-            case PSYCHOLOGIST:
-                playerRolePicto.setImageResource(R.mipmap.psychologist);
-                break;
-            case COMPUTER_SCIENTIST:
-                playerRolePicto.setImageResource(R.mipmap.computer_scientist);
-                break;
-            case HACKER:
-                playerRolePicto.setImageResource(R.mipmap.hacker);
-                break;
-            case SPY:
-                playerRolePicto.setImageResource(R.mipmap.spy);
-                break;
-            case FANATIC:
-                playerRolePicto.setImageResource(R.mipmap.fanatic);
-                break;
+        if (player.getRole() != Role.ASTRONAUT) {
+            ImageView playerRolePicto = (ImageView) playerView.findViewById(R.id.player_role_picto);
+            playerRolePicto.setImageResource(player.getRole().getImageResourceId());
         }
 
         if (player.isMutant()) {

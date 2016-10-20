@@ -41,15 +41,6 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/after_step_text"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="6sp"
-        android:layout_weight="1"
-        android:alpha="0.9"
-        android:background="@drawable/general_border"
-        android:gravity="center" />
 
     <GridView
         android:id="@+id/night_basis_list_players"
@@ -66,20 +57,43 @@
 
     </GridView>
 
+    <GridView
+        android:id="@+id/role_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="6sp"
+        android:layout_weight="1"
+        android:alpha="0.9"
+        android:background="@drawable/general_border"
+        android:horizontalSpacing="3sp"
+        android:numColumns="2"
+        android:padding="6sp"
+        android:verticalSpacing="3sp">
+
+    </GridView>
+
+    <TextView
+        android:id="@+id/after_step_text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="6sp"
+        android:layout_weight="1"
+        android:alpha="0.9"
+        android:background="@drawable/general_border"
+        android:gravity="center" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="horizontal">
-
 
         <Button
             style="@style/buttonStyle"
-            android:background="@drawable/button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/button"
             android:onClick="confirm"
             android:text="@string/common.validate" />
 
