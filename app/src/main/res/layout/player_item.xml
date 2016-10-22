@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@drawable/small_border"
     android:layout_margin="6sp"
+    android:background="@drawable/small_border"
+    android:orientation="horizontal"
     android:padding="3sp">
 
     <TextView
+        android:id="@+id/name_player_tv"
         android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:paddingLeft="2sp"
-        android:id="@+id/name_player_tv"
-        android:maxLines="1"
         android:ellipsize="marquee"
-        android:layout_height="match_parent"
         android:gravity="center_vertical"
+        android:maxLines="1"
+        android:paddingLeft="2sp"
         android:textSize="18sp" />
 
     <ImageView
-        android:layout_gravity="center_vertical"
-        android:paddingRight="2sp"
+        android:id="@+id/selected_image"
         android:layout_width="24sp"
         android:layout_height="24sp"
-        android:visibility="gone"
+        android:layout_gravity="center_vertical"
+        android:paddingRight="2sp"
         android:src="@mipmap/selected"
-        android:id="@+id/selected_image"/>
+        android:visibility="gone" />
 
     <ImageView
-        android:layout_gravity="center_vertical"
+        android:id="@+id/player_role_picto"
         android:layout_width="24sp"
         android:layout_height="24sp"
-        android:paddingRight="2sp"
+        android:layout_gravity="center_vertical"
         android:paddingLeft="2sp"
-        android:id="@+id/player_role_picto"/>
+        android:paddingRight="2sp" />
 
 </LinearLayout>

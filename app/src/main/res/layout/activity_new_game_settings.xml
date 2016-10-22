@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/background"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:background="@mipmap/background"
     android:paddingTop="@dimen/activity_vertical_margin">
 
 
     <LinearLayout
+        android:id="@+id/role_choice_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:id="@+id/role_choice_box"
+        android:alpha="0.9"
         android:background="@drawable/general_border"
-        android:alpha="0.9">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/new_game_settings.role_choice_box"
-            android:textSize="24sp"
-            android:gravity="center_horizontal"
-            android:background="@color/colorPrimary"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="1sp"
+            android:background="@color/colorPrimary"
+            android:gravity="center_horizontal"
+            android:text="@string/new_game_settings.role_choice_box"
             android:textColor="@color/abc_primary_text_material_dark"
-            android:layout_margin="1sp" />
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,22 +37,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/role_psychologist.name"
+                android:layout_marginBottom="3sp"
                 android:layout_marginLeft="6sp"
-                android:layout_marginBottom="3sp" />
+                android:layout_weight="1"
+                android:text="@string/role_psychologist.name" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@mipmap/psychologist"
                 android:layout_margin="3sp"
-                />
+                android:src="@mipmap/psychologist" />
 
             <CheckBox
+                android:id="@+id/checkBox_psychologist"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/checkBox_psychologist"/>
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
@@ -64,21 +64,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/role_computer_scientist.name"
+                android:layout_marginBottom="3sp"
                 android:layout_marginLeft="6sp"
-                android:layout_marginBottom="3sp" />
+                android:layout_weight="1"
+                android:text="@string/role_computer_scientist.name" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@mipmap/computer_scientist"
                 android:layout_margin="3sp"
-                />
+                android:src="@mipmap/computer_scientist" />
 
             <CheckBox
+                android:id="@+id/checkBox_computer_scientist"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/checkBox_computer_scientist"/>
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
@@ -91,21 +91,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/role_geneticist.name"
+                android:layout_marginBottom="3sp"
                 android:layout_marginLeft="6sp"
-                android:layout_marginBottom="3sp" />
+                android:layout_weight="1"
+                android:text="@string/role_geneticist.name" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@mipmap/geneticist"
                 android:layout_margin="3sp"
-                />
+                android:src="@mipmap/geneticist" />
 
             <CheckBox
+                android:id="@+id/checkBox_geneticist"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/checkBox_geneticist"/>
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
@@ -118,22 +118,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/role_spy.name"
+                android:layout_marginBottom="3sp"
                 android:layout_marginLeft="6sp"
-                android:layout_marginBottom="3sp" />
+                android:layout_weight="1"
+                android:text="@string/role_spy.name" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@mipmap/spy"
                 android:layout_margin="3sp"
-                />
+                android:src="@mipmap/spy" />
 
             <CheckBox
+                android:id="@+id/checkBox_spy"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/checkBox_spy"/>
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
@@ -146,22 +145,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/role_hacker.name"
+                android:layout_marginBottom="3sp"
                 android:layout_marginLeft="6sp"
-                android:layout_marginBottom="3sp" />
+                android:layout_weight="1"
+                android:text="@string/role_hacker.name" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@mipmap/hacker"
                 android:layout_margin="3sp"
-                />
+                android:src="@mipmap/hacker" />
 
             <CheckBox
+                android:id="@+id/checkBox_hacker"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/checkBox_hacker"/>
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
@@ -169,53 +167,52 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="3sp">
+            android:layout_marginBottom="3sp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/role_fanatic.name"
+                android:layout_marginBottom="3sp"
                 android:layout_marginLeft="6sp"
-                android:layout_marginBottom="3sp" />
+                android:layout_weight="1"
+                android:text="@string/role_fanatic.name" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@mipmap/fanatic"
                 android:layout_margin="3sp"
-                />
+                android:src="@mipmap/fanatic" />
 
             <CheckBox
+                android:id="@+id/checkBox_fanatic"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/checkBox_fanatic"/>
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/various_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_below="@id/role_choice_box"
-        android:id="@+id/various_box"
         android:layout_marginTop="10dp"
+        android:alpha="0.9"
         android:background="@drawable/general_border"
-        android:alpha="0.9">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/new_game_settings.various_box"
-            android:textSize="24sp"
-            android:gravity="center_horizontal"
-            android:background="@color/colorPrimary"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="1sp"
+            android:background="@color/colorPrimary"
+            android:gravity="center_horizontal"
+            android:text="@string/new_game_settings.various_box"
             android:textColor="@color/abc_primary_text_material_dark"
-            android:layout_margin="1sp" />
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -225,18 +222,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/new_game_settings.is_genotype"
+                android:layout_marginBottom="3sp"
                 android:layout_marginLeft="6sp"
-                android:layout_marginBottom="3sp" />
+                android:layout_weight="1"
+                android:text="@string/new_game_settings.is_genotype" />
 
-                />
+            />
 
             <CheckBox
+                android:id="@+id/checkBox_genotype"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/checkBox_genotype"
-                android:checked="true"/>
+                android:checked="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -247,18 +244,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/new_game_settings.randomize_game"
+                android:layout_marginBottom="3sp"
                 android:layout_marginLeft="6sp"
-                android:layout_marginBottom="3sp" />
+                android:layout_weight="1"
+                android:text="@string/new_game_settings.randomize_game" />
 
             />
 
             <CheckBox
+                android:id="@+id/checkBox_randomize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/checkBox_randomize"
-                android:checked="true"/>
+                android:checked="true" />
 
 
         </LinearLayout>
@@ -266,16 +263,15 @@
     </LinearLayout>
 
 
-
     <Button
         style="@style/buttonStyle"
-        android:background="@drawable/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/common.validate"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/activity_button_margin"
-        android:onClick="validateGameSettings" />
+        android:background="@drawable/button"
+        android:onClick="validateGameSettings"
+        android:text="@string/common.validate" />
 
 
 </RelativeLayout>
