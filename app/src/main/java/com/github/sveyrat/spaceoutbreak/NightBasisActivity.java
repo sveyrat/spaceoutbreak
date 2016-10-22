@@ -136,4 +136,10 @@ public class NightBasisActivity extends AppCompatActivity {
 
         headerTextView.setText(stepManager.headerText(this));
     }
+
+
+
+    @Override
+    public void onBackPressed() {
+    }
 }

@@ -183,5 +183,10 @@ public class VoteActivity extends AppCompatActivity {
         }
         return -1;
     }
+
+
+    @Override
+    public void onBackPressed() {
+    }
 }
 
