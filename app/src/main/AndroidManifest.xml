@@ -29,6 +29,9 @@
 
         <activity android:name=".VoteActivity"
             android:label="@string/vote_activity.name"></activity>
+
+        <activity android:name=".GameEndActivity"
+            android:label="@string/game_end_activity.activity_title"></activity>
     </application>
 
 </manifest>

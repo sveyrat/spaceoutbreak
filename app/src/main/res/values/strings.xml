@@ -98,4 +98,12 @@
     <string name="vote_activity.dialog_result.title">Résultats du vote</string>
 
 
+    <!-- GAME END ACTIVITY -->
+    <string name="game_end_activity.mutants_name">mutants</string>
+    <string name="game_end_activity.astronauts_name">astronautes</string>
+    <string name="game_end_activity.activity_title">Fin de la partie !</string>
+    <string name="game_end_activity.text">Les %1$s\n ont gagné !</string>
+    <string name="game_end_activity.new_game_text_button">Nouvelle partie</string>
+    <string name="game_end_activity.end_text_button">Quitter</string>
+
 </resources>
