@@ -57,4 +57,20 @@ public class GameInformationRepository extends AbstractRepository {
         Log.i(GameInformationRepository.class.getName(), "Loaded " + alivePlayers.size() + " alive players");
         return alivePlayers;
     }
+
+    /**
+     * Check if game is finished.
+     *
+     * @return a boolean of whether the game is finished
+     */
+    public boolean isGameFinished(){
+        int numberOfMutants = countMutantsInCurrentGame();
+        int numberOfPlayers = countPlayers();
+
+        if(numberOfMutants==numberOfPlayers || numberOfMutants==0){
+            return true;
+        }
+        return false;
+    }
+
 }
