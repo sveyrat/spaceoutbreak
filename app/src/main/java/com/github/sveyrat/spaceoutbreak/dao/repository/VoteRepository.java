@@ -9,6 +9,8 @@ import com.github.sveyrat.spaceoutbreak.domain.Round;
 import com.github.sveyrat.spaceoutbreak.domain.Vote;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class VoteRepository extends AbstractRepository {
@@ -18,7 +20,7 @@ public class VoteRepository extends AbstractRepository {
     }
 
     /**
-     * Persists the player votes
+     * Persists the player votes for the current round
      *
      * @return the vote results
      */
@@ -30,17 +32,15 @@ public class VoteRepository extends AbstractRepository {
                 Log.e(VoteRepository.class.getName(), message);
                 throw new RuntimeException(message);
             }
-            VoteResult voteResult = new VoteResult();
             for (Map.Entry<Player, Player> voteEntry : votes.entrySet()) {
                 Player voter = voteEntry.getKey();
                 Player votedFor = voteEntry.getValue();
                 Vote vote = new Vote(currentRound, voter, votedFor);
                 voteDao().create(vote);
-                if (voteEntry.getValue() == null) {
-                    voteResult.addABlankVote();
-                } else {
-                    voteResult.addVote(votedFor);
-                }
+            }
+            VoteResult voteResult = voteResult();
+            if (!voteResult.draw()) {
+                killMostVotedFor();
             }
             return voteResult;
         } catch (SQLException e) {
@@ -48,5 +48,48 @@ public class VoteRepository extends AbstractRepository {
             Log.e(VoteRepository.class.getName(), message);
             throw new RuntimeException(message, e);
         }
+    }
+
+    /**
+     * Captain vote to decide in case of a draw.
+     *
+     * @param player the player the captain voted to kill. If null, means that the captain opted for a blank vote.
+     */
+    public void captainVote(Player player) {
+        try {
+            Round currentRound = currentRound();
+            Vote vote = new Vote(currentRound, currentRound.getCaptain(), player);
+            voteDao().create(vote);
+
+            killMostVotedFor();
+        } catch (SQLException e) {
+            String message = "Could not save captain vote";
+            Log.e(VoteRepository.class.getName(), message);
+            throw new RuntimeException(message, e);
+        }
+    }
+
+    private void killMostVotedFor() throws SQLException {
+        Player mostVotedFor = voteResult().mostVotedFor();
+        if (mostVotedFor == null) {
+            return;
+        }
+        mostVotedFor.setAlive(false);
+        playerDao().update(mostVotedFor);
+    }
+
+    private VoteResult voteResult() {
+        VoteResult voteResult = new VoteResult();
+        Round currentRound = currentRound();
+        List<Vote> votes = new ArrayList<>(currentRound.getVotes());
+        for (Vote vote : votes) {
+            Player votedFor = vote.getVotedFor();
+            if (votedFor == null) {
+                voteResult.addABlankVote();
+            } else {
+                voteResult.addVote(votedFor);
+            }
+        }
+        return voteResult;
     }
 }

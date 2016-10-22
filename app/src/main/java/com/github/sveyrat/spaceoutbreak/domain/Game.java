@@ -5,6 +5,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,5 +58,13 @@ public class Game {
 
     public void setRounds(ForeignCollection<Round> rounds) {
         this.rounds = rounds;
+    }
+
+    public Round latestRound() {
+        if (rounds == null || rounds.isEmpty()) {
+            return null;
+        }
+        List<Round> roundList = new ArrayList<>(rounds);
+        return roundList.get(roundList.size() - 1);
     }
 }

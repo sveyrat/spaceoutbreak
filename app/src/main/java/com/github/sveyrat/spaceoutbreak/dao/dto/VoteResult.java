@@ -8,10 +8,10 @@ import java.util.Map;
 public class VoteResult {
 
     private int numberOfBlankVotes;
-    private Map<Player, Integer> result;
+    private Map<Player, Integer> results;
 
     public VoteResult() {
-        this.result = new HashMap<>();
+        this.results = new HashMap<>();
     }
 
     public int getNumberOfBlankVotes() {
@@ -22,17 +22,17 @@ public class VoteResult {
         this.numberOfBlankVotes = numberOfBlankVotes;
     }
 
-    public Map<Player, Integer> getResult() {
-        return result;
+    public Map<Player, Integer> getResults() {
+        return results;
     }
 
-    public void setResult(Map<Player, Integer> result) {
-        this.result = result;
+    public void setResults(Map<Player, Integer> result) {
+        this.results = result;
     }
 
     public boolean draw() {
         int maxNumberOfVotes = 0;
-        for (Map.Entry<Player, Integer> resultEntry : result.entrySet()) {
+        for (Map.Entry<Player, Integer> resultEntry : results.entrySet()) {
             Integer numberOfVotes = resultEntry.getValue();
             if (numberOfVotes > maxNumberOfVotes) {
                 maxNumberOfVotes = numberOfVotes;
@@ -41,7 +41,7 @@ public class VoteResult {
         if (numberOfBlankVotes == maxNumberOfVotes) {
             return true;
         }
-        for (Map.Entry<Player, Integer> resultEntry : result.entrySet()) {
+        for (Map.Entry<Player, Integer> resultEntry : results.entrySet()) {
             Integer numberOfVotes = resultEntry.getValue();
             if (numberOfVotes == maxNumberOfVotes) {
                 return true;
@@ -55,10 +55,25 @@ public class VoteResult {
     }
 
     public void addVote(Player player) {
-        if (result.get(player) == null) {
-            result.put(player, 1);
+        if (results.get(player) == null) {
+            results.put(player, 1);
             return;
         }
-        result.put(player, result.get(player) + 1);
+        results.put(player, results.get(player) + 1);
+    }
+
+    public Player mostVotedFor() {
+        Player mostVotedFor = null;
+        int numberOfVotesForMostVoted = 0;
+        for (Map.Entry<Player, Integer> resultEntry : results.entrySet()) {
+            if (resultEntry.getValue() > numberOfVotesForMostVoted) {
+                numberOfVotesForMostVoted = resultEntry.getValue();
+                mostVotedFor = resultEntry.getKey();
+            }
+        }
+        if (numberOfBlankVotes > numberOfVotesForMostVoted) {
+            return null;
+        }
+        return mostVotedFor;
     }
 }
