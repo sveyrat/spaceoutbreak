@@ -97,6 +97,10 @@ public class NightBasisActivity extends AppCompatActivity {
             stepManager = RepositoryManager.getInstance().nightActionRepository().nextStep(stepManager.currentlyPlayedRole());
 
             if (stepManager == null) {
+                if (RepositoryManager.getInstance().gameInformationRepository().isGameFinished()) {
+                    startActivity(new Intent(this, GameEndActivity.class));
+                    return;
+                }
                 startActivity(new Intent(this, VoteActivity.class));
                 return;
             }

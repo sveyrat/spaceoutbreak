@@ -63,11 +63,11 @@ public class GameInformationRepository extends AbstractRepository {
      *
      * @return a boolean of whether the game is finished
      */
-    public boolean isGameFinished(){
+    public boolean isGameFinished() {
         int numberOfMutants = countMutantsInCurrentGame();
-        int numberOfPlayers = countPlayers();
+        int numberOfAlivePlayers = loadAlivePlayers().size();
 
-        if(numberOfMutants==numberOfPlayers || numberOfMutants==0){
+        if (numberOfMutants == numberOfAlivePlayers || numberOfMutants == 0) {
             return true;
         }
         return false;

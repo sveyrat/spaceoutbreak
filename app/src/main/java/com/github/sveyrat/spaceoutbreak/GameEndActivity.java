@@ -14,7 +14,7 @@ import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 
 public class GameEndActivity extends AppCompatActivity {
 
-    TextView resultTextView;
+    private TextView resultTextView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,22 +24,18 @@ public class GameEndActivity extends AppCompatActivity {
         resultTextView = (TextView) findViewById(R.id.result_activity_tv);
 
         int nbMutants = RepositoryManager.getInstance().gameInformationRepository().countMutantsInCurrentGame();
-        String winners=getResources().getString(R.string.game_end_activity_mutants_name);
-        if(nbMutants==0){
-            winners=getResources().getString(R.string.game_end_activity_astronauts_name);
+        String winners = getResources().getString(R.string.game_end_activity_mutants_name);
+        if (nbMutants == 0) {
+            winners = getResources().getString(R.string.game_end_activity_astronauts_name);
         }
-        String message = String.format(getResources().getString(R.string.game_end_activity_text),winners );
+        String message = String.format(getResources().getString(R.string.game_end_activity_text), winners);
         resultTextView.setText(message);
     }
 
 
-    public void newGame(View view){
+    public void newGame(View view) {
         Intent newGameIntent = new Intent(this, NewGameInputPlayerActivity.class);
         startActivity(newGameIntent);
-    }
-
-    public void quit(View view){
-        super.onDestroy();
     }
 
     @Override

@@ -30,6 +30,7 @@ import java.util.Map;
  */
 
 public class VoteActivity extends AppCompatActivity {
+
     private List<Player> players;
     private CharSequence[] playersToVote;
     private PlayerVoteAdapter adapter;
@@ -105,7 +106,7 @@ public class VoteActivity extends AppCompatActivity {
         VoteResult voteResult = voteRepository.vote(votes);
 
         String message = "";
-        int numberOfNullVotes = players.size() - voteResult.getNumberOfBlankVotes() - voteResult.getResults().size();
+        int numberOfNullVotes = players.size() - votes.size();
         message += getResources().getString(R.string.vote_activity_null_vote) + " : " + numberOfNullVotes + "\n";
         message += getResources().getString(R.string.vote_activity_blank_vote) + " : " + voteResult.getNumberOfBlankVotes() + "\n";
         for (Map.Entry<Player, Integer> resultEntry : voteResult.getResults().entrySet()) {
@@ -125,6 +126,10 @@ public class VoteActivity extends AppCompatActivity {
         adb.setPositiveButton(getResources().getString(R.string.common_validate), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (RepositoryManager.getInstance().gameInformationRepository().isGameFinished()) {
+                    startActivity(new Intent(VoteActivity.this, GameEndActivity.class));
+                    return;
+                }
                 RepositoryManager.getInstance().nightActionRepository().newRound();
                 startActivity(new Intent(VoteActivity.this, NightBasisActivity.class));
             }
@@ -132,13 +137,13 @@ public class VoteActivity extends AppCompatActivity {
         adb.show();
     }
 
-    void updateView() {
+    private void updateView() {
         adapter.setPlayers(players);
         adapter.notifyDataSetChanged();
 
     }
 
-    CharSequence[] putPlayerNamesInCharSequence(List<Player> players) {
+    private CharSequence[] putPlayerNamesInCharSequence(List<Player> players) {
         List<String> playerNames = new ArrayList<String>();
         playerNames.add(getResources().getString(R.string.vote_activity_blank_vote));
         for (Player player : players) {
@@ -148,7 +153,7 @@ public class VoteActivity extends AppCompatActivity {
         return playersNamesInCharSequence;
     }
 
-    int getPlayerPositionInCharSequence(CharSequence[] names, Player player) {
+    private int getPlayerPositionInCharSequence(CharSequence[] names, Player player) {
         int position = 0;
         for (CharSequence s : names) {
             if (s.equals(player.getName())) {
