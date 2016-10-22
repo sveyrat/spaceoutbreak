@@ -32,10 +32,12 @@ public class VoteResult {
 
     public boolean draw() {
         int maxNumberOfVotes = 0;
+        Player mostVotedForPlayer = null;
         for (Map.Entry<Player, Integer> resultEntry : results.entrySet()) {
             Integer numberOfVotes = resultEntry.getValue();
             if (numberOfVotes > maxNumberOfVotes) {
                 maxNumberOfVotes = numberOfVotes;
+                mostVotedForPlayer = resultEntry.getKey();
             }
         }
         if (numberOfBlankVotes == maxNumberOfVotes) {
@@ -43,7 +45,7 @@ public class VoteResult {
         }
         for (Map.Entry<Player, Integer> resultEntry : results.entrySet()) {
             Integer numberOfVotes = resultEntry.getValue();
-            if (numberOfVotes == maxNumberOfVotes) {
+            if (numberOfVotes == maxNumberOfVotes && !resultEntry.getKey().equals(mostVotedForPlayer)) {
                 return true;
             }
         }

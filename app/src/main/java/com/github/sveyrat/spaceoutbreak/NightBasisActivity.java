@@ -1,5 +1,6 @@
 package com.github.sveyrat.spaceoutbreak;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -95,7 +96,10 @@ public class NightBasisActivity extends AppCompatActivity {
         } else {
             stepManager = RepositoryManager.getInstance().nightActionRepository().nextStep(stepManager.currentlyPlayedRole());
 
-            // TODO handle the case where there is no next step (go to the next activity)
+            if (stepManager == null) {
+                startActivity(new Intent(this, VoteActivity.class));
+                return;
+            }
 
             updateView();
             if (stepManager.useRoleSelection()) {
@@ -136,8 +140,6 @@ public class NightBasisActivity extends AppCompatActivity {
 
         headerTextView.setText(stepManager.headerText(this));
     }
-
-
 
     @Override
     public void onBackPressed() {

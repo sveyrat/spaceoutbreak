@@ -27,7 +27,7 @@ public class VoteRepository extends AbstractRepository {
     public VoteResult vote(Map<Player, Player> votes) {
         try {
             Round currentRound = currentRound();
-            if (currentRound.getVotes() == null || currentRound.getVotes().isEmpty()) {
+            if (currentRound.getVotes() != null && !currentRound.getVotes().isEmpty()) {
                 String message = "Attempting to persist votes on a round that already has votes";
                 Log.e(VoteRepository.class.getName(), message);
                 throw new RuntimeException(message);

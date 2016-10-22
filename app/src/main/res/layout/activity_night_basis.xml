@@ -78,7 +78,7 @@
         android:layout_height="0dp"
         android:layout_margin="6sp"
         android:layout_weight="1"
-        android:padding="2sp"
+        android:padding="4sp"
         android:alpha="0.9"
         android:background="@drawable/general_border"
         android:gravity="center" />

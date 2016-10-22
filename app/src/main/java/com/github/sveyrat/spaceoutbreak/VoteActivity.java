@@ -1,16 +1,21 @@
 package com.github.sveyrat.spaceoutbreak;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
+import com.github.sveyrat.spaceoutbreak.dao.dto.VoteResult;
+import com.github.sveyrat.spaceoutbreak.dao.repository.VoteRepository;
 import com.github.sveyrat.spaceoutbreak.display.PlayerVoteAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 
@@ -28,14 +33,14 @@ public class VoteActivity extends AppCompatActivity {
     private List<Player> players;
     private CharSequence[] playersToVote;
     private PlayerVoteAdapter adapter;
-    private Map<Player, Player> voteResults;
+    private Map<Player, Player> votes;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RepositoryManager.init(this);
         players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
         playersToVote = putPlayerNamesInCharSequence(players);
-        voteResults = new HashMap<Player, Player>();
+        votes = new HashMap<Player, Player>();
         setContentView(R.layout.activity_vote);
 
         adapter = new PlayerVoteAdapter(this, players);
@@ -49,8 +54,8 @@ public class VoteActivity extends AppCompatActivity {
                 String message = String.format(getResources().getString(R.string.vote_activity_dialog_title), player.getName());
 
                 int tempVote = 0;
-                if (voteResults.containsKey(player) && voteResults.get(player) != null) {
-                    tempVote = getPlayerPositionInCharSequence(playersToVote, voteResults.get(player));
+                if (votes.containsKey(player) && votes.get(player) != null) {
+                    tempVote = getPlayerPositionInCharSequence(playersToVote, votes.get(player));
                 }
                 builder.setTitle(message)
                         .setSingleChoiceItems(playersToVote, tempVote, new DialogInterface.OnClickListener() {
@@ -60,14 +65,14 @@ public class VoteActivity extends AppCompatActivity {
                                 // The 'which' argument contains the index position
                                 // of the selected item
                                 int finalChoicePosition = which - 1;
-                                if (voteResults.containsKey(player)) {
-                                    voteResults.remove(player);
+                                if (votes.containsKey(player)) {
+                                    votes.remove(player);
                                 }
 
                                 if (which != 0) {
-                                    voteResults.put(player, players.get(finalChoicePosition));
+                                    votes.put(player, players.get(finalChoicePosition));
                                 } else {
-                                    voteResults.put(player, null);
+                                    votes.put(player, null);
                                 }
                                 updateView();
                                 ImageView selectedImageView = (ImageView) selectedView.findViewById(R.id.selected_image);
@@ -83,78 +88,48 @@ public class VoteActivity extends AppCompatActivity {
                             }
 
                         });
-                /*// Set the action buttons
-                        .setPositiveButton(R.string.common_validate, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK, so save the mSelectedItems results somewhere
-                        // or return them to the component that opened the dialog
-                        if(voteResults.containsKey(player)){
-                            if(finalPosition!=0) {
-                                voteResults.put(player, players.get(finalPosition));
-                            }
-                            else{
-                                voteResults.put(player, null);
-                            }
-
-                        }
-                            dialog.dismiss();
-
-
-                    }
-                })
-                        .setNegativeButton(R.string.common_return, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                               dialog.dismiss();
-                            }
-                        });*/
-
                 builder.show();
             }
         });
-
     }
 
     public void confirm(View view) {
-        List<Player> results = new ArrayList<>();
-        results.addAll(voteResults.values());
-        int nullVoteNumber = players.size() - results.size();
-        int blankVoteNumber = 0;
-        Map<String, Integer> finalResults = new HashMap<String, Integer>();
-
-        while (results.remove(null)) {
-            blankVoteNumber++;
+        if (votes.isEmpty()) {
+            Toast toast = Toast.makeText(this, getResources().getString(R.string.vote_activity_error_atLeastOneVote), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+            return;
         }
 
-        finalResults.put(getResources().getString(R.string.vote_activity_null_vote), nullVoteNumber);
-        finalResults.put(getResources().getString(R.string.vote_activity_blank_vote), blankVoteNumber);
+        VoteRepository voteRepository = RepositoryManager.getInstance().voteRepository();
+        VoteResult voteResult = voteRepository.vote(votes);
 
-        if (nullVoteNumber + blankVoteNumber < players.size() + 1) {
-            for (Player e : results) {
-                String name = e.getName();
-                if (finalResults.containsKey(name)) {
-                    Integer lastVal = finalResults.get(name);
-                    finalResults.remove(name);
-                    finalResults.put(name, lastVal + 1);
-                } else {
-                    finalResults.put(name, 1);
-                }
-            }
+        String message = "";
+        int numberOfNullVotes = players.size() - voteResult.getNumberOfBlankVotes() - voteResult.getResults().size();
+        message += getResources().getString(R.string.vote_activity_null_vote) + " : " + numberOfNullVotes + "\n";
+        message += getResources().getString(R.string.vote_activity_blank_vote) + " : " + voteResult.getNumberOfBlankVotes() + "\n";
+        for (Map.Entry<Player, Integer> resultEntry : voteResult.getResults().entrySet()) {
+            message += resultEntry.getKey().getName() + " : " + resultEntry.getValue().toString();
+            message += "\n";
+        }
+
+        if (voteResult.draw()) {
+            // TODO
+            return;
         }
 
         AlertDialog.Builder adb = new AlertDialog.Builder(VoteActivity.this);
-        String message = finalResults.toString();
-        message = message.replace(",", "\n");
-        message = message.replace("{", "");
-        message = message.replace("}", "");
         adb.setTitle(getResources().getString(R.string.vote_activity_dialog_result_title));
         adb.setMessage(message);
-        adb.setNegativeButton(getResources().getString(R.string.common_return), null);
-        adb.setPositiveButton(getResources().getString(R.string.common_validate), null);
+        adb.setCancelable(false);
+        adb.setPositiveButton(getResources().getString(R.string.common_validate), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                RepositoryManager.getInstance().nightActionRepository().newRound();
+                startActivity(new Intent(VoteActivity.this, NightBasisActivity.class));
+            }
+        });
         adb.show();
-
-
     }
 
     void updateView() {
