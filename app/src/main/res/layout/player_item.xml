@@ -13,6 +13,8 @@
         android:layout_weight="1"
         android:paddingLeft="2sp"
         android:id="@+id/name_player_tv"
+        android:maxLines="1"
+        android:ellipsize="marquee"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:textSize="18sp" />
