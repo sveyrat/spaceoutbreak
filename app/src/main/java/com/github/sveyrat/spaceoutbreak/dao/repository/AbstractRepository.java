@@ -7,6 +7,7 @@ import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.Round;
+import com.github.sveyrat.spaceoutbreak.domain.Vote;
 import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
 import com.j256.ormlite.dao.Dao;
 
@@ -30,6 +31,10 @@ public abstract class AbstractRepository {
 
     protected Dao<Round, Long> roundDao() {
         return databaseOpenHelper.roundDao();
+    }
+
+    protected Dao<Vote, Long> voteDao() {
+        return databaseOpenHelper.voteDao();
     }
 
     protected Dao<NightAction, Long> nightActionDao() {

@@ -18,6 +18,15 @@ public class Vote {
     @DatabaseField(foreign = true, foreignAutoRefresh = true, canBeNull = true)
     private Player votedFor;
 
+    public Vote() {
+    }
+
+    public Vote(Round round, Player voter, Player votedFor) {
+        this.round = round;
+        this.voter = voter;
+        this.votedFor = votedFor;
+    }
+
     public Long getId() {
         return id;
     }
