@@ -48,8 +48,8 @@ public class VoteActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(VoteActivity.this);
                 String message = String.format(getResources().getString(R.string.vote_activity_dialog_title), player.getName());
 
-                int tempVote =0;
-                if(voteResults.containsKey(player)&&voteResults.get(player)!=null){
+                int tempVote = 0;
+                if (voteResults.containsKey(player) && voteResults.get(player) != null) {
                     tempVote = getPlayerPositionInCharSequence(playersToVote, voteResults.get(player));
                 }
                 builder.setTitle(message)
@@ -123,21 +123,21 @@ public class VoteActivity extends AppCompatActivity {
         int blankVoteNumber = 0;
         Map<String, Integer> finalResults = new HashMap<String, Integer>();
 
-        while(results.remove(null)){
+        while (results.remove(null)) {
             blankVoteNumber++;
         }
 
         finalResults.put(getResources().getString(R.string.vote_activity_null_vote), nullVoteNumber);
         finalResults.put(getResources().getString(R.string.vote_activity_blank_vote), blankVoteNumber);
 
-        if(nullVoteNumber+blankVoteNumber<players.size()+1){
-            for(Player e:results){
+        if (nullVoteNumber + blankVoteNumber < players.size() + 1) {
+            for (Player e : results) {
                 String name = e.getName();
-                if(finalResults.containsKey(name)){
+                if (finalResults.containsKey(name)) {
                     Integer lastVal = finalResults.get(name);
                     finalResults.remove(name);
-                    finalResults.put(name, lastVal+1);
-                }else{
+                    finalResults.put(name, lastVal + 1);
+                } else {
                     finalResults.put(name, 1);
                 }
             }
@@ -145,9 +145,9 @@ public class VoteActivity extends AppCompatActivity {
 
         AlertDialog.Builder adb = new AlertDialog.Builder(VoteActivity.this);
         String message = finalResults.toString();
-        message=message.replace(",","\n");
-        message=message.replace("{", "");
-        message=message.replace("}", "");
+        message = message.replace(",", "\n");
+        message = message.replace("{", "");
+        message = message.replace("}", "");
         adb.setTitle(getResources().getString(R.string.vote_activity_dialog_result_title));
         adb.setMessage(message);
         adb.setNegativeButton(getResources().getString(R.string.common_return), null);
@@ -163,20 +163,20 @@ public class VoteActivity extends AppCompatActivity {
 
     }
 
-    CharSequence[] putPlayerNamesInCharSequence(List<Player> players){
+    CharSequence[] putPlayerNamesInCharSequence(List<Player> players) {
         List<String> playerNames = new ArrayList<String>();
         playerNames.add(getResources().getString(R.string.vote_activity_blank_vote));
-        for(Player player:players){
+        for (Player player : players) {
             playerNames.add(player.getName());
         }
         CharSequence[] playersNamesInCharSequence = playerNames.toArray(new CharSequence[players.size()]);
         return playersNamesInCharSequence;
     }
 
-    int getPlayerPositionInCharSequence(CharSequence[] names, Player player){
-        int position=0;
-        for(CharSequence s:names){
-            if(s.equals(player.getName())){
+    int getPlayerPositionInCharSequence(CharSequence[] names, Player player) {
+        int position = 0;
+        for (CharSequence s : names) {
+            if (s.equals(player.getName())) {
                 return position;
             }
             position++;

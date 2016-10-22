@@ -20,6 +20,9 @@ public class Round {
     @ForeignCollectionField(orderColumnName = "order")
     private ForeignCollection<NightAction> nightActions;
 
+    @ForeignCollectionField
+    private ForeignCollection<Vote> votes;
+
     public Round() {
     }
 
@@ -58,5 +61,13 @@ public class Round {
 
     public void setNightActions(ForeignCollection<NightAction> nightActions) {
         this.nightActions = nightActions;
+    }
+
+    public ForeignCollection<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(ForeignCollection<Vote> votes) {
+        this.votes = votes;
     }
 }
