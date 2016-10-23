@@ -10,7 +10,6 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".HomeActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,7 +21,7 @@
 
 
         <activity android:name=".NewGameSettingsActivity"
-        android:label="@string/new_game_settings.name"></activity>
+            android:label="@string/new_game_settings.name"></activity>
 
         <activity android:name=".NightBasisActivity"
             android:label="@string/night_basis.name"></activity>

@@ -17,18 +17,18 @@ import android.widget.Toast;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.util.StringUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewGameInputPlayerActivity extends AppCompatActivity {
 
     ArrayAdapter<String> adapter;
-    private List<String> players = new ArrayList<>();
+    private ArrayList<String> players = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         RepositoryManager.init(this);
 
         setContentView(R.layout.activity_new_game_input_player);
@@ -53,8 +53,17 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
             }
         });
 
-        // TODO remove : populate list for testing purposes only
-        adapter.addAll("Annie", "Braum", "Caitlyn", "Dr Mundo", "Ezreal", "Fiddlesticks", "Gragas", "Hecarim", "Illaoi", "Jarvan IV");
+        if (savedInstanceState != null) {
+            players = savedInstanceState.getStringArrayList("players");
+            adapter.addAll(players); // TODO : put outside of condition when default population is removed
+        }else{
+            adapter.addAll("Annie", "Braum", "Caitlyn", "Dr Mundo", "Ezreal", "Fiddlesticks", "Gragas", "Hecarim", "Illaoi", "Jarvan IV"); // TODO remove : populate list for testing purposes only
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        outState.putStringArrayList("players", players);
     }
 
     public void addPlayer(View view) {
