@@ -44,6 +44,29 @@ public class NewGameSettingsActivity extends AppCompatActivity {
         fanaticBox = (CheckBox) findViewById(R.id.checkBox_fanatic);
         genotype = (CheckBox) findViewById(R.id.checkBox_genotype);
         randomize = (CheckBox) findViewById(R.id.checkBox_randomize);
+
+        if (savedInstanceState != null) {
+            psychologistBox.setChecked(savedInstanceState.getBoolean("psychoBoxStatus"));
+            computerScientistBox.setChecked(savedInstanceState.getBoolean("computerScientistBoxStatus"));
+            geneticistBox.setChecked(savedInstanceState.getBoolean("geneBoxStatus"));
+            spyBox.setChecked(savedInstanceState.getBoolean("spyBoxStatus"));
+            hackerBox.setChecked(savedInstanceState.getBoolean("hackerBoxStatus"));
+            fanaticBox.setChecked(savedInstanceState.getBoolean("fanaticBoxStatus"));
+            genotype.setChecked(savedInstanceState.getBoolean("genotypeBoxStatus"));
+            randomize.setChecked(savedInstanceState.getBoolean("randomizeStatus"));
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        outState.putBoolean("psychoBoxStatus",psychologistBox.isChecked());
+        outState.putBoolean("computerScientistBoxStatus",computerScientistBox.isChecked());
+        outState.putBoolean("geneBoxStatus",geneticistBox.isChecked());
+        outState.putBoolean("spyBoxStatus",spyBox.isChecked());
+        outState.putBoolean("hackerBoxStatus",hackerBox.isChecked());
+        outState.putBoolean("fanaticBoxStatus",fanaticBox.isChecked());
+        outState.putBoolean("genotypeBoxStatus",genotype.isChecked());
+        outState.putBoolean("randomizeStatus",randomize.isChecked());
     }
 
     public void validateGameSettings(View view) {
