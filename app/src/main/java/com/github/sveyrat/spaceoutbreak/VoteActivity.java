@@ -10,7 +10,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
@@ -19,6 +18,7 @@ import com.github.sveyrat.spaceoutbreak.dao.repository.VoteRepository;
 import com.github.sveyrat.spaceoutbreak.display.PlayerVoteAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +35,7 @@ public class VoteActivity extends AppCompatActivity {
     private CharSequence[] playersToVote;
     private PlayerVoteAdapter adapter;
     private Map<Player, Player> votes;
+    private GridView gridView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +45,16 @@ public class VoteActivity extends AppCompatActivity {
         votes = new HashMap<Player, Player>();
         setContentView(R.layout.activity_vote);
 
-        adapter = new PlayerVoteAdapter(this, players);
-        GridView gridView = (GridView) findViewById(R.id.vote_list_players);
+
+        if (savedInstanceState != null) {
+            votes = (Map<Player, Player>) savedInstanceState.getSerializable("votes");
+            // adapter.notifyDataSetChanged();
+        }
+        adapter = new PlayerVoteAdapter(this, players, votes);
+        gridView = (GridView) findViewById(R.id.vote_list_players);
         gridView.setAdapter(adapter);
+
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, final View selectedView, int position, long id) {
                 final Player player = adapter.getItem(position);
@@ -76,9 +84,8 @@ public class VoteActivity extends AppCompatActivity {
                                     votes.put(player, null);
                                 }
                                 updateView();
-                                ImageView selectedImageView = (ImageView) selectedView.findViewById(R.id.selected_image);
-                                selectedImageView.setVisibility(View.VISIBLE);
 
+                                // Slight pause before closing AlertDialog
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
                                     @Override
@@ -92,6 +99,11 @@ public class VoteActivity extends AppCompatActivity {
                 builder.show();
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        outState.putSerializable("votes", (Serializable) votes);
     }
 
     public void confirm(View view) {
@@ -139,6 +151,8 @@ public class VoteActivity extends AppCompatActivity {
 
     private void updateView() {
         adapter.setPlayers(players);
+        adapter.setVotes(votes);
+        gridView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
     }

@@ -13,6 +13,7 @@ import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Rom on 05/10/2016.
@@ -22,11 +23,13 @@ public class PlayerVoteAdapter extends BaseAdapter {
 
     private final Context context;
     private List<Player> players;
+    private Map<Player, Player> votes;
 
-    public PlayerVoteAdapter(Context context, List<Player> players) {
+    public PlayerVoteAdapter(Context context, List<Player> players, Map<Player, Player> votes) {
         super();
         this.context = context;
         this.players = players;
+        this.votes = votes;
     }
 
     @Override
@@ -48,9 +51,13 @@ public class PlayerVoteAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Player player = players.get(position);
         View playerView = convertView;
-        if(playerView==null) {
+        if (playerView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             playerView = inflater.inflate(R.layout.player_item, parent, false);
+            if (votes.containsKey(player)) {
+                ImageView selectedImageView = (ImageView) playerView.findViewById(R.id.selected_image);
+                selectedImageView.setVisibility(View.VISIBLE);
+            }
         }
         TextView playerName = (TextView) playerView.findViewById(R.id.name_player_tv);
         playerName.setText(player.getName());
@@ -61,6 +68,10 @@ public class PlayerVoteAdapter extends BaseAdapter {
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+
+    public void setVotes(Map<Player, Player> votes) {
+        this.votes = votes;
     }
 
 }
