@@ -56,7 +56,7 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             players = savedInstanceState.getStringArrayList("players");
             adapter.addAll(players); // TODO : put outside of condition when default population is removed
-        }else{
+        } else {
             adapter.addAll("Annie", "Braum", "Caitlyn", "Dr Mundo", "Ezreal", "Fiddlesticks", "Gragas", "Hecarim", "Illaoi", "Jarvan IV"); // TODO remove : populate list for testing purposes only
         }
     }

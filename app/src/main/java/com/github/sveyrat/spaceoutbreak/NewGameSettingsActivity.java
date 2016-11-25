@@ -59,14 +59,14 @@ public class NewGameSettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
-        outState.putBoolean("psychoBoxStatus",psychologistBox.isChecked());
-        outState.putBoolean("computerScientistBoxStatus",computerScientistBox.isChecked());
-        outState.putBoolean("geneBoxStatus",geneticistBox.isChecked());
-        outState.putBoolean("spyBoxStatus",spyBox.isChecked());
-        outState.putBoolean("hackerBoxStatus",hackerBox.isChecked());
-        outState.putBoolean("fanaticBoxStatus",fanaticBox.isChecked());
-        outState.putBoolean("genotypeBoxStatus",genotype.isChecked());
-        outState.putBoolean("randomizeStatus",randomize.isChecked());
+        outState.putBoolean("psychoBoxStatus", psychologistBox.isChecked());
+        outState.putBoolean("computerScientistBoxStatus", computerScientistBox.isChecked());
+        outState.putBoolean("geneBoxStatus", geneticistBox.isChecked());
+        outState.putBoolean("spyBoxStatus", spyBox.isChecked());
+        outState.putBoolean("hackerBoxStatus", hackerBox.isChecked());
+        outState.putBoolean("fanaticBoxStatus", fanaticBox.isChecked());
+        outState.putBoolean("genotypeBoxStatus", genotype.isChecked());
+        outState.putBoolean("randomizeStatus", randomize.isChecked());
     }
 
     public void validateGameSettings(View view) {

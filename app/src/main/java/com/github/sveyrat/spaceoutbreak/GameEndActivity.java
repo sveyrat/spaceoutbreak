@@ -37,7 +37,7 @@ public class GameEndActivity extends AppCompatActivity {
         Intent newGameIntent = new Intent(this, NewGameInputPlayerActivity.class);
         startActivity(newGameIntent);
     }
-    
+
     @Override
     public void onBackPressed() {
     }
