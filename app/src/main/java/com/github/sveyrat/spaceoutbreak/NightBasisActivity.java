@@ -3,12 +3,14 @@ package com.github.sveyrat.spaceoutbreak;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
+import com.github.sveyrat.spaceoutbreak.dao.dto.RoundStep;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.display.PlayerNightAdapter;
 
@@ -97,12 +99,23 @@ public class NightBasisActivity extends AppCompatActivity {
             stepManager = RepositoryManager.getInstance().nightActionRepository().nextStep(stepManager.currentlyPlayedRole());
 
             if (stepManager == null) {
-                if (RepositoryManager.getInstance().gameInformationRepository().isGameFinished()) {
+                RoundStep nextStep = RepositoryManager.getInstance().gameInformationRepository().nextStep();
+                if (RoundStep.END == nextStep) {
                     startActivity(new Intent(this, GameEndActivity.class));
                     return;
                 }
-                startActivity(new Intent(this, VoteActivity.class));
-                return;
+                if (RoundStep.CAPTAIN_ELECTION == nextStep) {
+                    // TODO go to captain election activity here instead of day activity
+                    startActivity(new Intent(this, VoteActivity.class));
+                    return;
+                }
+                if (RoundStep.DAY == nextStep) {
+                    startActivity(new Intent(this, VoteActivity.class));
+                    return;
+                }
+                String message = "Game next step is inconsistent with current status. Next step is " + nextStep.toString();
+                Log.e(NightBasisActivity.class.getName(), message);
+                throw new RuntimeException(message);
             }
 
             updateView();

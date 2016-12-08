@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,7 +14,9 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
+import com.github.sveyrat.spaceoutbreak.dao.dto.RoundStep;
 import com.github.sveyrat.spaceoutbreak.dao.dto.VoteResult;
+import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.dao.repository.VoteRepository;
 import com.github.sveyrat.spaceoutbreak.display.PlayerVoteAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
@@ -138,12 +141,25 @@ public class VoteActivity extends AppCompatActivity {
         adb.setPositiveButton(getResources().getString(R.string.common_validate), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (RepositoryManager.getInstance().gameInformationRepository().isGameFinished()) {
+                RoundStep nextStep = RepositoryManager.getInstance().gameInformationRepository().nextStep();
+                if (RoundStep.END == nextStep) {
                     startActivity(new Intent(VoteActivity.this, GameEndActivity.class));
                     return;
                 }
-                RepositoryManager.getInstance().nightActionRepository().newRound();
-                startActivity(new Intent(VoteActivity.this, NightBasisActivity.class));
+                if (RoundStep.CAPTAIN_ELECTION == nextStep) {
+                    // TODO go to captain election activity here instead of the night round
+                    RepositoryManager.getInstance().nightActionRepository().newRound();
+                    startActivity(new Intent(VoteActivity.this, NightBasisActivity.class));
+                    return;
+                }
+                if (RoundStep.NEW == nextStep) {
+                    RepositoryManager.getInstance().nightActionRepository().newRound();
+                    startActivity(new Intent(VoteActivity.this, NightBasisActivity.class));
+                    return;
+                }
+                String message = "Game next step is inconsistent with current status. Next step is " + nextStep.toString();
+                Log.e(VoteActivity.class.getName(), message);
+                throw new RuntimeException(message);
             }
         });
         adb.show();

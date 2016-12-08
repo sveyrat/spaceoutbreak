@@ -101,6 +101,7 @@ public class NewGameSettingsActivity extends AppCompatActivity {
         RepositoryManager.getInstance().initGameRepository().initializeRoles(additionalRoles, randomize.isChecked(), genotype.isChecked());
         RepositoryManager.getInstance().nightActionRepository().newRound();
 
+        // TODO here there should be a step for the doctors to recognize themself, then the captain election
         Intent nightBasisActivityIntent = new Intent(this, NightBasisActivity.class);
         startActivity(nightBasisActivityIntent);
     }

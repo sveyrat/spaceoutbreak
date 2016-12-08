@@ -78,7 +78,7 @@ public class VoteRepository extends AbstractRepository {
         playerDao().update(mostVotedFor);
     }
 
-    private VoteResult voteResult() {
+    public VoteResult voteResult() {
         VoteResult voteResult = new VoteResult();
         Round currentRound = currentRound();
         List<Vote> votes = new ArrayList<>(currentRound.getVotes());
