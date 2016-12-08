@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.github.sveyrat.spaceoutbreak.dao.DatabaseOpenHelper;
 import com.github.sveyrat.spaceoutbreak.dao.dto.VoteResult;
+import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.Round;
 import com.github.sveyrat.spaceoutbreak.domain.Vote;
@@ -57,8 +58,9 @@ public class VoteRepository extends AbstractRepository {
      */
     public void captainVote(Player player) {
         try {
+            Game currentGame = currentGame();
             Round currentRound = currentRound();
-            Vote vote = new Vote(currentRound, currentRound.getCaptain(), player);
+            Vote vote = new Vote(currentRound, currentGame.getCaptain(), player);
             voteDao().create(vote);
 
             killMostVotedFor();
@@ -91,5 +93,22 @@ public class VoteRepository extends AbstractRepository {
             }
         }
         return voteResult;
+    }
+
+    public void defineCaptain(Player player) {
+        Game currentGame = currentGame();
+        if (currentGame.getCaptain() != null && currentGame.getCaptain().isAlive()) {
+            String message = "Attempting to change captain when there is already an alive one";
+            Log.e(VoteRepository.class.getName(), message);
+            throw new RuntimeException(message);
+        }
+        currentGame.setCaptain(player);
+        try {
+            gameDao().update(currentGame);
+        } catch (SQLException e) {
+            String message = "Could not define captain";
+            Log.e(VoteRepository.class.getName(), message);
+            throw new RuntimeException(message, e);
+        }
     }
 }

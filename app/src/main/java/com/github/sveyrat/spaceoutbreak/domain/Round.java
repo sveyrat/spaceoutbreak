@@ -17,9 +17,6 @@ public class Round {
     @DatabaseField(canBeNull = false)
     private int order;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true)
-    private Player captain;
-
     @ForeignCollectionField(orderColumnName = "order")
     private ForeignCollection<NightAction> nightActions;
 
@@ -32,10 +29,6 @@ public class Round {
     public Round(Game game) {
         this.game = game;
         this.order = game.getRounds().size() + 1;
-        Round latestRound = game.latestRound();
-        if (latestRound != null && latestRound.getCaptain() != null && latestRound.getCaptain().isAlive()) {
-            this.captain = latestRound.getCaptain();
-        }
     }
 
     public Long getId() {
@@ -60,14 +53,6 @@ public class Round {
 
     public void setOrder(int order) {
         this.order = order;
-    }
-
-    public Player getCaptain() {
-        return captain;
-    }
-
-    public void setCaptain(Player captain) {
-        this.captain = captain;
     }
 
     public ForeignCollection<NightAction> getNightActions() {

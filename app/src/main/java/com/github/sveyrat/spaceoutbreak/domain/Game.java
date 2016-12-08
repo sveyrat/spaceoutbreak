@@ -24,6 +24,9 @@ public class Game {
     @ForeignCollectionField(orderColumnName = "order")
     private ForeignCollection<Round> rounds;
 
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Player captain;
+
     public Game() {
         this.creationDate = new Date();
     }
@@ -58,6 +61,14 @@ public class Game {
 
     public void setRounds(ForeignCollection<Round> rounds) {
         this.rounds = rounds;
+    }
+
+    public Player getCaptain() {
+        return captain;
+    }
+
+    public void setCaptain(Player captain) {
+        this.captain = captain;
     }
 
     public Round latestRound() {

@@ -87,6 +87,7 @@ public class GameInformationRepository extends AbstractRepository {
         if (isGameFinished()) {
             return RoundStep.END;
         }
+        Game currentGame = currentGame();
         Round currentRound = currentRound();
         List<NightAction> nightActions = new ArrayList<>(currentRound.getNightActions());
         if (nightActions != null && !nightActions.isEmpty()) {
@@ -100,7 +101,7 @@ public class GameInformationRepository extends AbstractRepository {
             // Day voting step has been started but not finished
             return RoundStep.DAY;
         }
-        if (currentRound.getCaptain() == null || !currentRound.getCaptain().isAlive()) {
+        if (currentGame.getCaptain() == null || !currentGame.getCaptain().isAlive()) {
             return RoundStep.CAPTAIN_ELECTION;
         }
         if (nightActions == null || nightActions.isEmpty()) {
