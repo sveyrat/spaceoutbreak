@@ -11,6 +11,7 @@ import com.github.sveyrat.spaceoutbreak.domain.NightAction;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.Round;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,19 @@ public class GameInformationRepository extends AbstractRepository {
 
     public GameInformationRepository(DatabaseOpenHelper databaseOpenHelper) {
         super(databaseOpenHelper);
+    }
+
+    /**
+     * @return the list of all persisted games
+     */
+    public List<Game> listGames() {
+        try {
+            return new ArrayList<>(gameDao().queryForAll());
+        } catch (SQLException e) {
+            String message = "Error while retrieving game list";
+            Log.e(GameInformationRepository.class.getName(), message, e);
+            throw new RuntimeException(message, e);
+        }
     }
 
     /**
