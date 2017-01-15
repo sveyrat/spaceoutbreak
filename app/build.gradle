@@ -25,4 +25,5 @@ dependencies {
     // ORM Lite
     compile 'com.j256.ormlite:ormlite-core:5.0'
     compile 'com.j256.ormlite:ormlite-android:5.0'
+    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
 }

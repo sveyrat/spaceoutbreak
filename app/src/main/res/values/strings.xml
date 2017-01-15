@@ -107,4 +107,8 @@
     <string name="game_end_activity.new_game_text_button">Nouvelle partie</string>
     <string name="game_end_activity.end_text_button">Quitter</string>
 
+    <!-- CAPTAIN ELECTION ACTIVITY -->
+    <string name="captain_election_activity.activity_title">Election du capitaine</string>
+    <string name="captain_election_error_missVote">Choisissez un joueur !</string>
+    <string name="captain_election.validate">Choisir %1$s comme capitaine ?</string>
 </resources>
