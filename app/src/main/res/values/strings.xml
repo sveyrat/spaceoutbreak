@@ -97,6 +97,7 @@
     <string name="vote_activity.null_vote">Nul</string>
     <string name="vote_activity.error.atLeastOneVote">Au moins un vote doit être exprimé pour valider le vote</string>
     <string name="vote_activity.dialog_result.title">Résultats du vote</string>
+    <string name="vote_activity_tie_title">Egalité ! Cpt %1$s doit choisir</string>
 
 
     <!-- GAME END ACTIVITY -->

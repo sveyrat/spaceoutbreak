@@ -2,7 +2,9 @@ package com.github.sveyrat.spaceoutbreak.dao.dto;
 
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class VoteResult {
@@ -51,6 +53,20 @@ public class VoteResult {
         }
         return false;
     }
+
+    public List<Player> getTiedPlayers(){
+        List<Player> result = new ArrayList<Player>();;
+        int nbVotesMax = results.get(mostVotedFor());
+        for (Map.Entry<Player, Integer> resultEntry : results.entrySet()) {
+            if(resultEntry.getValue()==nbVotesMax){
+                result.add(resultEntry.getKey());
+            }
+        }
+        return result;
+    }
+
+
+
 
     public void addABlankVote() {
         numberOfBlankVotes++;

@@ -2,6 +2,7 @@ package com.github.sveyrat.spaceoutbreak;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v7.app.AlertDialog;
@@ -41,10 +42,11 @@ public class CaptainElectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vote);
 
 
-        if (savedInstanceState != null) {
-            voted = (Player) savedInstanceState.getSerializable("voted");
+        /*if (savedInstanceState != null) {
+            // TODO : correct this to avoid orientation change issues
+            //voted = (Player) savedInstanceState.getSerializable("voted");
 
-        }
+        }*/
         adapter = new CaptainVoteAdapter(this, players, voted);
         gridView = (GridView) findViewById(R.id.vote_list_players);
         gridView.setAdapter(adapter);
@@ -66,10 +68,11 @@ public class CaptainElectionActivity extends AppCompatActivity {
         });
 
     }
-    @Override
+    /*@Override
     protected void onSaveInstanceState(final Bundle outState) {
-        outState.putSerializable("voted", (Serializable) voted);
-    }
+        // TODO : make this work, as player object can not be cast to Serializable
+        //outState.putSerializable("voted", (Serializable) voted);
+    }*/
 
     public void confirm(View view) {
         if (voted == null) {
@@ -86,9 +89,14 @@ public class CaptainElectionActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     RepositoryManager.getInstance().voteRepository().defineCaptain(voted);
                     RoundStep nextStep = RepositoryManager.getInstance().gameInformationRepository().nextStep();
-                    Toast toast = Toast.makeText(CaptainElectionActivity.this, ""+nextStep, Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
+                    if (RoundStep.NIGHT == nextStep) {
+                        startActivity(new Intent(CaptainElectionActivity.this, NightBasisActivity.class));
+                        return;
+                    }
+                    if (RoundStep.DAY == nextStep) {
+                        startActivity(new Intent(CaptainElectionActivity.this, VoteActivity.class));
+                        return;
+                    }
                 }
             });
             adb.show();

@@ -19,10 +19,13 @@ import com.github.sveyrat.spaceoutbreak.dao.dto.VoteResult;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.dao.repository.VoteRepository;
 import com.github.sveyrat.spaceoutbreak.display.PlayerVoteAdapter;
+import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,7 +120,7 @@ public class VoteActivity extends AppCompatActivity {
             return;
         }
 
-        VoteRepository voteRepository = RepositoryManager.getInstance().voteRepository();
+        final VoteRepository voteRepository = RepositoryManager.getInstance().voteRepository();
         VoteResult voteResult = voteRepository.vote(votes);
 
         String message = "";
@@ -130,8 +133,33 @@ public class VoteActivity extends AppCompatActivity {
         }
 
         if (voteResult.draw()) {
-            // TODO
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(VoteActivity.this);
+            String title = String.format(getResources().getString(R.string.vote_activity_tie_title), "nom du capitaine");// CF gdoc on how to get this ID here
+            final List<Player> tied = voteResult.getTiedPlayers();
+            final int chosenPos[] = new int[1];
+            CharSequence[] tied_names = Arrays.copyOfRange(putPlayerNamesInCharSequence(tied), 1, tied.size()+1);
+            builder.setTitle(title)
+                    .setSingleChoiceItems(tied_names, -1, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(final DialogInterface dialog, int which) {
+                            chosenPos[0] = which;
+                        }
+
+                    });
+
+            builder.setPositiveButton(R.string.common_validate, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    voteRepository.captainVote(tied.get(chosenPos[0]));
+
+                }
+            });
+            builder.setNegativeButton(R.string.common_return, null);
+            builder.show();
+
             return;
+
         }
 
         AlertDialog.Builder adb = new AlertDialog.Builder(VoteActivity.this);
@@ -147,9 +175,7 @@ public class VoteActivity extends AppCompatActivity {
                     return;
                 }
                 if (RoundStep.CAPTAIN_ELECTION == nextStep) {
-                    // TODO go to captain election activity here instead of the night round
-                    RepositoryManager.getInstance().nightActionRepository().newRound();
-                    startActivity(new Intent(VoteActivity.this, NightBasisActivity.class));
+                    startActivity(new Intent(VoteActivity.this, CaptainElectionActivity.class));
                     return;
                 }
                 if (RoundStep.NEW == nextStep) {

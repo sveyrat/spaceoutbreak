@@ -105,8 +105,7 @@ public class NightBasisActivity extends AppCompatActivity {
                     return;
                 }
                 if (RoundStep.CAPTAIN_ELECTION == nextStep) {
-                    // TODO go to captain election activity here instead of day activity
-                    startActivity(new Intent(this, VoteActivity.class));
+                    startActivity(new Intent(this, CaptainElectionActivity.class));
                     return;
                 }
                 if (RoundStep.DAY == nextStep) {
