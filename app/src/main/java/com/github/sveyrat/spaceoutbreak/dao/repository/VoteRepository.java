@@ -111,4 +111,9 @@ public class VoteRepository extends AbstractRepository {
             throw new RuntimeException(message, e);
         }
     }
+
+    public Player getCaptain() {
+        Game currentGame = currentGame();
+        return currentGame.getCaptain();
+    }
 }

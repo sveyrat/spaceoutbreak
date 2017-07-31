@@ -135,7 +135,7 @@ public class VoteActivity extends AppCompatActivity {
         if (voteResult.draw()) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(VoteActivity.this);
-            String title = String.format(getResources().getString(R.string.vote_activity_tie_title), "nom du capitaine");// CF gdoc on how to get this ID here
+            String title = String.format(getResources().getString(R.string.vote_activity_tie_title), voteRepository.getCaptain().getName());// CF gdoc on how to get this ID here
             final List<Player> tied = voteResult.getTiedPlayers();
             final int chosenPos[] = new int[1];
             CharSequence[] tied_names = Arrays.copyOfRange(putPlayerNamesInCharSequence(tied), 1, tied.size()+1);
