@@ -13,7 +13,6 @@ import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Rom on 15/01/2017.

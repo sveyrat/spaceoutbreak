@@ -20,6 +20,7 @@
 
     <Button
         style="@style/buttonStyle"
+        android:id="@+id/home.new_game_btn"
         android:background="@drawable/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,5 +30,33 @@
         android:layout_margin="@dimen/activity_button_margin"
         android:text="@string/home.new_game"
         android:onClick="newGame"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home.new_game_btn"
+        android:background="@drawable/general_border">
+
+        <TextView
+            style="@style/buttonStyle"
+            android:background="@drawable/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/home.load_txt"
+            android:layout_weight="1"
+            />
+
+        <ListView
+            android:id="@+id/home_previous_game_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="0sp"
+            android:layout_weight="5"
+            android:alpha="0.9">
+        </ListView>
+
+
+    </LinearLayout>
 
 </RelativeLayout>
