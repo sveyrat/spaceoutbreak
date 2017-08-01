@@ -10,6 +10,8 @@ import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.Round;
+import com.j256.ormlite.db.DatabaseType;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,9 +26,9 @@ public class GameInformationRepository extends AbstractRepository {
     /**
      * @return the list of all persisted games
      */
-    public List<Game> listGames() {
+    public List<Game> lastTwoGames() {
         try {
-            return new ArrayList<>(gameDao().queryForAll());
+            return new ArrayList<>(gameDao().queryBuilder().orderBy(Game.CREATION_DATE_FIELD_NAME, false).limit(2l).query());
         } catch (SQLException e) {
             String message = "Error while retrieving game list";
             Log.e(GameInformationRepository.class.getName(), message, e);
