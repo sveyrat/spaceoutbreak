@@ -1,13 +1,12 @@
 package com.github.sveyrat.spaceoutbreak.dao.repository;
 
-import android.util.Log;
-
 import com.github.sveyrat.spaceoutbreak.dao.DatabaseOpenHelper;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.Round;
 import com.github.sveyrat.spaceoutbreak.domain.Vote;
+import com.github.sveyrat.spaceoutbreak.log.Logger;
 import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
 import com.j256.ormlite.dao.Dao;
 
@@ -46,7 +45,7 @@ public abstract class AbstractRepository {
             return gameDao().queryForId(DataHolderUtil.getInstance().getCurrentGameId());
         } catch (SQLException e) {
             String message = "Error while attempting to load the current game with id " + DataHolderUtil.getInstance().getCurrentGameId();
-            Log.e(AbstractRepository.class.getName(), message);
+            Logger.getInstance().error(AbstractRepository.class.getName(), message);
             throw new RuntimeException(message, e);
         }
     }
@@ -56,7 +55,7 @@ public abstract class AbstractRepository {
             return roundDao().queryForId(DataHolderUtil.getInstance().getCurrentRoundId());
         } catch (SQLException e) {
             String message = "Error while attempting to load the current round with id " + DataHolderUtil.getInstance().getCurrentRoundId();
-            Log.e(AbstractRepository.class.getName(), message);
+            Logger.getInstance().error(AbstractRepository.class.getName(), message);
             throw new RuntimeException(message, e);
         }
     }

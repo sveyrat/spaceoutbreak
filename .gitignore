@@ -8,5 +8,6 @@
 .DS_Store
 /build
 /captures
+<<<<<<< HEAD
 /app/build.gradle
-/gradle/wrapper/gradle-wrapper.properties
+/gradle/**

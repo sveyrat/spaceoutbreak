@@ -1,13 +1,12 @@
 package com.github.sveyrat.spaceoutbreak.dao.repository;
 
-import android.util.Log;
-
 import com.github.sveyrat.spaceoutbreak.dao.DatabaseOpenHelper;
 import com.github.sveyrat.spaceoutbreak.dao.dto.VoteResult;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.Round;
 import com.github.sveyrat.spaceoutbreak.domain.Vote;
+import com.github.sveyrat.spaceoutbreak.log.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class VoteRepository extends AbstractRepository {
             Round currentRound = currentRound();
             if (currentRound.getVotes() != null && !currentRound.getVotes().isEmpty()) {
                 String message = "Attempting to persist votes on a round that already has votes";
-                Log.e(VoteRepository.class.getName(), message);
+                Logger.getInstance().error(VoteRepository.class.getName(), message);
                 throw new RuntimeException(message);
             }
             for (Map.Entry<Player, Player> voteEntry : votes.entrySet()) {
@@ -46,7 +45,7 @@ public class VoteRepository extends AbstractRepository {
             return voteResult;
         } catch (SQLException e) {
             String message = "Could not save votes";
-            Log.e(VoteRepository.class.getName(), message);
+            Logger.getInstance().error(VoteRepository.class.getName(), message);
             throw new RuntimeException(message, e);
         }
     }
@@ -66,7 +65,7 @@ public class VoteRepository extends AbstractRepository {
             killMostVotedFor();
         } catch (SQLException e) {
             String message = "Could not save captain vote";
-            Log.e(VoteRepository.class.getName(), message);
+            Logger.getInstance().error(VoteRepository.class.getName(), message);
             throw new RuntimeException(message, e);
         }
     }
@@ -99,7 +98,7 @@ public class VoteRepository extends AbstractRepository {
         Game currentGame = currentGame();
         if (currentGame.getCaptain() != null && currentGame.getCaptain().isAlive()) {
             String message = "Attempting to change captain when there is already an alive one";
-            Log.e(VoteRepository.class.getName(), message);
+            Logger.getInstance().error(VoteRepository.class.getName(), message);
             throw new RuntimeException(message);
         }
         currentGame.setCaptain(player);
@@ -107,7 +106,7 @@ public class VoteRepository extends AbstractRepository {
             gameDao().update(currentGame);
         } catch (SQLException e) {
             String message = "Could not define captain";
-            Log.e(VoteRepository.class.getName(), message);
+            Logger.getInstance().error(VoteRepository.class.getName(), message);
             throw new RuntimeException(message, e);
         }
     }

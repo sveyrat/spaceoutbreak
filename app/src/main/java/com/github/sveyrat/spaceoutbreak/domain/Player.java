@@ -5,23 +5,25 @@ import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
+
 @DatabaseTable(tableName = "player")
-public class Player {
+public class Player implements Serializable {
 
     @DatabaseField(generatedId = true)
     private Long id;
 
     @DatabaseField(foreign = true, foreignAutoRefresh = true, canBeNull = false)
-    private Game game;
+    private transient Game game;
 
     @DatabaseField(canBeNull = false)
     private String name;
 
     @DatabaseField(canBeNull = false)
-    private Role role = Role.ASTRONAUT;
+    private transient Role role = Role.ASTRONAUT;
 
     @DatabaseField(canBeNull = false)
-    private Genome genome = Genome.NORMAL;
+    private transient Genome genome = Genome.NORMAL;
 
     @DatabaseField(canBeNull = false)
     private boolean mutant = false;

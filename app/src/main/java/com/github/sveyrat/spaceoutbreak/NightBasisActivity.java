@@ -3,24 +3,21 @@ package com.github.sveyrat.spaceoutbreak;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.dto.RoundStep;
-import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.display.PlayerNightAdapter;
-
-import android.widget.ImageView;
-
 import com.github.sveyrat.spaceoutbreak.display.RoleNightAdapter;
 import com.github.sveyrat.spaceoutbreak.display.nightaction.MutantsMutateOrKillStepManager;
 import com.github.sveyrat.spaceoutbreak.display.nightaction.StepManager;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
+import com.github.sveyrat.spaceoutbreak.log.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +110,7 @@ public class NightBasisActivity extends AppCompatActivity {
                     return;
                 }
                 String message = "Game next step is inconsistent with current status. Next step is " + nextStep.toString();
-                Log.e(NightBasisActivity.class.getName(), message);
+                Logger.getInstance().error(NightBasisActivity.class.getName(), message);
                 throw new RuntimeException(message);
             }
 

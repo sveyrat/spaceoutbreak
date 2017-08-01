@@ -1,7 +1,6 @@
 package com.github.sveyrat.spaceoutbreak.display.nightaction;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.github.sveyrat.spaceoutbreak.R;
@@ -9,6 +8,7 @@ import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
+import com.github.sveyrat.spaceoutbreak.log.Logger;
 
 public class ComputerScientistStepManager extends StepManager {
 
@@ -24,7 +24,7 @@ public class ComputerScientistStepManager extends StepManager {
     @Override
     public boolean validateStep(Context context) {
         String message = "The computer scientist step validation should never be called.";
-        Log.e(ComputerScientistStepManager.class.getName(), message);
+        Logger.getInstance().error(ComputerScientistStepManager.class.getName(), message);
         throw new RuntimeException(message);
     }
 

@@ -1,13 +1,13 @@
 package com.github.sveyrat.spaceoutbreak.display.nightaction;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
+import com.github.sveyrat.spaceoutbreak.log.Logger;
 
 public class PsychologistStepManager extends StepManager {
 
@@ -37,7 +37,7 @@ public class PsychologistStepManager extends StepManager {
         Player inspectedPlayer = selectedPlayers.get(0);
         if (inspectedPlayerIsMutant == null) {
             String message = "Trying to display the psychologist inspection result, when it has not been done";
-            Log.e(PsychologistStepManager.class.getName(), message);
+            Logger.getInstance().error(PsychologistStepManager.class.getName(), message);
             throw new RuntimeException(message);
         }
         String mutantOrSane = inspectedPlayerIsMutant ? context.getResources().getString(R.string.night_basis_information_playerStatus_mutant) : context.getResources().getString(R.string.night_basis_information_playerStatus_sane);

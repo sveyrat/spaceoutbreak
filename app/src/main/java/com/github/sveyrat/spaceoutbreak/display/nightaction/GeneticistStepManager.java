@@ -1,14 +1,13 @@
 package com.github.sveyrat.spaceoutbreak.display.nightaction;
 
 import android.content.Context;
-import android.util.Log;
-
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Genome;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
+import com.github.sveyrat.spaceoutbreak.log.Logger;
 
 public class GeneticistStepManager extends StepManager {
 
@@ -38,7 +37,7 @@ public class GeneticistStepManager extends StepManager {
         Player inspectedPlayer = selectedPlayers.get(0);
         if (inspectedPlayerGenome == null) {
             String message = "Trying to display the geneticist inspection result, when it has not been done";
-            Log.e(GeneticistStepManager.class.getName(), message);
+            Logger.getInstance().error(GeneticistStepManager.class.getName(), message);
             throw new RuntimeException(message);
         }
         String genomeLabel = context.getResources().getString(inspectedPlayerGenome.getLabelResourcesId());

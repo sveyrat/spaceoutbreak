@@ -1,7 +1,6 @@
 package com.github.sveyrat.spaceoutbreak.display.nightaction;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -10,6 +9,7 @@ import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
+import com.github.sveyrat.spaceoutbreak.log.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +86,7 @@ public class HackerStepManager extends StepManager {
                     inspectedPlayer.getName(), //
                     genomeLabel);
         }
-        Log.e(HackerStepManager.class.getName(), "The hacked role can not be recognized");
+        Logger.getInstance().error(HackerStepManager.class.getName(), "The hacked role can not be recognized");
         return "";
     }
 

@@ -1,12 +1,11 @@
 package com.github.sveyrat.spaceoutbreak.dao.repository;
 
-import android.util.Log;
-
 import com.github.sveyrat.spaceoutbreak.dao.DatabaseOpenHelper;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Genome;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
+import com.github.sveyrat.spaceoutbreak.log.Logger;
 import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
 
 import java.sql.SQLException;
@@ -35,10 +34,10 @@ public class InitGameRepository extends AbstractRepository {
                 playerDao().create(new Player(game, playerName));
             }
             DataHolderUtil.getInstance().setCurrentGameId(game.getId());
-            Log.i(InitGameRepository.class.getName(), "Created game " + game.getId() + " with " + playerNames.size() + " players");
+            Logger.getInstance().info(InitGameRepository.class.getName(), "Created game " + game.getId() + " with " + playerNames.size() + " players");
         } catch (SQLException e) {
             String message = "Error while attempting to create a game";
-            Log.e(InitGameRepository.class.getName(), message, e);
+            Logger.getInstance().error(InitGameRepository.class.getName(), message, e);
             throw new RuntimeException(message, e);
         }
     }
@@ -70,7 +69,7 @@ public class InitGameRepository extends AbstractRepository {
             }
         } catch (SQLException e) {
             String message = "Error while attempting to initialize a game";
-            Log.e(InitGameRepository.class.getName(), message, e);
+            Logger.getInstance().error(InitGameRepository.class.getName(), message, e);
             throw new RuntimeException(message, e);
         }
     }
@@ -99,7 +98,7 @@ public class InitGameRepository extends AbstractRepository {
         selectedPlayer.setRole(role);
         playerDao().update(selectedPlayer);
         players.remove(randomIndex);
-        Log.i(InitGameRepository.class.getName(), "Affected role " + role + " to player " + selectedPlayer.getName());
+        Logger.getInstance().info(InitGameRepository.class.getName(), "Affected role " + role + " to player " + selectedPlayer.getName());
         return selectedPlayer;
     }
 
@@ -126,6 +125,6 @@ public class InitGameRepository extends AbstractRepository {
         selectedPlayer.setGenome(genome);
         playerDao().update(selectedPlayer);
         players.remove(randomIndex);
-        Log.i(InitGameRepository.class.getName(), "Affected genome " + genome + " to player " + selectedPlayer.getName());
+        Logger.getInstance().info(InitGameRepository.class.getName(), "Affected genome " + genome + " to player " + selectedPlayer.getName());
     }
 }

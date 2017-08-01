@@ -19,8 +19,6 @@ import com.github.sveyrat.spaceoutbreak.display.CaptainVoteAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 
 
-import java.io.Serializable;
-
 import java.util.List;
 
 
@@ -37,16 +35,15 @@ public class CaptainElectionActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         RepositoryManager.init(this);
         players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
         setContentView(R.layout.activity_vote);
 
 
-        /*if (savedInstanceState != null) {
-            // TODO : correct this to avoid orientation change issues
-            //voted = (Player) savedInstanceState.getSerializable("voted");
-
-        }*/
+        if (savedInstanceState != null) {
+            voted = (Player) savedInstanceState.getSerializable("voted");
+        }
         adapter = new CaptainVoteAdapter(this, players, voted);
         gridView = (GridView) findViewById(R.id.vote_list_players);
         gridView.setAdapter(adapter);
@@ -68,11 +65,11 @@ public class CaptainElectionActivity extends AppCompatActivity {
         });
 
     }
-    /*@Override
+
+    @Override
     protected void onSaveInstanceState(final Bundle outState) {
-        // TODO : make this work, as player object can not be cast to Serializable
-        //outState.putSerializable("voted", (Serializable) voted);
-    }*/
+        outState.putSerializable("voted", voted);
+    }
 
     public void confirm(View view) {
         if (voted == null) {

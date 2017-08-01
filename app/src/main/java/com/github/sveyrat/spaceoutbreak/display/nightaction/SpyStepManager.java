@@ -1,7 +1,6 @@
 package com.github.sveyrat.spaceoutbreak.display.nightaction;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
@@ -9,6 +8,7 @@ import com.github.sveyrat.spaceoutbreak.dao.dto.SpyInspectionResult;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
+import com.github.sveyrat.spaceoutbreak.log.Logger;
 
 public class SpyStepManager extends StepManager {
 
@@ -38,7 +38,7 @@ public class SpyStepManager extends StepManager {
         Player inspectedPlayer = selectedPlayers.get(0);
         if (spyInspectionResult == null) {
             String message = "Trying to display the spy inspection result, when it has not been done";
-            Log.e(SpyStepManager.class.getName(), message);
+            Logger.getInstance().error(SpyStepManager.class.getName(), message);
             throw new RuntimeException(message);
         }
         String inspectionResult = String.format(context.getResources().getString(R.string.night_basis_information_spy_introduction), inspectedPlayer.getName());

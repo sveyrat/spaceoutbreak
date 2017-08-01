@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +18,7 @@ import com.github.sveyrat.spaceoutbreak.dao.dto.VoteResult;
 import com.github.sveyrat.spaceoutbreak.dao.repository.VoteRepository;
 import com.github.sveyrat.spaceoutbreak.display.PlayerVoteAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
+import com.github.sveyrat.spaceoutbreak.log.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +41,7 @@ public class VoteActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         RepositoryManager.init(this);
         players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
         playersToVote = putPlayerNamesInCharSequence(players);
@@ -105,7 +106,7 @@ public class VoteActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
-        //outState.putSerializable("votes", (Serializable) votes);
+        outState.putSerializable("votes", new HashMap<>(votes));
     }
 
     public void confirm(View view) {
@@ -181,7 +182,7 @@ public class VoteActivity extends AppCompatActivity {
                     return;
                 }
                 String message = "Game next step is inconsistent with current status. Next step is " + nextStep.toString();
-                Log.e(VoteActivity.class.getName(), message);
+                Logger.getInstance().error(VoteActivity.class.getName(), message);
                 throw new RuntimeException(message);
             }
         });

@@ -1,7 +1,5 @@
 package com.github.sveyrat.spaceoutbreak.dao.repository;
 
-import android.util.Log;
-
 import com.github.sveyrat.spaceoutbreak.dao.DatabaseOpenHelper;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.dto.RoundStep;
@@ -10,8 +8,7 @@ import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.Round;
-import com.j256.ormlite.db.DatabaseType;
-import com.j256.ormlite.stmt.QueryBuilder;
+import com.github.sveyrat.spaceoutbreak.log.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,7 +28,7 @@ public class GameInformationRepository extends AbstractRepository {
             return new ArrayList<>(gameDao().queryBuilder().orderBy(Game.CREATION_DATE_FIELD_NAME, false).limit(2l).query());
         } catch (SQLException e) {
             String message = "Error while retrieving game list";
-            Log.e(GameInformationRepository.class.getName(), message, e);
+            Logger.getInstance().error(GameInformationRepository.class.getName(), message, e);
             throw new RuntimeException(message, e);
         }
     }
@@ -75,7 +72,7 @@ public class GameInformationRepository extends AbstractRepository {
                 alivePlayers.add(player);
             }
         }
-        Log.i(GameInformationRepository.class.getName(), "Loaded " + alivePlayers.size() + " alive players");
+        Logger.getInstance().info(GameInformationRepository.class.getName(), "Loaded " + alivePlayers.size() + " alive players");
         return alivePlayers;
     }
 

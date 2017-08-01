@@ -3,13 +3,13 @@ package com.github.sveyrat.spaceoutbreak.dao;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.Round;
 import com.github.sveyrat.spaceoutbreak.domain.Vote;
+import com.github.sveyrat.spaceoutbreak.log.Logger;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -39,10 +39,10 @@ public class DatabaseOpenHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, NightAction.class);
             TableUtils.createTable(connectionSource, Vote.class);
         } catch (SQLException e) {
-            Log.e(DatabaseOpenHelper.class.getName(), "Could not create database", e);
+            Logger.getInstance().error(DatabaseOpenHelper.class.getName(), "Could not create database", e);
             throw new RuntimeException(e);
         } catch (java.sql.SQLException e) {
-            Log.e(DatabaseOpenHelper.class.getName(), "Could not create database", e);
+            Logger.getInstance().error(DatabaseOpenHelper.class.getName(), "Could not create database", e);
             throw new RuntimeException(e);
         }
 
@@ -63,7 +63,7 @@ public class DatabaseOpenHelper extends OrmLiteSqliteOpenHelper {
 //                db.execSQL(sql);
 //            }
         } catch (SQLException e) {
-            Log.e(DatabaseOpenHelper.class.getName(), "Could not update database", e);
+            Logger.getInstance().error(DatabaseOpenHelper.class.getName(), "Could not update database", e);
             throw new RuntimeException(e);
         }
     }
@@ -73,7 +73,7 @@ public class DatabaseOpenHelper extends OrmLiteSqliteOpenHelper {
             try {
                 gameDao = getDao(Game.class);
             } catch (java.sql.SQLException e) {
-                Log.e(DatabaseOpenHelper.class.getName(), "Could not create Game DAO", e);
+                Logger.getInstance().error(DatabaseOpenHelper.class.getName(), "Could not create Game DAO", e);
                 throw new RuntimeException(e);
             }
         }
@@ -85,7 +85,7 @@ public class DatabaseOpenHelper extends OrmLiteSqliteOpenHelper {
             try {
                 playerDao = getDao(Player.class);
             } catch (java.sql.SQLException e) {
-                Log.e(DatabaseOpenHelper.class.getName(), "Could not create Player DAO", e);
+                Logger.getInstance().error(DatabaseOpenHelper.class.getName(), "Could not create Player DAO", e);
                 throw new RuntimeException(e);
             }
         }
@@ -97,7 +97,7 @@ public class DatabaseOpenHelper extends OrmLiteSqliteOpenHelper {
             try {
                 roundDao = getDao(Round.class);
             } catch (java.sql.SQLException e) {
-                Log.e(DatabaseOpenHelper.class.getName(), "Could not create Round DAO", e);
+                Logger.getInstance().error(DatabaseOpenHelper.class.getName(), "Could not create Round DAO", e);
                 throw new RuntimeException(e);
             }
         }
@@ -109,7 +109,7 @@ public class DatabaseOpenHelper extends OrmLiteSqliteOpenHelper {
             try {
                 nightActionDao = getDao(NightAction.class);
             } catch (java.sql.SQLException e) {
-                Log.e(DatabaseOpenHelper.class.getName(), "Could not create Night Action DAO", e);
+                Logger.getInstance().error(DatabaseOpenHelper.class.getName(), "Could not create Night Action DAO", e);
                 throw new RuntimeException(e);
             }
         }
@@ -121,7 +121,7 @@ public class DatabaseOpenHelper extends OrmLiteSqliteOpenHelper {
             try {
                 voteDao = getDao(Vote.class);
             } catch (java.sql.SQLException e) {
-                Log.e(DatabaseOpenHelper.class.getName(), "Could not create Vote DAO", e);
+                Logger.getInstance().error(DatabaseOpenHelper.class.getName(), "Could not create Vote DAO", e);
                 throw new RuntimeException(e);
             }
         }

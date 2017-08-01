@@ -17,9 +17,7 @@ import android.widget.Toast;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.util.StringUtil;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class NewGameInputPlayerActivity extends AppCompatActivity {
 
@@ -29,6 +27,7 @@ public class NewGameInputPlayerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         RepositoryManager.init(this);
 
         setContentView(R.layout.activity_new_game_input_player);
