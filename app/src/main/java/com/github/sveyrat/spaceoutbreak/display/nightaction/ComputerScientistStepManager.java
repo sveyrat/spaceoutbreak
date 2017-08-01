@@ -13,7 +13,7 @@ import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 public class ComputerScientistStepManager extends StepManager {
 
     public ComputerScientistStepManager(boolean fakeStep) {
-        super(fakeStep, R.string.night_basis_step_healOrKill_headerText);
+        super(fakeStep, R.string.night_basis_step_computerScientist_headerText);
     }
 
     @Override

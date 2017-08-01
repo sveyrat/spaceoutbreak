@@ -62,6 +62,7 @@
     <string name="night_basis.step.geneticist.headerText">Sélectionner un joueur à inspecter par le généticien :</string>
     <string name="night_basis.step.spy.headerText">Sélectionner un joueur à inspecter par l’espion :</string>
     <string name="night_basis.step.hacker.headerText">Sélectionner un rôle à hacker :</string>
+    <string name="night_basis.step.computerScientist.headerText">Indiquer le nombre de mutants à l\'informaticien :</string>
     <string name="night_basis.action.mutate">Muter</string>
     <string name="night_basis.action.mutate.resistant">Muter (en signalant la résistance)</string>
     <string name="night_basis.action.paralyse">Paralyser</string>

@@ -16,14 +16,10 @@ import android.widget.Toast;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.dto.RoundStep;
 import com.github.sveyrat.spaceoutbreak.dao.dto.VoteResult;
-import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.dao.repository.VoteRepository;
 import com.github.sveyrat.spaceoutbreak.display.PlayerVoteAdapter;
-import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -109,7 +105,7 @@ public class VoteActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
-        outState.putSerializable("votes", (Serializable) votes);
+        //outState.putSerializable("votes", (Serializable) votes);
     }
 
     public void confirm(View view) {
@@ -135,6 +131,7 @@ public class VoteActivity extends AppCompatActivity {
         if (voteResult.draw()) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(VoteActivity.this);
+            builder.setCancelable(false);
             String title = String.format(getResources().getString(R.string.vote_activity_tie_title), voteRepository.getCaptain().getName());// CF gdoc on how to get this ID here
             final List<Player> tied = voteResult.getTiedPlayers();
             final int chosenPos[] = new int[1];

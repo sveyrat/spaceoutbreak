@@ -10,10 +10,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
+import com.github.sveyrat.spaceoutbreak.dao.dto.RoundStep;
 import com.github.sveyrat.spaceoutbreak.display.PlayerNightAdapter;
 import com.github.sveyrat.spaceoutbreak.display.PreviousGamesAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
+import com.github.sveyrat.spaceoutbreak.domain.Round;
 
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         RepositoryManager.init(this);
         setContentView(R.layout.activity_home);
-        List<Game> previousGames = RepositoryManager.getInstance().gameInformationRepository().listGames();
+        List<Game> previousGames = RepositoryManager.getInstance().gameInformationRepository().lastTwoGames();
         gamesAdapter = new PreviousGamesAdapter(this, previousGames);
 
         gamesList = (ListView) findViewById(R.id.home_previous_game_list);
@@ -35,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
         gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Game game = gamesAdapter.getItem(position);
+
 
             }
         });

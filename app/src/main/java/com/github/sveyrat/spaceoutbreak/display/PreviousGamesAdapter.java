@@ -1,18 +1,14 @@
 package com.github.sveyrat.spaceoutbreak.display;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
-import com.github.sveyrat.spaceoutbreak.domain.Player;
-import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -25,7 +21,7 @@ public class PreviousGamesAdapter extends BaseAdapter {
 
     private final Context context;
     private List<Game> games;
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM - hh:mm");
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM - HH:mm");
 
     public PreviousGamesAdapter(Context context, List<Game> games) {
         super();
