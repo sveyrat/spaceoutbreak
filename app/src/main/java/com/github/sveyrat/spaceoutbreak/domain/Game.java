@@ -12,6 +12,8 @@ import java.util.List;
 @DatabaseTable(tableName = "game")
 public class Game {
 
+    public static final String CREATION_DATE_FIELD_NAME = "creationDate";
+
     @DatabaseField(generatedId = true)
     private Long id;
 
