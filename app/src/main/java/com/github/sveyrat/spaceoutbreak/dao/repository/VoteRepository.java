@@ -102,6 +102,7 @@ public class VoteRepository extends AbstractRepository {
             throw new RuntimeException(message);
         }
         currentGame.setCaptain(player);
+        Logger.getInstance().info(VoteRepository.class.getName(), "New captain is " + player.getName());
         try {
             gameDao().update(currentGame);
         } catch (SQLException e) {

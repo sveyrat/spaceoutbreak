@@ -107,22 +107,28 @@ public class GameInformationRepository extends AbstractRepository {
             StepManager stepManager = RepositoryManager.getInstance().nightActionRepository().nextStep(nightActions.get(nightActions.size() - 1).getActingPlayerRole());
             if (stepManager != null) {
                 // Night step has been started but not finished
+                Logger.getInstance().info(GameInformationRepository.class.getName(), "Next round is NIGHT");
                 return RoundStep.NIGHT;
             }
         }
         if (currentRound.getVotes() != null && !currentRound.getVotes().isEmpty() && RepositoryManager.getInstance().voteRepository().voteResult().draw()) {
             // Day voting step has been started but not finished
+            Logger.getInstance().info(GameInformationRepository.class.getName(), "Next round is DAY");
             return RoundStep.DAY;
         }
         if (currentGame.getCaptain() == null || !currentGame.getCaptain().isAlive()) {
+            Logger.getInstance().info(GameInformationRepository.class.getName(), "Next round is CAPTAIN ELECTION");
             return RoundStep.CAPTAIN_ELECTION;
         }
         if (nightActions == null || nightActions.isEmpty()) {
+            Logger.getInstance().info(GameInformationRepository.class.getName(), "Next round is NIGHT");
             return RoundStep.NIGHT;
         }
         if (currentRound.getVotes() == null || currentRound.getVotes().isEmpty()) {
+            Logger.getInstance().info(GameInformationRepository.class.getName(), "Next round is DAY");
             return RoundStep.DAY;
         }
+        Logger.getInstance().info(GameInformationRepository.class.getName(), "Next round is NEW");
         return RoundStep.NEW;
     }
 }

@@ -118,16 +118,7 @@ public class VoteActivity extends AppCompatActivity {
         }
 
         final VoteRepository voteRepository = RepositoryManager.getInstance().voteRepository();
-        VoteResult voteResult = voteRepository.vote(votes);
-
-        String message = "";
-        int numberOfNullVotes = players.size() - votes.size();
-        message += getResources().getString(R.string.vote_activity_null_vote) + " : " + numberOfNullVotes + "\n";
-        message += getResources().getString(R.string.vote_activity_blank_vote) + " : " + voteResult.getNumberOfBlankVotes() + "\n";
-        for (Map.Entry<Player, Integer> resultEntry : voteResult.getResults().entrySet()) {
-            message += resultEntry.getKey().getName() + " : " + resultEntry.getValue().toString();
-            message += "\n";
-        }
+        final VoteResult voteResult = voteRepository.vote(votes);
 
         if (voteResult.draw()) {
 
@@ -150,14 +141,28 @@ public class VoteActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     voteRepository.captainVote(tied.get(chosenPos[0]));
-
+                    displayVoteResults(voteResult);
                 }
             });
             builder.setNegativeButton(R.string.common_return, null);
             builder.show();
 
-            return;
+        }else{
+            displayVoteResults(voteResult);
+        }
 
+
+    }
+
+    private void displayVoteResults(VoteResult voteResult){
+
+        String message = "";
+        int numberOfNullVotes = players.size() - votes.size();
+        message += getResources().getString(R.string.vote_activity_null_vote) + " : " + numberOfNullVotes + "\n";
+        message += getResources().getString(R.string.vote_activity_blank_vote) + " : " + voteResult.getNumberOfBlankVotes() + "\n";
+        for (Map.Entry<Player, Integer> resultEntry : voteResult.getResults().entrySet()) {
+            message += resultEntry.getKey().getName() + " : " + resultEntry.getValue().toString();
+            message += "\n";
         }
 
         AlertDialog.Builder adb = new AlertDialog.Builder(VoteActivity.this);
@@ -187,6 +192,7 @@ public class VoteActivity extends AppCompatActivity {
             }
         });
         adb.show();
+        return;
     }
 
     private void updateView() {
