@@ -122,7 +122,7 @@ public class VoteActivity extends AppCompatActivity {
         final VoteResult voteResult = voteRepository.vote(votes);
 
         if (voteResult.draw()) {
-            Logger.getInstance().info(getClass().getName(), "Vote result is a draw, asking captain to make a choice...");
+            Logger.getInstance().info(getClass(), "Vote result is a draw, asking captain to make a choice...");
             AlertDialog.Builder builder = new AlertDialog.Builder(VoteActivity.this);
             builder.setCancelable(false);
             String title = String.format(getResources().getString(R.string.vote_activity_tie_title), voteRepository.getCaptain().getName());// CF gdoc on how to get this ID here

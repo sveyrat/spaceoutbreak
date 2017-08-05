@@ -24,7 +24,7 @@ public class ComputerScientistNightStepManager extends NightStepManager {
     public boolean validateStep(Context context) {
         // Auto validated step : we should never get here
         String message = "The computer scientist step validation should never be called.";
-        Logger.getInstance().error(ComputerScientistNightStepManager.class.getName(), message);
+        Logger.getInstance().error(getClass(), message);
         throw new RuntimeException(message);
     }
 

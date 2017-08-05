@@ -86,7 +86,7 @@ public class HackerNightStepManager extends NightStepManager {
                     inspectedPlayer.getName(), //
                     genomeLabel);
         }
-        Logger.getInstance().error(HackerNightStepManager.class.getName(), "The hacked role can not be recognized");
+        Logger.getInstance().error(getClass(), "The hacked role can not be recognized");
         return "";
     }
 

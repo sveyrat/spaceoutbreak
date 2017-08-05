@@ -38,7 +38,7 @@ public class GeneticistNightStepManager extends NightStepManager {
         Player inspectedPlayer = selectedPlayers.get(0);
         if (inspectedPlayerGenome == null) {
             String message = "Trying to display the geneticist inspection result, when it has not been done";
-            Logger.getInstance().error(GeneticistNightStepManager.class.getName(), message);
+            Logger.getInstance().error(getClass(), message);
             throw new RuntimeException(message);
         }
         String genomeLabel = context.getResources().getString(inspectedPlayerGenome.getLabelResourcesId());

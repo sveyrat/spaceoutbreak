@@ -37,7 +37,7 @@ public class PsychologistNightStepManager extends NightStepManager {
         Player inspectedPlayer = selectedPlayers.get(0);
         if (inspectedPlayerIsMutant == null) {
             String message = "Trying to display the psychologist inspection result, when it has not been done";
-            Logger.getInstance().error(PsychologistNightStepManager.class.getName(), message);
+            Logger.getInstance().error(getClass(), message);
             throw new RuntimeException(message);
         }
         String mutantOrSane = inspectedPlayerIsMutant ? context.getResources().getString(R.string.night_basis_information_playerStatus_mutant) : context.getResources().getString(R.string.night_basis_information_playerStatus_sane);

@@ -17,7 +17,7 @@ public class RoundPhaseToActivityManager {
 
     public static Intent nextRoundPhaseIntent(Context context) {
         RoundPhase roundPhase = RepositoryManager.getInstance().gameInformationRepository().nextRoundPhase();
-        Logger.getInstance().info(RoundPhaseToActivityManager.class.getName(), "Selecting activity for RoundPhase " + roundPhase);
+        Logger.getInstance().info(RoundPhaseToActivityManager.class, "Selecting activity for RoundPhase " + roundPhase);
         switch (roundPhase) {
             case CAPTAIN_ELECTION:
                 return new Intent(context, CaptainElectionActivity.class);
@@ -42,7 +42,7 @@ public class RoundPhaseToActivityManager {
                 return new Intent(context, GameEndActivity.class);
         }
         String message = "RoundPhase " + roundPhase + " is not handled.";
-        Logger.getInstance().error(RoundPhaseToActivityManager.class.getName(), message);
+        Logger.getInstance().error(RoundPhaseToActivityManager.class, message);
         throw new RuntimeException(message);
     }
 }

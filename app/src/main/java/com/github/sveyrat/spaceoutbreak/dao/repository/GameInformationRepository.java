@@ -28,7 +28,7 @@ public class GameInformationRepository extends AbstractRepository {
             return new ArrayList<>(gameDao().queryBuilder().orderBy(Game.CREATION_DATE_FIELD_NAME, false).limit(2l).query());
         } catch (SQLException e) {
             String message = "Error while retrieving game list";
-            Logger.getInstance().error(GameInformationRepository.class.getName(), message, e);
+            Logger.getInstance().error(getClass(), message, e);
             throw new RuntimeException(message, e);
         }
     }
@@ -106,36 +106,36 @@ public class GameInformationRepository extends AbstractRepository {
             NightStepManager nightStepManager = RepositoryManager.getInstance().nightActionRepository().nextNightStep();
             if (nightStepManager != null) {
                 // Night step has been started but not finished
-                Logger.getInstance().info(getClass().getName(), "Night phase has been started but not finished, next phase is NIGHT");
+                Logger.getInstance().info(getClass(), "Night phase has been started but not finished, next phase is NIGHT");
                 return RoundPhase.NIGHT;
             }
         }
         if (currentRound.getVotes() != null && !currentRound.getVotes().isEmpty() && RepositoryManager.getInstance().voteRepository().voteResult().draw()) {
             // Day voting step has been started but not finished
-            Logger.getInstance().info(getClass().getName(), "Voting phase has been started but not finished due to a draw, next phase is VOTE");
+            Logger.getInstance().info(getClass(), "Voting phase has been started but not finished due to a draw, next phase is VOTE");
             return RoundPhase.VOTE;
         }
         if (currentGame.getCaptain() == null || !currentGame.getCaptain().isAlive()) {
-            Logger.getInstance().info(getClass().getName(), "No Captain or dead captain, next phase is CAPTAIN_ELECTION");
+            Logger.getInstance().info(getClass(), "No Captain or dead captain, next phase is CAPTAIN_ELECTION");
             return RoundPhase.CAPTAIN_ELECTION;
         }
         if (nightActions == null || nightActions.isEmpty()) {
-            Logger.getInstance().info(getClass().getName(), "Night phase has not been done yet, next phase is NIGHT");
+            Logger.getInstance().info(getClass(), "Night phase has not been done yet, next phase is NIGHT");
             return RoundPhase.NIGHT;
         }
         if (!currentRound.isNightAutopsyDone() && RepositoryManager.getInstance().nightActionRepository().killedDuringNightPhase().size() > 0) {
-            Logger.getInstance().info(getClass().getName(), "Night autopsy has not been done yet, next phase is NIGHT_AUTOPSY");
+            Logger.getInstance().info(getClass(), "Night autopsy has not been done yet, next phase is NIGHT_AUTOPSY");
             return RoundPhase.NIGHT_AUTOPSY;
         }
         if (currentRound.getVotes() == null || currentRound.getVotes().isEmpty()) {
-            Logger.getInstance().info(getClass().getName(), "Voting phase has not been done yet, next phase is VOTE");
+            Logger.getInstance().info(getClass(), "Voting phase has not been done yet, next phase is VOTE");
             return RoundPhase.VOTE;
         }
         if (!currentRound.isDayAutopsyDone() && RepositoryManager.getInstance().voteRepository().voteResult().mostVotedFor() != null) {
-            Logger.getInstance().info(getClass().getName(), "Day autopsy has not been done yet, next phase is DAY_AUTOPSY");
+            Logger.getInstance().info(getClass(), "Day autopsy has not been done yet, next phase is DAY_AUTOPSY");
             return RoundPhase.DAY_AUTOPSY;
         }
-        Logger.getInstance().info(getClass().getName(), "Previous round has been completed, next phase is NEW_ROUND");
+        Logger.getInstance().info(getClass(), "Previous round has been completed, next phase is NEW_ROUND");
         return RoundPhase.NEW_ROUND;
     }
 
@@ -144,10 +144,10 @@ public class GameInformationRepository extends AbstractRepository {
         currentRound.setNightAutopsyDone(true);
         try {
             roundDao().update(currentRound);
-            Logger.getInstance().info(getClass().getName(), "Night autopsy done");
+            Logger.getInstance().info(getClass(), "Night autopsy done");
         } catch (SQLException e) {
             String message = "Error while marking night autopsy as done";
-            Logger.getInstance().error(getClass().getName(), message, e);
+            Logger.getInstance().error(getClass(), message, e);
             throw new RuntimeException(message, e);
         }
     }
@@ -157,10 +157,10 @@ public class GameInformationRepository extends AbstractRepository {
         currentRound.setDayAutopsyDone(true);
         try {
             roundDao().update(currentRound);
-            Logger.getInstance().info(getClass().getName(), "Day autopsy done");
+            Logger.getInstance().info(getClass(), "Day autopsy done");
         } catch (SQLException e) {
             String message = "Error while marking day autopsy as done";
-            Logger.getInstance().error(getClass().getName(), message, e);
+            Logger.getInstance().error(getClass(), message, e);
             throw new RuntimeException(message, e);
         }
     }

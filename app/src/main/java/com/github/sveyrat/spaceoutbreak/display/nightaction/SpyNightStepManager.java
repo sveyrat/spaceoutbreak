@@ -38,7 +38,7 @@ public class SpyNightStepManager extends NightStepManager {
         Player inspectedPlayer = selectedPlayers.get(0);
         if (spyInspectionResult == null) {
             String message = "Trying to display the spy inspection result, when it has not been done";
-            Logger.getInstance().error(SpyNightStepManager.class.getName(), message);
+            Logger.getInstance().error(getClass(), message);
             throw new RuntimeException(message);
         }
         String inspectionResult = String.format(context.getResources().getString(R.string.night_basis_information_spy_introduction), inspectedPlayer.getName());
