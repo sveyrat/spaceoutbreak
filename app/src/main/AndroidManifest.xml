@@ -9,31 +9,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".HomeActivity">
+        <activity android:name=".display.activity.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".NewGameInputPlayerActivity"
+        <activity android:name=".display.activity.NewGameInputPlayerActivity"
             android:label="@string/new_game_player_input.name"></activity>
 
 
-        <activity android:name=".NewGameSettingsActivity"
+        <activity android:name=".display.activity.NewGameSettingsActivity"
             android:label="@string/new_game_settings.name"></activity>
 
-        <activity android:name=".NightBasisActivity"
+        <activity android:name=".display.activity.NightBasisActivity"
             android:label="@string/night_basis.name"></activity>
 
-        <activity android:name=".VoteActivity"
+        <activity android:name=".display.activity.VoteActivity"
             android:label="@string/vote_activity.name"></activity>
 
-        <activity android:name=".GameEndActivity"
+        <activity android:name=".display.activity.GameEndActivity"
             android:label="@string/game_end_activity.activity_title"></activity>
 
 
-        <activity android:name=".CaptainElectionActivity"
+        <activity android:name=".display.activity.CaptainElectionActivity"
             android:label="@string/captain_election_activity.activity_title"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data

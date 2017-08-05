@@ -1,4 +1,4 @@
-package com.github.sveyrat.spaceoutbreak;
+package com.github.sveyrat.spaceoutbreak.display.activity;
 
 
 import android.content.DialogInterface;
@@ -13,9 +13,10 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.dto.RoundStep;
-import com.github.sveyrat.spaceoutbreak.display.CaptainVoteAdapter;
+import com.github.sveyrat.spaceoutbreak.display.adapter.CaptainVoteAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 
 

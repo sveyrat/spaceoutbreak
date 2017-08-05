@@ -1,4 +1,4 @@
-package com.github.sveyrat.spaceoutbreak;
+package com.github.sveyrat.spaceoutbreak.display.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.dto.RoundStep;
-import com.github.sveyrat.spaceoutbreak.display.PlayerNightAdapter;
-import com.github.sveyrat.spaceoutbreak.display.RoleNightAdapter;
+import com.github.sveyrat.spaceoutbreak.display.adapter.PlayerNightAdapter;
+import com.github.sveyrat.spaceoutbreak.display.adapter.RoleNightAdapter;
 import com.github.sveyrat.spaceoutbreak.display.nightaction.MutantsMutateOrKillStepManager;
 import com.github.sveyrat.spaceoutbreak.display.nightaction.StepManager;
 import com.github.sveyrat.spaceoutbreak.domain.Player;

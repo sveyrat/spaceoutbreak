@@ -10,7 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.github.sveyrat.spaceoutbreak.NewGameInputPlayerActivity">
+    tools:context="com.github.sveyrat.spaceoutbreak.display.activity.NewGameInputPlayerActivity">
 
     <LinearLayout
         android:id="@+id/new_game_input_player_inputs_layout"

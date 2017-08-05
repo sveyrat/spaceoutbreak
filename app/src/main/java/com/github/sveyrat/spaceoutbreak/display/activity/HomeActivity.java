@@ -1,4 +1,4 @@
-package com.github.sveyrat.spaceoutbreak;
+package com.github.sveyrat.spaceoutbreak.display.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,9 +7,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
-import com.github.sveyrat.spaceoutbreak.display.PreviousGamesAdapter;
+import com.github.sveyrat.spaceoutbreak.display.adapter.PreviousGamesAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
+import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
 
 import java.util.List;
 
@@ -32,7 +34,8 @@ public class HomeActivity extends AppCompatActivity {
         gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Game game = gamesAdapter.getItem(position);
-                // TODO launch the right activity here based on the game's next step
+                DataHolderUtil.getInstance().setCurrentGameId(game.getId());
+
             }
         });
 
