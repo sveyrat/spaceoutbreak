@@ -28,6 +28,4 @@ public enum Role {
     public int getImageResourceId() {
         return imageResourceId;
     }
-
-
 }

@@ -3,15 +3,15 @@ package com.github.sveyrat.spaceoutbreak.dao.repository;
 import com.github.sveyrat.spaceoutbreak.dao.DatabaseOpenHelper;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.dto.SpyInspectionResult;
-import com.github.sveyrat.spaceoutbreak.display.nightaction.ComputerScientistStepManager;
-import com.github.sveyrat.spaceoutbreak.display.nightaction.DoctorsHealOrKillStepManager;
-import com.github.sveyrat.spaceoutbreak.display.nightaction.GeneticistStepManager;
-import com.github.sveyrat.spaceoutbreak.display.nightaction.HackerStepManager;
-import com.github.sveyrat.spaceoutbreak.display.nightaction.MutantsMutateOrKillStepManager;
-import com.github.sveyrat.spaceoutbreak.display.nightaction.MutantsParalyzeStepManager;
-import com.github.sveyrat.spaceoutbreak.display.nightaction.PsychologistStepManager;
-import com.github.sveyrat.spaceoutbreak.display.nightaction.SpyStepManager;
-import com.github.sveyrat.spaceoutbreak.display.nightaction.StepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.ComputerScientistNightStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.DoctorsHealOrKillNightStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.GeneticistNightStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.HackerNightStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.MutantsMutateOrKillNightStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.MutantsParalyzeNightStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.PsychologistNightStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.SpyNightStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.NightStepManager;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
@@ -332,49 +332,64 @@ public class NightActionRepository extends AbstractRepository {
         return hackedRoleNightAction;
     }
 
-    public StepManager nextStep(Role lastPlayedRole) {
+    public NightStepManager nextNightStep() {
+        List<NightAction> nightActions = new ArrayList<>(currentRound().getNightActions());
+        if (nightActions == null || nightActions.isEmpty()) {
+            // newly created night round
+            Logger.getInstance().info(getClass().getName(), "No night actions have been made yet in this round, meaning it's the mutants turn to play");
+            return new MutantsMutateOrKillNightStepManager();
+        }
+        NightAction latestAction = nightActions.get(nightActions.size() - 1);
+        Role lastPlayedRole = latestAction.getActingPlayerRole();
         if (lastPlayedRole == null) {
-            return new MutantsMutateOrKillStepManager();
+            Logger.getInstance().info(getClass().getName(), "No role has been played yet in this round, meaning it's the mutants turn to play");
+            return new MutantsMutateOrKillNightStepManager();
         }
 
         switch (lastPlayedRole) {
             case BASE_MUTANT:
-                List<NightAction> nightActions = new ArrayList<>(currentRound().getNightActions());
-                NightAction lastAction = nightActions.get(nightActions.size() - 1);
-                if (lastAction.getType() == NightActionType.MUTATE) {
-                    return new MutantsParalyzeStepManager(lastAction.getTargetPlayer(), null);
+                if (latestAction.getType() == NightActionType.MUTATE) {
+                    Logger.getInstance().info(getClass().getName(), "Last action was mutants mutating, so it's the mutants turn to paralyse");
+                    return new MutantsParalyzeNightStepManager(latestAction.getTargetPlayer(), null);
                 }
-                if (lastAction.getType() == NightActionType.KILL) {
-                    return new MutantsParalyzeStepManager(null, lastAction.getTargetPlayer());
+                if (latestAction.getType() == NightActionType.KILL) {
+                    Logger.getInstance().info(getClass().getName(), "Last action was mutants kill, so it's the mutants turn to paralyse");
+                    return new MutantsParalyzeNightStepManager(null, latestAction.getTargetPlayer());
                 }
                 if (canBePlayed(Role.DOCTOR)) {
+                    Logger.getInstance().info(getClass().getName(), "Last role played was the mutants, it's the doctors' turn");
                     int numberOfHeals = numberOfHealsAvailable();
-                    return new DoctorsHealOrKillStepManager(fakeStep(Role.DOCTOR), numberOfHeals);
+                    return new DoctorsHealOrKillNightStepManager(fakeStep(Role.DOCTOR), numberOfHeals);
                 }
                 // otherwise, keep going (no break)
             case DOCTOR:
                 if (canBePlayed(Role.COMPUTER_SCIENTIST)) {
-                    return new ComputerScientistStepManager(fakeStep(Role.COMPUTER_SCIENTIST));
+                    Logger.getInstance().info(getClass().getName(), "It's the computer scientist's turn");
+                    return new ComputerScientistNightStepManager(fakeStep(Role.COMPUTER_SCIENTIST));
                 }
                 // otherwise, keep going (no break)
             case COMPUTER_SCIENTIST:
                 if (canBePlayed(Role.PSYCHOLOGIST)) {
-                    return new PsychologistStepManager(fakeStep(Role.PSYCHOLOGIST));
+                    Logger.getInstance().info(getClass().getName(), "It's the psychologist's turn");
+                    return new PsychologistNightStepManager(fakeStep(Role.PSYCHOLOGIST));
                 }
                 // otherwise, keep going (no break)
             case PSYCHOLOGIST:
                 if (canBePlayed(Role.GENETICIST)) {
-                    return new GeneticistStepManager(fakeStep(Role.GENETICIST));
+                    Logger.getInstance().info(getClass().getName(), "It's the geneticist's turn");
+                    return new GeneticistNightStepManager(fakeStep(Role.GENETICIST));
                 }
                 // otherwise, keep going (no break)
             case GENETICIST:
                 if (canBePlayed(Role.SPY)) {
-                    return new SpyStepManager(fakeStep(Role.SPY));
+                    Logger.getInstance().info(getClass().getName(), "It's the spy's turn");
+                    return new SpyNightStepManager(fakeStep(Role.SPY));
                 }
                 // otherwise, keep going (no break)
             case SPY:
                 if (canBePlayed(Role.HACKER)) {
-                    return new HackerStepManager(fakeStep(Role.HACKER));
+                    Logger.getInstance().info(getClass().getName(), "It's the hacker's turn");
+                    return new HackerNightStepManager(fakeStep(Role.HACKER));
                 }
                 // otherwise, keep going (no break)
             case HACKER:

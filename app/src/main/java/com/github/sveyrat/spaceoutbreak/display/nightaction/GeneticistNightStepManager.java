@@ -6,14 +6,13 @@ import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Genome;
-import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.github.sveyrat.spaceoutbreak.log.Logger;
 
-public class GeneticistStepManager extends StepManager {
+public class GeneticistNightStepManager extends NightStepManager {
 
     private Genome inspectedPlayerGenome;
 
-    public GeneticistStepManager(boolean fakeStep) {
+    public GeneticistNightStepManager(boolean fakeStep) {
         super(fakeStep, R.string.night_basis_step_geneticist_headerText);
     }
 
@@ -37,15 +36,10 @@ public class GeneticistStepManager extends StepManager {
         Player inspectedPlayer = selectedPlayers.get(0);
         if (inspectedPlayerGenome == null) {
             String message = "Trying to display the geneticist inspection result, when it has not been done";
-            Logger.getInstance().error(GeneticistStepManager.class.getName(), message);
+            Logger.getInstance().error(GeneticistNightStepManager.class.getName(), message);
             throw new RuntimeException(message);
         }
         String genomeLabel = context.getResources().getString(inspectedPlayerGenome.getLabelResourcesId());
         return String.format(context.getResources().getString(R.string.night_basis_information_genomeStatus), inspectedPlayer.getName(), genomeLabel);
-    }
-
-    @Override
-    public Role currentlyPlayedRole() {
-        return Role.GENETICIST;
     }
 }

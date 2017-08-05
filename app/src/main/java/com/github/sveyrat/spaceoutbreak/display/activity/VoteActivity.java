@@ -14,9 +14,10 @@ import android.widget.Toast;
 
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
-import com.github.sveyrat.spaceoutbreak.dao.dto.RoundStep;
+import com.github.sveyrat.spaceoutbreak.dao.dto.RoundPhase;
 import com.github.sveyrat.spaceoutbreak.dao.dto.VoteResult;
 import com.github.sveyrat.spaceoutbreak.dao.repository.VoteRepository;
+import com.github.sveyrat.spaceoutbreak.display.RoundPhaseToActivityManager;
 import com.github.sveyrat.spaceoutbreak.display.adapter.PlayerVoteAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.log.Logger;
@@ -173,23 +174,10 @@ public class VoteActivity extends AppCompatActivity {
         adb.setPositiveButton(getResources().getString(R.string.common_validate), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                RoundStep nextStep = RepositoryManager.getInstance().gameInformationRepository().nextStep();
-                if (RoundStep.END == nextStep) {
-                    startActivity(new Intent(VoteActivity.this, GameEndActivity.class));
-                    return;
-                }
-                if (RoundStep.CAPTAIN_ELECTION == nextStep) {
-                    startActivity(new Intent(VoteActivity.this, CaptainElectionActivity.class));
-                    return;
-                }
-                if (RoundStep.NEW == nextStep) {
-                    RepositoryManager.getInstance().nightActionRepository().newRound();
-                    startActivity(new Intent(VoteActivity.this, NightBasisActivity.class));
-                    return;
-                }
-                String message = "Game next step is inconsistent with current status. Next step is " + nextStep.toString();
-                Logger.getInstance().error(VoteActivity.class.getName(), message);
-                throw new RuntimeException(message);
+                RoundPhase nextRoundPhase = RepositoryManager.getInstance().gameInformationRepository().nextRoundStep();
+                Intent nextActivityIntent = RoundPhaseToActivityManager.goToActivityIntent(VoteActivity.this, nextRoundPhase);
+                startActivity(nextActivityIntent);
+                return;
             }
         });
         adb.show();

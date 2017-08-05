@@ -1,6 +1,6 @@
 package com.github.sveyrat.spaceoutbreak.dao.dto;
 
-public enum RoundStep {
+public enum RoundPhase {
     /*
      * Next step in the round is the night step.
      * This differs from the new step in that you don't need to start a new round.

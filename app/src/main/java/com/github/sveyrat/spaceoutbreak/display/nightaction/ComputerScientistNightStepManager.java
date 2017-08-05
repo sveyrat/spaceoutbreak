@@ -7,12 +7,11 @@ import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
-import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.github.sveyrat.spaceoutbreak.log.Logger;
 
-public class ComputerScientistStepManager extends StepManager {
+public class ComputerScientistNightStepManager extends NightStepManager {
 
-    public ComputerScientistStepManager(boolean fakeStep) {
+    public ComputerScientistNightStepManager(boolean fakeStep) {
         super(fakeStep, R.string.night_basis_step_computerScientist_headerText);
     }
 
@@ -24,7 +23,7 @@ public class ComputerScientistStepManager extends StepManager {
     @Override
     public boolean validateStep(Context context) {
         String message = "The computer scientist step validation should never be called.";
-        Logger.getInstance().error(ComputerScientistStepManager.class.getName(), message);
+        Logger.getInstance().error(ComputerScientistNightStepManager.class.getName(), message);
         throw new RuntimeException(message);
     }
 
@@ -41,10 +40,5 @@ public class ComputerScientistStepManager extends StepManager {
     @Override
     public boolean autoValidate() {
         return true;
-    }
-
-    @Override
-    public Role currentlyPlayedRole() {
-        return Role.COMPUTER_SCIENTIST;
     }
 }

@@ -6,9 +6,8 @@ import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
-import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 
-public class MutantsParalyzeStepManager extends StepManager {
+public class MutantsParalyzeNightStepManager extends NightStepManager {
 
     /*
      * Those come from the previous step and are required to display the after step text
@@ -17,7 +16,7 @@ public class MutantsParalyzeStepManager extends StepManager {
     private Player mutedPlayer;
     private Player killedPlayer;
 
-    public MutantsParalyzeStepManager(Player mutedPlayer, Player killedPlayer) {
+    public MutantsParalyzeNightStepManager(Player mutedPlayer, Player killedPlayer) {
         super(false, R.string.night_basis_step_paralyse_headerText);
         this.mutedPlayer = mutedPlayer;
         this.killedPlayer = killedPlayer;
@@ -50,10 +49,5 @@ public class MutantsParalyzeStepManager extends StepManager {
         instructions += "\n\n";
         instructions += context.getResources().getString(R.string.night_basis_action_paralyse) + " " + selectedPlayers.get(0).getName();
         return instructions;
-    }
-
-    @Override
-    public Role currentlyPlayedRole() {
-        return Role.BASE_MUTANT;
     }
 }

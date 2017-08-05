@@ -2,8 +2,8 @@ package com.github.sveyrat.spaceoutbreak.dao.repository;
 
 import com.github.sveyrat.spaceoutbreak.dao.DatabaseOpenHelper;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
-import com.github.sveyrat.spaceoutbreak.dao.dto.RoundStep;
-import com.github.sveyrat.spaceoutbreak.display.nightaction.StepManager;
+import com.github.sveyrat.spaceoutbreak.dao.dto.RoundPhase;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.NightStepManager;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
@@ -95,39 +95,39 @@ public class GameInformationRepository extends AbstractRepository {
      *
      * @return
      */
-    public RoundStep nextStep() {
+    public RoundPhase nextRoundStep() {
         if (isGameFinished()) {
-            return RoundStep.END;
+            return RoundPhase.END;
         }
         Game currentGame = currentGame();
         Round currentRound = currentRound();
         List<NightAction> nightActions = new ArrayList<>(currentRound.getNightActions());
         if (nightActions != null && !nightActions.isEmpty()) {
-            StepManager stepManager = RepositoryManager.getInstance().nightActionRepository().nextStep(nightActions.get(nightActions.size() - 1).getActingPlayerRole());
-            if (stepManager != null) {
+            NightStepManager nightStepManager = RepositoryManager.getInstance().nightActionRepository().nextNightStep();
+            if (nightStepManager != null) {
                 // Night step has been started but not finished
                 Logger.getInstance().info(GameInformationRepository.class.getName(), "Next round is NIGHT");
-                return RoundStep.NIGHT;
+                return RoundPhase.NIGHT;
             }
         }
         if (currentRound.getVotes() != null && !currentRound.getVotes().isEmpty() && RepositoryManager.getInstance().voteRepository().voteResult().draw()) {
             // Day voting step has been started but not finished
             Logger.getInstance().info(GameInformationRepository.class.getName(), "Next round is DAY");
-            return RoundStep.DAY;
+            return RoundPhase.DAY;
         }
         if (currentGame.getCaptain() == null || !currentGame.getCaptain().isAlive()) {
             Logger.getInstance().info(GameInformationRepository.class.getName(), "Next round is CAPTAIN ELECTION");
-            return RoundStep.CAPTAIN_ELECTION;
+            return RoundPhase.CAPTAIN_ELECTION;
         }
         if (nightActions == null || nightActions.isEmpty()) {
             Logger.getInstance().info(GameInformationRepository.class.getName(), "Next round is NIGHT");
-            return RoundStep.NIGHT;
+            return RoundPhase.NIGHT;
         }
         if (currentRound.getVotes() == null || currentRound.getVotes().isEmpty()) {
             Logger.getInstance().info(GameInformationRepository.class.getName(), "Next round is DAY");
-            return RoundStep.DAY;
+            return RoundPhase.DAY;
         }
         Logger.getInstance().info(GameInformationRepository.class.getName(), "Next round is NEW");
-        return RoundStep.NEW;
+        return RoundPhase.NEW;
     }
 }

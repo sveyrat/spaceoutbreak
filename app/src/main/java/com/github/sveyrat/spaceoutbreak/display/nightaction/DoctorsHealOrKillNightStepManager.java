@@ -15,14 +15,14 @@ import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoctorsHealOrKillStepManager extends StepManager {
+public class DoctorsHealOrKillNightStepManager extends NightStepManager {
 
     private Integer numberOfHeals;
 
     private List<Player> healedPlayers = new ArrayList<>();
     private List<Player> killedPlayers = new ArrayList<>();
 
-    public DoctorsHealOrKillStepManager(boolean fakeStep, int numberOfHeals) {
+    public DoctorsHealOrKillNightStepManager(boolean fakeStep, int numberOfHeals) {
         super(fakeStep, R.string.night_basis_step_healOrKill_headerText);
         this.numberOfHeals = numberOfHeals;
     }
@@ -99,10 +99,5 @@ public class DoctorsHealOrKillStepManager extends StepManager {
             instructions += "\n\n";
         }
         return instructions;
-    }
-
-    @Override
-    public Role currentlyPlayedRole() {
-        return Role.DOCTOR;
     }
 }

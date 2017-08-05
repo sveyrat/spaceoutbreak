@@ -12,7 +12,7 @@ import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class StepManager {
+public abstract class NightStepManager {
 
     private int headerTextStringResourceId;
 
@@ -27,7 +27,7 @@ public abstract class StepManager {
      */
     protected boolean fakeStep;
 
-    public StepManager(boolean fakeStep, int headerTextStringResourceId) {
+    public NightStepManager(boolean fakeStep, int headerTextStringResourceId) {
         this.fakeStep = fakeStep;
         this.headerTextStringResourceId = headerTextStringResourceId;
     }
@@ -115,6 +115,4 @@ public abstract class StepManager {
     public boolean useRoleSelection() {
         return false;
     }
-
-    public abstract Role currentlyPlayedRole();
 }

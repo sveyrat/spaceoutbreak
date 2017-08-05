@@ -15,7 +15,8 @@ import android.widget.Toast;
 
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
-import com.github.sveyrat.spaceoutbreak.dao.dto.RoundStep;
+import com.github.sveyrat.spaceoutbreak.dao.dto.RoundPhase;
+import com.github.sveyrat.spaceoutbreak.display.RoundPhaseToActivityManager;
 import com.github.sveyrat.spaceoutbreak.display.adapter.CaptainVoteAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 
@@ -52,13 +53,13 @@ public class CaptainElectionActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, final View selectedView, int position, long id) {
                 final Player player = adapter.getItem(position);
 
-                if(voted == null) {
+                if (voted == null) {
                     voted = player;
-                }else{
-                    if(voted.equals(player)){
-                        voted =null;
-                    }else{
-                        voted=player;
+                } else {
+                    if (voted.equals(player)) {
+                        voted = null;
+                    } else {
+                        voted = player;
                     }
                 }
                 updateView();
@@ -78,7 +79,7 @@ public class CaptainElectionActivity extends AppCompatActivity {
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
             return;
-        }else{
+        } else {
             AlertDialog.Builder adb = new AlertDialog.Builder(CaptainElectionActivity.this);
             String message = String.format(getResources().getString(R.string.captain_election_validate), voted.getName());
             adb.setMessage(message);
@@ -86,15 +87,10 @@ public class CaptainElectionActivity extends AppCompatActivity {
             adb.setPositiveButton(getResources().getString(R.string.new_game_player_input_yes), new AlertDialog.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     RepositoryManager.getInstance().voteRepository().defineCaptain(voted);
-                    RoundStep nextStep = RepositoryManager.getInstance().gameInformationRepository().nextStep();
-                    if (RoundStep.NIGHT == nextStep) {
-                        startActivity(new Intent(CaptainElectionActivity.this, NightBasisActivity.class));
-                        return;
-                    }
-                    if (RoundStep.DAY == nextStep) {
-                        startActivity(new Intent(CaptainElectionActivity.this, VoteActivity.class));
-                        return;
-                    }
+                    RoundPhase nextRoundPhase = RepositoryManager.getInstance().gameInformationRepository().nextRoundStep();
+                    Intent nextActivityIntent = RoundPhaseToActivityManager.goToActivityIntent(CaptainElectionActivity.this, nextRoundPhase);
+                    startActivity(nextActivityIntent);
+                    return;
                 }
             });
             adb.show();

@@ -15,12 +15,12 @@ import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MutantsMutateOrKillStepManager extends StepManager {
+public class MutantsMutateOrKillNightStepManager extends NightStepManager {
 
     private List<Player> mutedPlayers = new ArrayList<>();
     private List<Player> killedPlayers = new ArrayList<>();
 
-    public MutantsMutateOrKillStepManager() {
+    public MutantsMutateOrKillNightStepManager() {
         super(false, R.string.night_basis_step_mutate_headerText);
     }
 
@@ -71,10 +71,5 @@ public class MutantsMutateOrKillStepManager extends StepManager {
         }
         nightActionRepository.mutate(mutedPlayers.get(0));
         return true;
-    }
-
-    @Override
-    public Role currentlyPlayedRole() {
-        return Role.BASE_MUTANT;
     }
 }

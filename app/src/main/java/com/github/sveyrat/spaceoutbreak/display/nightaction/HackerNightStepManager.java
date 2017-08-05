@@ -14,7 +14,7 @@ import com.github.sveyrat.spaceoutbreak.log.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HackerStepManager extends StepManager {
+public class HackerNightStepManager extends NightStepManager {
 
     private int headerTextStringResourceId;
 
@@ -25,7 +25,7 @@ public class HackerStepManager extends StepManager {
     private Integer numberOfMutants;
     private Player inspectedPlayer;
 
-    public HackerStepManager(boolean fakeStep) {
+    public HackerNightStepManager(boolean fakeStep) {
         super(fakeStep, R.string.night_basis_step_hacker_headerText);
     }
 
@@ -86,17 +86,12 @@ public class HackerStepManager extends StepManager {
                     inspectedPlayer.getName(), //
                     genomeLabel);
         }
-        Logger.getInstance().error(HackerStepManager.class.getName(), "The hacked role can not be recognized");
+        Logger.getInstance().error(HackerNightStepManager.class.getName(), "The hacked role can not be recognized");
         return "";
     }
 
     @Override
     public boolean useRoleSelection() {
         return true;
-    }
-
-    @Override
-    public Role currentlyPlayedRole() {
-        return Role.HACKER;
     }
 }

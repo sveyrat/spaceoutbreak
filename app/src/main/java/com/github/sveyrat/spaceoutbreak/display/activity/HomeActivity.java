@@ -9,6 +9,8 @@ import android.widget.ListView;
 
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
+import com.github.sveyrat.spaceoutbreak.dao.dto.RoundPhase;
+import com.github.sveyrat.spaceoutbreak.display.RoundPhaseToActivityManager;
 import com.github.sveyrat.spaceoutbreak.display.adapter.PreviousGamesAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
@@ -35,11 +37,12 @@ public class HomeActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Game game = gamesAdapter.getItem(position);
                 DataHolderUtil.getInstance().setCurrentGameId(game.getId());
-
+                DataHolderUtil.getInstance().setCurrentRoundId(game.latestRound().getId());
+                RoundPhase nextRoundPhase = RepositoryManager.getInstance().gameInformationRepository().nextRoundStep();
+                Intent nextActivityIntent = RoundPhaseToActivityManager.goToActivityIntent(HomeActivity.this, nextRoundPhase);
+                startActivity(nextActivityIntent);
             }
         });
-
-
     }
 
     public void newGame(View view) {
