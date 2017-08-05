@@ -72,7 +72,6 @@ public class GameInformationRepository extends AbstractRepository {
                 alivePlayers.add(player);
             }
         }
-        Logger.getInstance().info(GameInformationRepository.class.getName(), "Loaded " + alivePlayers.size() + " alive players");
         return alivePlayers;
     }
 

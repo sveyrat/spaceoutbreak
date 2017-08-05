@@ -134,4 +134,14 @@ public class Player implements Serializable {
         }
         return this.id.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "Player " + getName() + " :"//
+                + " [ alive : " + isAlive() + " ," //
+                + " mutant : " + isMutant() + " ," //
+                + " paralyzed : " + isParalyzed() + " ," //
+                + " role : " + getRole() + " ," //
+                + " genome : " + getGenome() + " ]";
+    }
 }

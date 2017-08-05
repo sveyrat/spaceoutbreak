@@ -8,6 +8,5 @@
 .DS_Store
 /build
 /captures
-<<<<<<< HEAD
 /app/build.gradle
 /gradle/**

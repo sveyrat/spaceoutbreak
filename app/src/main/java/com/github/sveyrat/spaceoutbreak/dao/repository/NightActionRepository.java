@@ -40,6 +40,14 @@ public class NightActionRepository extends AbstractRepository {
     public void newRound() {
         try {
             Game game = currentGame();
+
+            // Log all player informations
+            Logger.getInstance().info(NightActionRepository.class.getName(), "------------------------- Players state start -------------------------");
+            for (Player player : game.getPlayers()) {
+                Logger.getInstance().info(NightActionRepository.class.getName(), player.toString());
+            }
+            Logger.getInstance().info(NightActionRepository.class.getName(), "------------------------- Players state end -------------------------");
+
             Round round = new Round(game);
             roundDao().create(round);
 

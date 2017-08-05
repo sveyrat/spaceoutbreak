@@ -121,13 +121,13 @@ public class VoteActivity extends AppCompatActivity {
         final VoteResult voteResult = voteRepository.vote(votes);
 
         if (voteResult.draw()) {
-
+            Logger.getInstance().info(getClass().getName(), "Vote result is a draw, asking captain to make a choice...");
             AlertDialog.Builder builder = new AlertDialog.Builder(VoteActivity.this);
             builder.setCancelable(false);
             String title = String.format(getResources().getString(R.string.vote_activity_tie_title), voteRepository.getCaptain().getName());// CF gdoc on how to get this ID here
             final List<Player> tied = voteResult.getTiedPlayers();
             final int chosenPos[] = new int[1];
-            CharSequence[] tied_names = Arrays.copyOfRange(putPlayerNamesInCharSequence(tied), 1, tied.size()+1);
+            CharSequence[] tied_names = Arrays.copyOfRange(putPlayerNamesInCharSequence(tied), 1, tied.size() + 1);
             builder.setTitle(title)
                     .setSingleChoiceItems(tied_names, -1, new DialogInterface.OnClickListener() {
                         @Override
@@ -147,14 +147,14 @@ public class VoteActivity extends AppCompatActivity {
             builder.setNegativeButton(R.string.common_return, null);
             builder.show();
 
-        }else{
+        } else {
             displayVoteResults(voteResult);
         }
 
 
     }
 
-    private void displayVoteResults(VoteResult voteResult){
+    private void displayVoteResults(VoteResult voteResult) {
 
         String message = "";
         int numberOfNullVotes = players.size() - votes.size();

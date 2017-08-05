@@ -119,7 +119,7 @@ public class NightBasisActivity extends AppCompatActivity {
                 showRoleGrid();
             }
             if (stepManager.autoValidate()) {
-                showAfterStepText(stepManager.afterStepText(this));
+                showAfterStepText(afterStepText);
             }
         }
     }
