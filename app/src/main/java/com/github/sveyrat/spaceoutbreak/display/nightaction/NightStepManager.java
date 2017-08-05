@@ -21,7 +21,7 @@ public abstract class NightStepManager {
     /**
      * A step is fake if no one will wake up to do the actions,
      * but the GM still needs to act as if the role was still being played.
-     *
+     * <p>
      * This is the case when the player(s) that should play has been paralyzed,
      * or if all the doctors have been mutated in the case of the doctors step.
      */

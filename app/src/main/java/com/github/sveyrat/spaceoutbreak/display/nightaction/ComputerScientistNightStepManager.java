@@ -5,7 +5,6 @@ import android.widget.ImageView;
 
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
-import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.github.sveyrat.spaceoutbreak.log.Logger;

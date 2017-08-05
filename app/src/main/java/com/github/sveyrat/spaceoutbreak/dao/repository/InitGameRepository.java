@@ -2,8 +2,8 @@ package com.github.sveyrat.spaceoutbreak.dao.repository;
 
 import com.github.sveyrat.spaceoutbreak.dao.DatabaseOpenHelper;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
-import com.github.sveyrat.spaceoutbreak.domain.constant.Genome;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Genome;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.github.sveyrat.spaceoutbreak.log.Logger;
 import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;

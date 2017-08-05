@@ -9,10 +9,11 @@ public enum Genome {
 
     private int labelResourcesId;
 
-    private Genome(int labelResourcesId){
+    private Genome(int labelResourcesId) {
         this.labelResourcesId = labelResourcesId;
     }
-    public int getLabelResourcesId(){
+
+    public int getLabelResourcesId() {
         return labelResourcesId;
     }
 }

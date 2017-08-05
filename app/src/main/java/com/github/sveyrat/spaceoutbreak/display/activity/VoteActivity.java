@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
-import com.github.sveyrat.spaceoutbreak.dao.dto.RoundPhase;
 import com.github.sveyrat.spaceoutbreak.dao.dto.VoteResult;
 import com.github.sveyrat.spaceoutbreak.dao.repository.VoteRepository;
 import com.github.sveyrat.spaceoutbreak.display.RoundPhaseToActivityManager;

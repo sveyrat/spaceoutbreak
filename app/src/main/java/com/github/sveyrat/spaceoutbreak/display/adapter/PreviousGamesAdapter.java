@@ -60,7 +60,7 @@ public class PreviousGamesAdapter extends BaseAdapter {
         gameDate.setText(sdf.format(game.getCreationDate()));
 
         TextView nrPlayers = (TextView) gameView.findViewById(R.id.previous_game_nr_of_players);
-        nrPlayers.setText("Alive = "+game.getPlayers().size());
+        nrPlayers.setText("Alive = " + game.getPlayers().size());
 
         return gameView;
     }

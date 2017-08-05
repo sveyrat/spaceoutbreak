@@ -54,18 +54,17 @@ public class VoteResult {
         return false;
     }
 
-    public List<Player> getTiedPlayers(){
-        List<Player> result = new ArrayList<Player>();;
+    public List<Player> getTiedPlayers() {
+        List<Player> result = new ArrayList<Player>();
+        ;
         int nbVotesMax = results.get(mostVotedFor());
         for (Map.Entry<Player, Integer> resultEntry : results.entrySet()) {
-            if(resultEntry.getValue()==nbVotesMax){
+            if (resultEntry.getValue() == nbVotesMax) {
                 result.add(resultEntry.getKey());
             }
         }
         return result;
     }
-
-
 
 
     public void addABlankVote() {

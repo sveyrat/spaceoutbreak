@@ -9,9 +9,9 @@ import com.github.sveyrat.spaceoutbreak.display.nightaction.GeneticistNightStepM
 import com.github.sveyrat.spaceoutbreak.display.nightaction.HackerNightStepManager;
 import com.github.sveyrat.spaceoutbreak.display.nightaction.MutantsMutateOrKillNightStepManager;
 import com.github.sveyrat.spaceoutbreak.display.nightaction.MutantsParalyzeNightStepManager;
+import com.github.sveyrat.spaceoutbreak.display.nightaction.NightStepManager;
 import com.github.sveyrat.spaceoutbreak.display.nightaction.PsychologistNightStepManager;
 import com.github.sveyrat.spaceoutbreak.display.nightaction.SpyNightStepManager;
-import com.github.sveyrat.spaceoutbreak.display.nightaction.NightStepManager;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
 import com.github.sveyrat.spaceoutbreak.domain.NightAction;
 import com.github.sveyrat.spaceoutbreak.domain.Player;

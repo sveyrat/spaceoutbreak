@@ -1,6 +1,7 @@
 package com.github.sveyrat.spaceoutbreak.display.nightaction;
 
 import android.content.Context;
+
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;

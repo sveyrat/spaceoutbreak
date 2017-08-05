@@ -46,7 +46,7 @@ public class Logger {
                 logDirectory.mkdir();
             }
 
-            logFile = new File(logDirectory, "logs-" + System.currentTimeMillis() + ".txt" );
+            logFile = new File(logDirectory, "logs-" + System.currentTimeMillis() + ".txt");
             logToFile = true;
         } else {
             Log.e(Logger.class.getName(), LOG_PREFIX + "No external storage mounted : application will not be able to log to file");

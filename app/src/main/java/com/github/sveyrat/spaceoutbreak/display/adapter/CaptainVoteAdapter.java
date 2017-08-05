@@ -53,7 +53,7 @@ public class CaptainVoteAdapter extends BaseAdapter {
         if (playerView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             playerView = inflater.inflate(R.layout.player_item, parent, false);
-            if(voted != null) {
+            if (voted != null) {
                 if (voted.equals(player)) {
                     ImageView selectedImageView = (ImageView) playerView.findViewById(R.id.selected_image);
                     selectedImageView.setVisibility(View.VISIBLE);
