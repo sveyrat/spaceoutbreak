@@ -492,4 +492,18 @@ public class NightActionRepository extends AbstractRepository {
         }
         return numberOfDoctorsPlaying;
     }
+
+    /**
+     * Retrieves the players that have been killed during the current night phase
+     */
+    public List<Player> killedDuringNightPhase() {
+        List<Player> killedPlayers = new ArrayList<>();
+        Round currentRound = currentRound();
+        for (NightAction nightAction : currentRound.getNightActions()) {
+            if (NightActionType.KILL == nightAction.getType()) {
+                killedPlayers.add(nightAction.getTargetPlayer());
+            }
+        }
+        return killedPlayers;
+    }
 }

@@ -104,8 +104,7 @@ public class NightBasisActivity extends AppCompatActivity {
 
         if (nightStepManager == null) {
             // No night step left to do : go to next round phase
-            RoundPhase nextRoundPhase = RepositoryManager.getInstance().gameInformationRepository().nextRoundStep();
-            Intent nextActivityIntent = RoundPhaseToActivityManager.goToActivityIntent(this, nextRoundPhase);
+            Intent nextActivityIntent = RoundPhaseToActivityManager.nextRoundPhaseIntent(this);
             startActivity(nextActivityIntent);
             return;
         }

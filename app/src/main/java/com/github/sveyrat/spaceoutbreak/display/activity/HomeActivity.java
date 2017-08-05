@@ -38,8 +38,7 @@ public class HomeActivity extends AppCompatActivity {
                 Game game = gamesAdapter.getItem(position);
                 DataHolderUtil.getInstance().setCurrentGameId(game.getId());
                 DataHolderUtil.getInstance().setCurrentRoundId(game.latestRound().getId());
-                RoundPhase nextRoundPhase = RepositoryManager.getInstance().gameInformationRepository().nextRoundStep();
-                Intent nextActivityIntent = RoundPhaseToActivityManager.goToActivityIntent(HomeActivity.this, nextRoundPhase);
+                Intent nextActivityIntent = RoundPhaseToActivityManager.nextRoundPhaseIntent(HomeActivity.this);
                 startActivity(nextActivityIntent);
             }
         });

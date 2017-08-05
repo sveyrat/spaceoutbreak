@@ -116,4 +116,8 @@ public class VoteRepository extends AbstractRepository {
         Game currentGame = currentGame();
         return currentGame.getCaptain();
     }
+
+    public Player killedThisRound() {
+        return voteResult().mostVotedFor();
+    }
 }

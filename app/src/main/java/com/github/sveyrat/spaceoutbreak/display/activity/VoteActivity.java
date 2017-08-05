@@ -47,7 +47,7 @@ public class VoteActivity extends AppCompatActivity {
         RepositoryManager.init(this);
         players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
         playersToVote = putPlayerNamesInCharSequence(players);
-        votes = new HashMap<Player, Player>();
+        votes = new HashMap<>();
         setContentView(R.layout.activity_vote);
 
 
@@ -174,8 +174,7 @@ public class VoteActivity extends AppCompatActivity {
         adb.setPositiveButton(getResources().getString(R.string.common_validate), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                RoundPhase nextRoundPhase = RepositoryManager.getInstance().gameInformationRepository().nextRoundStep();
-                Intent nextActivityIntent = RoundPhaseToActivityManager.goToActivityIntent(VoteActivity.this, nextRoundPhase);
+                Intent nextActivityIntent = RoundPhaseToActivityManager.nextRoundPhaseIntent(VoteActivity.this);
                 startActivity(nextActivityIntent);
                 return;
             }

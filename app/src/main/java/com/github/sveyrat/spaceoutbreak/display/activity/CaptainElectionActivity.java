@@ -87,8 +87,7 @@ public class CaptainElectionActivity extends AppCompatActivity {
             adb.setPositiveButton(getResources().getString(R.string.new_game_player_input_yes), new AlertDialog.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     RepositoryManager.getInstance().voteRepository().defineCaptain(voted);
-                    RoundPhase nextRoundPhase = RepositoryManager.getInstance().gameInformationRepository().nextRoundStep();
-                    Intent nextActivityIntent = RoundPhaseToActivityManager.goToActivityIntent(CaptainElectionActivity.this, nextRoundPhase);
+                    Intent nextActivityIntent = RoundPhaseToActivityManager.nextRoundPhaseIntent(CaptainElectionActivity.this);
                     startActivity(nextActivityIntent);
                     return;
                 }

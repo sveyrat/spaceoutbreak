@@ -13,16 +13,29 @@ import com.github.sveyrat.spaceoutbreak.log.Logger;
 
 public class RoundPhaseToActivityManager {
 
-    public static Intent goToActivityIntent(Context context, RoundPhase roundPhase) {
+    public static final String IS_NIGHT_AUTOPSY_INTENT_EXTRA_FIELD_NAME = "IS_NIGHT_AUTOPSY";
+
+    public static Intent nextRoundPhaseIntent(Context context) {
+        RoundPhase roundPhase = RepositoryManager.getInstance().gameInformationRepository().nextRoundPhase();
         Logger.getInstance().info(RoundPhaseToActivityManager.class.getName(), "Selecting activity for RoundPhase " + roundPhase);
         switch (roundPhase) {
-            case NIGHT:
-                return new Intent(context, NightBasisActivity.class);
-            case DAY:
-                return new Intent(context, VoteActivity.class);
             case CAPTAIN_ELECTION:
                 return new Intent(context, CaptainElectionActivity.class);
-            case NEW:
+            case NIGHT:
+                return new Intent(context, NightBasisActivity.class);
+            case NIGHT_AUTOPSY:
+                // TODO put the autopsy activity instead of null
+                Intent nightAutopsyIntent = new Intent(context, null);
+                nightAutopsyIntent.putExtra(IS_NIGHT_AUTOPSY_INTENT_EXTRA_FIELD_NAME, true);
+                return nightAutopsyIntent;
+            case VOTE:
+                return new Intent(context, VoteActivity.class);
+            case DAY_AUTOPSY:
+                // TODO put the autopsy activity instead of null
+                Intent dayAutopsyIntent = new Intent(context, null);
+                dayAutopsyIntent.putExtra(IS_NIGHT_AUTOPSY_INTENT_EXTRA_FIELD_NAME, false);
+                return dayAutopsyIntent;
+            case NEW_ROUND:
                 RepositoryManager.getInstance().nightActionRepository().newRound();
                 return new Intent(context, NightBasisActivity.class);
             case END:
