@@ -84,33 +84,40 @@ public class NightBasisActivity extends AppCompatActivity {
 
     public void confirm(View view) {
         if (View.GONE == afterStepTextView.getVisibility()) {
+            // After step text is not shown yet, validate the screen status
             boolean validationResult = nightStepManager.validateStep(this);
             if (!validationResult) {
+                // Validation failed : don't change the view state
                 return;
             }
         }
 
         String afterStepText = nightStepManager.afterStepText(this);
         if (View.GONE == afterStepTextView.getVisibility() && afterStepText != null) {
+            // After step text is not shown yet, show it since validation's result was ok
             showAfterStepText(afterStepText);
             return;
-        } else {
-            nightStepManager = RepositoryManager.getInstance().nightActionRepository().nextNightStep();
+        }
 
-            if (nightStepManager == null) {
-                RoundPhase nextRoundPhase = RepositoryManager.getInstance().gameInformationRepository().nextRoundStep();
-                Intent nextActivityIntent = RoundPhaseToActivityManager.goToActivityIntent(this, nextRoundPhase);
-                startActivity(nextActivityIntent);
-                return;
-            }
+        // After step text is already shown or there is none to show : go to next step
+        nightStepManager = RepositoryManager.getInstance().nightActionRepository().nextNightStep();
 
-            updateView();
-            if (nightStepManager.useRoleSelection()) {
-                showRoleGrid();
-            }
-            if (nightStepManager.autoValidate()) {
-                showAfterStepText(afterStepText);
-            }
+        if (nightStepManager == null) {
+            // No night step left to do : go to next round phase
+            RoundPhase nextRoundPhase = RepositoryManager.getInstance().gameInformationRepository().nextRoundStep();
+            Intent nextActivityIntent = RoundPhaseToActivityManager.goToActivityIntent(this, nextRoundPhase);
+            startActivity(nextActivityIntent);
+            return;
+        }
+
+        // There are still night phases to play
+        updateView();
+        if (nightStepManager.useRoleSelection()) {
+            showRoleGrid();
+        }
+        if (nightStepManager.autoValidate()) {
+            nightStepManager.registerAutoValidatedAction();
+            showAfterStepText(nightStepManager.afterStepText(this));
         }
     }
 

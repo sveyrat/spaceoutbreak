@@ -6,6 +6,7 @@ import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Genome;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.github.sveyrat.spaceoutbreak.log.Logger;
 
 public class GeneticistNightStepManager extends NightStepManager {
@@ -41,5 +42,10 @@ public class GeneticistNightStepManager extends NightStepManager {
         }
         String genomeLabel = context.getResources().getString(inspectedPlayerGenome.getLabelResourcesId());
         return String.format(context.getResources().getString(R.string.night_basis_information_genomeStatus), inspectedPlayer.getName(), genomeLabel);
+    }
+
+    @Override
+    public void registerAutoValidatedAction() {
+        RepositoryManager.getInstance().nightActionRepository().none(Role.GENETICIST);
     }
 }

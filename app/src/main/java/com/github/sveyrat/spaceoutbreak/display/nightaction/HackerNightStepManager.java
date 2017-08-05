@@ -94,4 +94,9 @@ public class HackerNightStepManager extends NightStepManager {
     public boolean useRoleSelection() {
         return true;
     }
+
+    @Override
+    public void registerAutoValidatedAction() {
+        RepositoryManager.getInstance().nightActionRepository().none(Role.HACKER);
+    }
 }

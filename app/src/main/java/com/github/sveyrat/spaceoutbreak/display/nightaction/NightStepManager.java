@@ -112,6 +112,10 @@ public abstract class NightStepManager {
         return fakeStep;
     }
 
+    public void registerAutoValidatedAction() {
+        // do nothing
+    }
+
     public boolean useRoleSelection() {
         return false;
     }

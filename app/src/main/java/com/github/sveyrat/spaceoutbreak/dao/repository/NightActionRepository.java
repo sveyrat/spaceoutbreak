@@ -67,13 +67,29 @@ public class NightActionRepository extends AbstractRepository {
     }
 
     /**
+     * If the player was paralyzed, we store it's action with type NONE
+     */
+    public void none(Role role) {
+        try {
+            Round round = currentRound();
+            NightAction nightAction = new NightAction(round, role, NightActionType.NONE, null);
+            nightActionDao().create(nightAction);
+            Logger.getInstance().info(NightActionRepository.class.getName(), "Role " + role + " did nothing");
+        } catch (SQLException e) {
+            String message = "Error while attempting to save empty action for role " + role;
+            Logger.getInstance().info(NightActionRepository.class.getName(), message);
+            throw new RuntimeException(message, e);
+        }
+    }
+
+    /**
      * Mutates a player if his/her status authorizes it.
      *
      * @param player the player to mutate
      */
     public void mutate(Player player) {
         if (player.isMutant() || !player.isAlive()) {
-            Logger.getInstance().info(NightActionRepository.class.getName(), "Can not mutate player " + player.getName() + " with id " + player.getId() + ". Mutant : " + player.isMutant() + ". Alive : " + player.isAlive());
+            Logger.getInstance().error(NightActionRepository.class.getName(), "Can not mutate player " + player.getName() + " with id " + player.getId() + ". Mutant : " + player.isMutant() + ". Alive : " + player.isAlive());
             return;
         }
         try {
@@ -284,7 +300,18 @@ public class NightActionRepository extends AbstractRepository {
     public Integer hackComputerScientist() {
         try {
             NightAction hackedRoleNightAction = nightActionForHacker(Role.COMPUTER_SCIENTIST);
-            return hackedRoleNightAction == null ? null : RepositoryManager.getInstance().gameInformationRepository().countMutantsInCurrentGame();
+            if (hackedRoleNightAction == null) {
+                String message = "Could not retrieve night action for computer scientist";
+                Logger.getInstance().error(getClass().getName(), message);
+                throw new RuntimeException(message);
+            }
+            if (NightActionType.NONE == hackedRoleNightAction.getType()) {
+                Logger.getInstance().info(getClass().getName(), "Computer scientist has been hacked but had no information");
+                return null;
+            }
+            int mutantCount = RepositoryManager.getInstance().gameInformationRepository().countMutantsInCurrentGame();
+            Logger.getInstance().info(getClass().getName(), "Computer scientist has been hacked, mutant count is " + mutantCount);
+            return mutantCount;
         } catch (SQLException e) {
             String message = "Error while attempting to hack computer scientist";
             Logger.getInstance().error(NightActionRepository.class.getName(), message);
@@ -309,7 +336,18 @@ public class NightActionRepository extends AbstractRepository {
     private Player hack(Role role) {
         try {
             NightAction hackedRoleNightAction = nightActionForHacker(role);
-            return hackedRoleNightAction == null ? null : hackedRoleNightAction.getTargetPlayer();
+            if (hackedRoleNightAction == null) {
+                String message = "Could not retrieve night action for " + role;
+                Logger.getInstance().error(getClass().getName(), message);
+                throw new RuntimeException(message);
+            }
+            if (NightActionType.NONE == hackedRoleNightAction.getType()) {
+                Logger.getInstance().info(getClass().getName(), role + " has been hacked but had no information");
+                return null;
+            }
+            Player targetedPlayer = hackedRoleNightAction.getTargetPlayer();
+            Logger.getInstance().info(NightActionRepository.class.getName(), role + "  has been hacked, targeted player retrieved  : " + targetedPlayer.getName());
+            return targetedPlayer;
         } catch (SQLException e) {
             String message = "Error while attempting to hack " + role;
             Logger.getInstance().error(NightActionRepository.class.getName(), message);
@@ -349,46 +387,46 @@ public class NightActionRepository extends AbstractRepository {
         switch (lastPlayedRole) {
             case BASE_MUTANT:
                 if (latestAction.getType() == NightActionType.MUTATE) {
-                    Logger.getInstance().info(getClass().getName(), "Last action was mutants mutating, so it's the mutants turn to paralyse");
+                    Logger.getInstance().info(getClass().getName(), "Last action was mutants mutating, so next is the mutants paralysing");
                     return new MutantsParalyzeNightStepManager(latestAction.getTargetPlayer(), null);
                 }
                 if (latestAction.getType() == NightActionType.KILL) {
-                    Logger.getInstance().info(getClass().getName(), "Last action was mutants kill, so it's the mutants turn to paralyse");
+                    Logger.getInstance().info(getClass().getName(), "Last action was mutants kill, so next is the mutants paralysing");
                     return new MutantsParalyzeNightStepManager(null, latestAction.getTargetPlayer());
                 }
                 if (canBePlayed(Role.DOCTOR)) {
-                    Logger.getInstance().info(getClass().getName(), "Last role played was the mutants, it's the doctors' turn");
+                    Logger.getInstance().info(getClass().getName(), "Last role played was the mutants, next is the doctors' turn");
                     int numberOfHeals = numberOfHealsAvailable();
                     return new DoctorsHealOrKillNightStepManager(fakeStep(Role.DOCTOR), numberOfHeals);
                 }
                 // otherwise, keep going (no break)
             case DOCTOR:
                 if (canBePlayed(Role.COMPUTER_SCIENTIST)) {
-                    Logger.getInstance().info(getClass().getName(), "It's the computer scientist's turn");
+                    Logger.getInstance().info(getClass().getName(), "Next is the computer scientist's turn");
                     return new ComputerScientistNightStepManager(fakeStep(Role.COMPUTER_SCIENTIST));
                 }
                 // otherwise, keep going (no break)
             case COMPUTER_SCIENTIST:
                 if (canBePlayed(Role.PSYCHOLOGIST)) {
-                    Logger.getInstance().info(getClass().getName(), "It's the psychologist's turn");
+                    Logger.getInstance().info(getClass().getName(), "Next is the psychologist's turn");
                     return new PsychologistNightStepManager(fakeStep(Role.PSYCHOLOGIST));
                 }
                 // otherwise, keep going (no break)
             case PSYCHOLOGIST:
                 if (canBePlayed(Role.GENETICIST)) {
-                    Logger.getInstance().info(getClass().getName(), "It's the geneticist's turn");
+                    Logger.getInstance().info(getClass().getName(), "Next is the geneticist's turn");
                     return new GeneticistNightStepManager(fakeStep(Role.GENETICIST));
                 }
                 // otherwise, keep going (no break)
             case GENETICIST:
                 if (canBePlayed(Role.SPY)) {
-                    Logger.getInstance().info(getClass().getName(), "It's the spy's turn");
+                    Logger.getInstance().info(getClass().getName(), "Next is the spy's turn");
                     return new SpyNightStepManager(fakeStep(Role.SPY));
                 }
                 // otherwise, keep going (no break)
             case SPY:
                 if (canBePlayed(Role.HACKER)) {
-                    Logger.getInstance().info(getClass().getName(), "It's the hacker's turn");
+                    Logger.getInstance().info(getClass().getName(), "Next is the hacker's turn");
                     return new HackerNightStepManager(fakeStep(Role.HACKER));
                 }
                 // otherwise, keep going (no break)
@@ -425,6 +463,7 @@ public class NightActionRepository extends AbstractRepository {
                     return false;
                 }
             }
+            Logger.getInstance().info(NightActionRepository.class.getName(), "No valid doctor, faking doctor step");
             return true;
         }
 
@@ -433,6 +472,7 @@ public class NightActionRepository extends AbstractRepository {
                 continue;
             }
             if (player.isParalyzed()) {
+                Logger.getInstance().info(NightActionRepository.class.getName(), "No not-paralyzed " + role + ", faking step");
                 return true;
             }
         }

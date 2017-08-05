@@ -7,6 +7,7 @@ import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.dto.SpyInspectionResult;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.github.sveyrat.spaceoutbreak.log.Logger;
 
 public class SpyNightStepManager extends NightStepManager {
@@ -50,5 +51,10 @@ public class SpyNightStepManager extends NightStepManager {
         inspectionResult += context.getResources().getString(R.string.night_basis_information_spy_inspectedByPsychologist) + " " + (spyInspectionResult.isInspectedByPsychologist() ? yes : no) + "\n";
         inspectionResult += context.getResources().getString(R.string.night_basis_information_spy_inspectedByGeneticist) + " " + (spyInspectionResult.isInspectedByGeneticist() ? yes : no) + "\n";
         return inspectionResult;
+    }
+
+    @Override
+    public void registerAutoValidatedAction() {
+        RepositoryManager.getInstance().nightActionRepository().none(Role.SPY);
     }
 }

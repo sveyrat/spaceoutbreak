@@ -100,4 +100,9 @@ public class DoctorsHealOrKillNightStepManager extends NightStepManager {
         }
         return instructions;
     }
+
+    @Override
+    public void registerAutoValidatedAction() {
+        RepositoryManager.getInstance().nightActionRepository().none(Role.DOCTOR);
+    }
 }

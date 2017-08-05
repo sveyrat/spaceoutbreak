@@ -6,6 +6,7 @@ import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.github.sveyrat.spaceoutbreak.log.Logger;
 
 public class PsychologistNightStepManager extends NightStepManager {
@@ -41,5 +42,10 @@ public class PsychologistNightStepManager extends NightStepManager {
         }
         String mutantOrSane = inspectedPlayerIsMutant ? context.getResources().getString(R.string.night_basis_information_playerStatus_mutant) : context.getResources().getString(R.string.night_basis_information_playerStatus_sane);
         return String.format(context.getResources().getString(R.string.night_basis_information_playerStatus), inspectedPlayer.getName(), mutantOrSane);
+    }
+
+    @Override
+    public void registerAutoValidatedAction() {
+        RepositoryManager.getInstance().nightActionRepository().none(Role.PSYCHOLOGIST);
     }
 }
