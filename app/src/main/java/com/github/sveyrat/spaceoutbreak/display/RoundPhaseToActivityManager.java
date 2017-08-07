@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.dto.RoundPhase;
+import com.github.sveyrat.spaceoutbreak.display.activity.AutopsyActivity;
 import com.github.sveyrat.spaceoutbreak.display.activity.CaptainElectionActivity;
 import com.github.sveyrat.spaceoutbreak.display.activity.GameEndActivity;
 import com.github.sveyrat.spaceoutbreak.display.activity.NightBasisActivity;
@@ -24,15 +25,13 @@ public class RoundPhaseToActivityManager {
             case NIGHT:
                 return new Intent(context, NightBasisActivity.class);
             case NIGHT_AUTOPSY:
-                // TODO put the autopsy activity instead of null
-                Intent nightAutopsyIntent = new Intent(context, null);
+                Intent nightAutopsyIntent = new Intent(context, AutopsyActivity.class);
                 nightAutopsyIntent.putExtra(IS_NIGHT_AUTOPSY_INTENT_EXTRA_FIELD_NAME, true);
                 return nightAutopsyIntent;
             case VOTE:
                 return new Intent(context, VoteActivity.class);
             case DAY_AUTOPSY:
-                // TODO put the autopsy activity instead of null
-                Intent dayAutopsyIntent = new Intent(context, null);
+                Intent dayAutopsyIntent = new Intent(context, AutopsyActivity.class);
                 dayAutopsyIntent.putExtra(IS_NIGHT_AUTOPSY_INTENT_EXTRA_FIELD_NAME, false);
                 return dayAutopsyIntent;
             case NEW_ROUND:
