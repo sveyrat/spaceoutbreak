@@ -114,4 +114,8 @@
     <string name="captain_election_activity.activity_title">Election du capitaine</string>
     <string name="captain_election_error_missVote">Choisissez un joueur !</string>
     <string name="captain_election.validate">Choisir %1$s comme capitaine ?</string>
+
+    <!-- AUTOPSY ACTIVITY -->
+    <string name="autopsy_activity.activity_title">Autopsie !</string>
+
 </resources>

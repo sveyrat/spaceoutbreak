@@ -32,6 +32,8 @@
         <activity android:name=".display.activity.GameEndActivity"
             android:label="@string/game_end_activity.activity_title"></activity>
 
+        <activity android:name=".display.activity.AutopsyActivity"
+            android:label="@string/autopsy_activity.activity_title"></activity>
 
         <activity android:name=".display.activity.CaptainElectionActivity"
             android:label="@string/captain_election_activity.activity_title"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
