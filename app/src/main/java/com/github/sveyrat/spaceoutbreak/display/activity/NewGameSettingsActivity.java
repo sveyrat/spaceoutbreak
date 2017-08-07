@@ -1,4 +1,4 @@
-package com.github.sveyrat.spaceoutbreak;
+package com.github.sveyrat.spaceoutbreak.display.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
-import com.github.sveyrat.spaceoutbreak.dao.dto.RoundStep;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 
 import java.util.ArrayList;
@@ -103,7 +103,6 @@ public class NewGameSettingsActivity extends AppCompatActivity {
         RepositoryManager.getInstance().nightActionRepository().newRound();
 
         // TODO here there should be a step for the doctors to recognize themself, then the captain election
-        RoundStep nextStep = RepositoryManager.getInstance().gameInformationRepository().nextStep();
         Intent nightBasisActivityIntent = new Intent(this, CaptainElectionActivity.class);
         startActivity(nightBasisActivityIntent);
     }

@@ -12,7 +12,7 @@ import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class StepManager {
+public abstract class NightStepManager {
 
     private int headerTextStringResourceId;
 
@@ -21,13 +21,13 @@ public abstract class StepManager {
     /**
      * A step is fake if no one will wake up to do the actions,
      * but the GM still needs to act as if the role was still being played.
-     *
+     * <p>
      * This is the case when the player(s) that should play has been paralyzed,
      * or if all the doctors have been mutated in the case of the doctors step.
      */
     protected boolean fakeStep;
 
-    public StepManager(boolean fakeStep, int headerTextStringResourceId) {
+    public NightStepManager(boolean fakeStep, int headerTextStringResourceId) {
         this.fakeStep = fakeStep;
         this.headerTextStringResourceId = headerTextStringResourceId;
     }
@@ -112,9 +112,11 @@ public abstract class StepManager {
         return fakeStep;
     }
 
+    public void registerAutoValidatedAction() {
+        // do nothing
+    }
+
     public boolean useRoleSelection() {
         return false;
     }
-
-    public abstract Role currentlyPlayedRole();
 }

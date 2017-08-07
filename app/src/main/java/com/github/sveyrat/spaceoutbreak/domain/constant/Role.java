@@ -16,7 +16,7 @@ public enum Role {
     private int labelResourceId;
     private int imageResourceId;
 
-    private Role(int labelResourceId, int imageResourceId) {
+    Role(int labelResourceId, int imageResourceId) {
         this.labelResourceId = labelResourceId;
         this.imageResourceId = imageResourceId;
     }
@@ -28,6 +28,4 @@ public enum Role {
     public int getImageResourceId() {
         return imageResourceId;
     }
-
-
 }

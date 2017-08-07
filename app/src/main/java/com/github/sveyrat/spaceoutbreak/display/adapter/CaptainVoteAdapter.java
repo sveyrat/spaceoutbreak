@@ -1,4 +1,4 @@
-package com.github.sveyrat.spaceoutbreak.display;
+package com.github.sveyrat.spaceoutbreak.display.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -11,23 +11,24 @@ import android.widget.TextView;
 
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
-import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 
 import java.util.List;
 
 /**
- * Created by Rom on 02/10/2016.
+ * Created by Rom on 15/01/2017.
  */
 
-public class PlayerNightAdapter extends BaseAdapter {
+public class CaptainVoteAdapter extends BaseAdapter {
 
     private final Context context;
     private List<Player> players;
+    private Player voted;
 
-    public PlayerNightAdapter(Context context, List<Player> players) {
+    public CaptainVoteAdapter(Context context, List<Player> players, Player voted) {
         super();
         this.context = context;
         this.players = players;
+        this.voted = voted;
     }
 
     @Override
@@ -52,30 +53,25 @@ public class PlayerNightAdapter extends BaseAdapter {
         if (playerView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             playerView = inflater.inflate(R.layout.player_item, parent, false);
+            if (voted != null) {
+                if (voted.equals(player)) {
+                    ImageView selectedImageView = (ImageView) playerView.findViewById(R.id.selected_image);
+                    selectedImageView.setVisibility(View.VISIBLE);
+                }
+            }
         }
         TextView playerName = (TextView) playerView.findViewById(R.id.name_player_tv);
         playerName.setText(player.getName());
-
-        ImageView selectedIndicatorImageView = (ImageView) playerView.findViewById(R.id.selected_image);
-        selectedIndicatorImageView.setVisibility(View.GONE);
-
-        ImageView playerRolePicto = (ImageView) playerView.findViewById(R.id.player_role_picto);
-        if (player.getRole() != Role.ASTRONAUT) {
-            playerRolePicto.setImageResource(player.getRole().getImageResourceId());
-        } else {
-            playerRolePicto.setImageResource(android.R.color.transparent);
-        }
-
-        if (player.isMutant()) {
-            playerView.setBackground(ContextCompat.getDrawable(context, R.drawable.mutant_small_border));
-        } else {
-            playerView.setBackground(ContextCompat.getDrawable(context, R.drawable.small_border));
-        }
+        playerView.setBackground(ContextCompat.getDrawable(context, R.drawable.small_border));
 
         return playerView;
     }
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+
+    public void setVoted(Player voted) {
+        this.voted = voted;
     }
 }

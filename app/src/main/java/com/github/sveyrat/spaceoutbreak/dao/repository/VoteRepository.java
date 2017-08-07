@@ -29,7 +29,7 @@ public class VoteRepository extends AbstractRepository {
             Round currentRound = currentRound();
             if (currentRound.getVotes() != null && !currentRound.getVotes().isEmpty()) {
                 String message = "Attempting to persist votes on a round that already has votes";
-                Logger.getInstance().error(VoteRepository.class.getName(), message);
+                Logger.getInstance().error(getClass(), message);
                 throw new RuntimeException(message);
             }
             for (Map.Entry<Player, Player> voteEntry : votes.entrySet()) {
@@ -45,7 +45,7 @@ public class VoteRepository extends AbstractRepository {
             return voteResult;
         } catch (SQLException e) {
             String message = "Could not save votes";
-            Logger.getInstance().error(VoteRepository.class.getName(), message);
+            Logger.getInstance().error(getClass(), message);
             throw new RuntimeException(message, e);
         }
     }
@@ -65,7 +65,7 @@ public class VoteRepository extends AbstractRepository {
             killMostVotedFor();
         } catch (SQLException e) {
             String message = "Could not save captain vote";
-            Logger.getInstance().error(VoteRepository.class.getName(), message);
+            Logger.getInstance().error(getClass(), message);
             throw new RuntimeException(message, e);
         }
     }
@@ -98,16 +98,16 @@ public class VoteRepository extends AbstractRepository {
         Game currentGame = currentGame();
         if (currentGame.getCaptain() != null && currentGame.getCaptain().isAlive()) {
             String message = "Attempting to change captain when there is already an alive one";
-            Logger.getInstance().error(VoteRepository.class.getName(), message);
+            Logger.getInstance().error(getClass(), message);
             throw new RuntimeException(message);
         }
         currentGame.setCaptain(player);
-        Logger.getInstance().info(VoteRepository.class.getName(), "New captain is " + player.getName());
+        Logger.getInstance().info(getClass(), "New captain is " + player.getName());
         try {
             gameDao().update(currentGame);
         } catch (SQLException e) {
             String message = "Could not define captain";
-            Logger.getInstance().error(VoteRepository.class.getName(), message);
+            Logger.getInstance().error(getClass(), message);
             throw new RuntimeException(message, e);
         }
     }
@@ -115,5 +115,9 @@ public class VoteRepository extends AbstractRepository {
     public Player getCaptain() {
         Game currentGame = currentGame();
         return currentGame.getCaptain();
+    }
+
+    public Player killedThisRound() {
+        return voteResult().mostVotedFor();
     }
 }

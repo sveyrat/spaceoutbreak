@@ -45,7 +45,7 @@ public abstract class AbstractRepository {
             return gameDao().queryForId(DataHolderUtil.getInstance().getCurrentGameId());
         } catch (SQLException e) {
             String message = "Error while attempting to load the current game with id " + DataHolderUtil.getInstance().getCurrentGameId();
-            Logger.getInstance().error(AbstractRepository.class.getName(), message);
+            Logger.getInstance().error(getClass(), message);
             throw new RuntimeException(message, e);
         }
     }
@@ -55,7 +55,7 @@ public abstract class AbstractRepository {
             return roundDao().queryForId(DataHolderUtil.getInstance().getCurrentRoundId());
         } catch (SQLException e) {
             String message = "Error while attempting to load the current round with id " + DataHolderUtil.getInstance().getCurrentRoundId();
-            Logger.getInstance().error(AbstractRepository.class.getName(), message);
+            Logger.getInstance().error(getClass(), message);
             throw new RuntimeException(message, e);
         }
     }

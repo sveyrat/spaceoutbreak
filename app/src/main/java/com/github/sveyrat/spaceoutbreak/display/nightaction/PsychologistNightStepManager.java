@@ -9,11 +9,11 @@ import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 import com.github.sveyrat.spaceoutbreak.log.Logger;
 
-public class PsychologistStepManager extends StepManager {
+public class PsychologistNightStepManager extends NightStepManager {
 
     private Boolean inspectedPlayerIsMutant;
 
-    public PsychologistStepManager(boolean fakeStep) {
+    public PsychologistNightStepManager(boolean fakeStep) {
         super(fakeStep, R.string.night_basis_step_psychologist_headerText);
     }
 
@@ -37,7 +37,7 @@ public class PsychologistStepManager extends StepManager {
         Player inspectedPlayer = selectedPlayers.get(0);
         if (inspectedPlayerIsMutant == null) {
             String message = "Trying to display the psychologist inspection result, when it has not been done";
-            Logger.getInstance().error(PsychologistStepManager.class.getName(), message);
+            Logger.getInstance().error(getClass(), message);
             throw new RuntimeException(message);
         }
         String mutantOrSane = inspectedPlayerIsMutant ? context.getResources().getString(R.string.night_basis_information_playerStatus_mutant) : context.getResources().getString(R.string.night_basis_information_playerStatus_sane);
@@ -45,7 +45,7 @@ public class PsychologistStepManager extends StepManager {
     }
 
     @Override
-    public Role currentlyPlayedRole() {
-        return Role.PSYCHOLOGIST;
+    public void registerAutoValidatedAction() {
+        RepositoryManager.getInstance().nightActionRepository().none(Role.PSYCHOLOGIST);
     }
 }

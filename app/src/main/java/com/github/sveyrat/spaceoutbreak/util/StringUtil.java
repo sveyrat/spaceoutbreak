@@ -1,6 +1,5 @@
 package com.github.sveyrat.spaceoutbreak.util;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class StringUtil {

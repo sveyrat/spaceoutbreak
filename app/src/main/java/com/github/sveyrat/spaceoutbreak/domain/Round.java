@@ -20,8 +20,14 @@ public class Round {
     @ForeignCollectionField(orderColumnName = "order")
     private ForeignCollection<NightAction> nightActions;
 
+    @DatabaseField(canBeNull = false)
+    private boolean nightAutopsyDone = false;
+
     @ForeignCollectionField
     private ForeignCollection<Vote> votes;
+
+    @DatabaseField(canBeNull = false)
+    private boolean dayAutopsyDone = false;
 
     public Round() {
     }
@@ -69,5 +75,21 @@ public class Round {
 
     public void setVotes(ForeignCollection<Vote> votes) {
         this.votes = votes;
+    }
+
+    public boolean isNightAutopsyDone() {
+        return nightAutopsyDone;
+    }
+
+    public void setNightAutopsyDone(boolean nightAutopsyDone) {
+        this.nightAutopsyDone = nightAutopsyDone;
+    }
+
+    public boolean isDayAutopsyDone() {
+        return dayAutopsyDone;
+    }
+
+    public void setDayAutopsyDone(boolean dayAutopsyDone) {
+        this.dayAutopsyDone = dayAutopsyDone;
     }
 }

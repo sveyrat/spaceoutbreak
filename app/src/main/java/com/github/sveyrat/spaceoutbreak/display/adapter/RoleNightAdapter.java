@@ -1,4 +1,4 @@
-package com.github.sveyrat.spaceoutbreak.display;
+package com.github.sveyrat.spaceoutbreak.display.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

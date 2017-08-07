@@ -1,4 +1,4 @@
-package com.github.sveyrat.spaceoutbreak;
+package com.github.sveyrat.spaceoutbreak.display.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,11 +12,12 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
-import com.github.sveyrat.spaceoutbreak.dao.dto.RoundStep;
 import com.github.sveyrat.spaceoutbreak.dao.dto.VoteResult;
 import com.github.sveyrat.spaceoutbreak.dao.repository.VoteRepository;
-import com.github.sveyrat.spaceoutbreak.display.PlayerVoteAdapter;
+import com.github.sveyrat.spaceoutbreak.display.RoundPhaseToActivityManager;
+import com.github.sveyrat.spaceoutbreak.display.adapter.PlayerVoteAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.log.Logger;
 
@@ -45,7 +46,7 @@ public class VoteActivity extends AppCompatActivity {
         RepositoryManager.init(this);
         players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
         playersToVote = putPlayerNamesInCharSequence(players);
-        votes = new HashMap<Player, Player>();
+        votes = new HashMap<>();
         setContentView(R.layout.activity_vote);
 
 
@@ -121,13 +122,13 @@ public class VoteActivity extends AppCompatActivity {
         final VoteResult voteResult = voteRepository.vote(votes);
 
         if (voteResult.draw()) {
-
+            Logger.getInstance().info(getClass(), "Vote result is a draw, asking captain to make a choice...");
             AlertDialog.Builder builder = new AlertDialog.Builder(VoteActivity.this);
             builder.setCancelable(false);
             String title = String.format(getResources().getString(R.string.vote_activity_tie_title), voteRepository.getCaptain().getName());// CF gdoc on how to get this ID here
             final List<Player> tied = voteResult.getTiedPlayers();
             final int chosenPos[] = new int[1];
-            CharSequence[] tied_names = Arrays.copyOfRange(putPlayerNamesInCharSequence(tied), 1, tied.size()+1);
+            CharSequence[] tied_names = Arrays.copyOfRange(putPlayerNamesInCharSequence(tied), 1, tied.size() + 1);
             builder.setTitle(title)
                     .setSingleChoiceItems(tied_names, -1, new DialogInterface.OnClickListener() {
                         @Override
@@ -147,14 +148,14 @@ public class VoteActivity extends AppCompatActivity {
             builder.setNegativeButton(R.string.common_return, null);
             builder.show();
 
-        }else{
+        } else {
             displayVoteResults(voteResult);
         }
 
 
     }
 
-    private void displayVoteResults(VoteResult voteResult){
+    private void displayVoteResults(VoteResult voteResult) {
 
         String message = "";
         int numberOfNullVotes = players.size() - votes.size();
@@ -172,23 +173,9 @@ public class VoteActivity extends AppCompatActivity {
         adb.setPositiveButton(getResources().getString(R.string.common_validate), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                RoundStep nextStep = RepositoryManager.getInstance().gameInformationRepository().nextStep();
-                if (RoundStep.END == nextStep) {
-                    startActivity(new Intent(VoteActivity.this, GameEndActivity.class));
-                    return;
-                }
-                if (RoundStep.CAPTAIN_ELECTION == nextStep) {
-                    startActivity(new Intent(VoteActivity.this, CaptainElectionActivity.class));
-                    return;
-                }
-                if (RoundStep.NEW == nextStep) {
-                    RepositoryManager.getInstance().nightActionRepository().newRound();
-                    startActivity(new Intent(VoteActivity.this, NightBasisActivity.class));
-                    return;
-                }
-                String message = "Game next step is inconsistent with current status. Next step is " + nextStep.toString();
-                Logger.getInstance().error(VoteActivity.class.getName(), message);
-                throw new RuntimeException(message);
+                Intent nextActivityIntent = RoundPhaseToActivityManager.nextRoundPhaseIntent(VoteActivity.this);
+                startActivity(nextActivityIntent);
+                return;
             }
         });
         adb.show();

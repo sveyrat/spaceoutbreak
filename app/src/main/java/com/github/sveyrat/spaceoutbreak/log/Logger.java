@@ -46,34 +46,34 @@ public class Logger {
                 logDirectory.mkdir();
             }
 
-            logFile = new File(logDirectory, "logs-" + System.currentTimeMillis() + ".txt" );
+            logFile = new File(logDirectory, "logs-" + System.currentTimeMillis() + ".txt");
             logToFile = true;
         } else {
             Log.e(Logger.class.getName(), LOG_PREFIX + "No external storage mounted : application will not be able to log to file");
         }
     }
 
-    public void info(String tag, String message) {
+    public void info(Class clazz, String message) {
         String prefixedMessage = LOG_PREFIX + message;
-        Log.i(tag, prefixedMessage);
+        Log.i(clazz.getSimpleName(), prefixedMessage);
         if (!logToFile) {
             return;
         }
-        logToFile(LogLevel.INFO, tag, message);
+        logToFile(LogLevel.INFO, clazz, message);
     }
 
-    public void error(String tag, String message) {
+    public void error(Class clazz, String message) {
         String prefixedMessage = LOG_PREFIX + message;
-        Log.e(tag, prefixedMessage);
+        Log.e(clazz.getSimpleName(), prefixedMessage);
         if (!logToFile) {
             return;
         }
-        logToFile(LogLevel.ERROR, tag, message);
+        logToFile(LogLevel.ERROR, clazz, message);
     }
 
-    public void error(String tag, String message, Throwable t) {
+    public void error(Class clazz, String message, Throwable t) {
         String prefixedMessage = LOG_PREFIX + message;
-        Log.e(tag, prefixedMessage, t);
+        Log.e(clazz.getSimpleName(), prefixedMessage, t);
         if (!logToFile) {
             return;
         }
@@ -84,11 +84,11 @@ public class Logger {
 
         String messageWithStacktrace = message + "\n" + stackTrace;
 
-        logToFile(LogLevel.ERROR, tag, messageWithStacktrace);
+        logToFile(LogLevel.ERROR, clazz, messageWithStacktrace);
     }
 
-    private void logToFile(LogLevel logLevel, String tag, String message) {
-        String fullMessage = new SimpleDateFormat(DATE_FORMAT).format(new Date()) + " " + LOG_PREFIX + logLevel.getLogPrefix() + tag + " " + message;
+    private void logToFile(LogLevel logLevel, Class clazz, String message) {
+        String fullMessage = new SimpleDateFormat(DATE_FORMAT).format(new Date()) + " " + LOG_PREFIX + logLevel.getLogPrefix() + clazz.getSimpleName() + " " + message;
         BufferedWriter bufferedWriter = null;
         try {
             bufferedWriter = new BufferedWriter(new FileWriter(logFile, true));
