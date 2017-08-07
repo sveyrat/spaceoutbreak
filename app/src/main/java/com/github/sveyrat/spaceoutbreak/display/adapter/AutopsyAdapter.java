@@ -43,9 +43,9 @@ public class AutopsyAdapter extends BaseAdapter {
         killedRole.setText(String.format(this.context.getResources().getString(R.string.autopsy_activity_killed_role), player.getRole().getLabelResourceId()));
 
         TextView killedStatus = (TextView) playerView.findViewById(R.id.status_killed_tv);
-        if(player.isMutant()){
+        if (player.isMutant()) {
             killedStatus.setText(String.format(this.context.getResources().getString(R.string.autopsy_activity_killed_status), this.context.getResources().getString(R.string.common_yes)));
-        }else{
+        } else {
             killedStatus.setText(String.format(this.context.getResources().getString(R.string.autopsy_activity_killed_status), this.context.getResources().getString(R.string.common_no)));
         }
 
