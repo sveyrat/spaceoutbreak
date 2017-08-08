@@ -96,47 +96,98 @@ public class GameInformationRepository extends AbstractRepository {
      * @return
      */
     public RoundPhase nextRoundPhase() {
+        // Game over
         if (gameFinished()) {
+            Logger.getInstance().info(getClass(), "Game over, go to END");
             return RoundPhase.END;
         }
+
         Game currentGame = currentGame();
-        Round currentRound = currentRound();
-        List<NightAction> nightActions = new ArrayList<>(currentRound.getNightActions());
-        if (nightActions != null && !nightActions.isEmpty()) {
-            NightStepManager nightStepManager = RepositoryManager.getInstance().nightActionRepository().nextNightStep();
-            if (nightStepManager != null) {
-                // Night step has been started but not finished
-                Logger.getInstance().info(getClass(), "Night phase has been started but not finished, next phase is NIGHT");
-                return RoundPhase.NIGHT;
-            }
-        }
-        if (currentRound.getVotes() != null && !currentRound.getVotes().isEmpty() && RepositoryManager.getInstance().voteRepository().voteResult().draw()) {
-            // Day voting step has been started but not finished
-            Logger.getInstance().info(getClass(), "Voting phase has been started but not finished due to a draw, next phase is VOTE");
-            return RoundPhase.VOTE;
-        }
-        if (currentGame.getCaptain() == null || !currentGame.getCaptain().isAlive()) {
-            Logger.getInstance().info(getClass(), "No Captain or dead captain, next phase is CAPTAIN_ELECTION");
+
+        if (isFirstRound() && currentGame.getCaptain() == null) {
+            Logger.getInstance().info(getClass(), "First round and no captain yet, go to CAPTAIN_ELECTION");
             return RoundPhase.CAPTAIN_ELECTION;
         }
-        if (nightActions == null || nightActions.isEmpty()) {
-            Logger.getInstance().info(getClass(), "Night phase has not been done yet, next phase is NIGHT");
+
+        if (nightPhaseStarted() && nightPhaseNotFinished()) {
+            Logger.getInstance().info(getClass(), "Night phase has been started but not finished, go to NIGHT");
             return RoundPhase.NIGHT;
         }
-        if (!currentRound.isNightAutopsyDone() && RepositoryManager.getInstance().nightActionRepository().killedDuringNightPhase().size() > 0) {
-            Logger.getInstance().info(getClass(), "Night autopsy has not been done yet, next phase is NIGHT_AUTOPSY");
-            return RoundPhase.NIGHT_AUTOPSY;
-        }
-        if (currentRound.getVotes() == null || currentRound.getVotes().isEmpty()) {
-            Logger.getInstance().info(getClass(), "Voting phase has not been done yet, next phase is VOTE");
+
+        // The only case where a vote can not lead straight to a result is in the case of a draw
+        if (votingPhaseStarted() && RepositoryManager.getInstance().voteRepository().voteResult().draw()) {
+            Logger.getInstance().info(getClass(), "Voting phase has been started but not finished (due to a draw), go to VOTE");
             return RoundPhase.VOTE;
         }
-        if (!currentRound.isDayAutopsyDone() && RepositoryManager.getInstance().voteRepository().voteResult().mostVotedFor() != null) {
-            Logger.getInstance().info(getClass(), "Day autopsy has not been done yet, next phase is DAY_AUTOPSY");
+
+        if (!nightPhaseStarted()) {
+            Logger.getInstance().info(getClass(), "Night phase has not been done yet, go to NIGHT");
+            return RoundPhase.NIGHT;
+        }
+
+        // Reaching this point means that the night phase has been started AND finished
+
+        if (nightAutospyRequiredAndNotFinished()) {
+            Logger.getInstance().info(getClass(), "Night autopsy has not been done yet, go to NIGHT_AUTOPSY");
+            return RoundPhase.NIGHT_AUTOPSY;
+        }
+
+        // The captain could have been killed in the voting phase, in which case we'll want to do the autopsy before electing a new captain (see below)
+        if (!votingPhaseStarted() && !currentGame.getCaptain().isAlive()) {
+            Logger.getInstance().info(getClass(), "Dead captain before voting phase, go to CAPTAIN_ELECTION");
+            return RoundPhase.CAPTAIN_ELECTION;
+        }
+
+        if (!votingPhaseStarted()) {
+            Logger.getInstance().info(getClass(), "Voting phase has not been done yet, go to VOTE");
+            return RoundPhase.VOTE;
+        }
+
+        // Reaching this point means that the voting phase has been started AND finished
+
+        if (dayAutopsyRequiredAndNotFinished()) {
+            Logger.getInstance().info(getClass(), "Day autopsy has not been done yet, go to DAY_AUTOPSY");
             return RoundPhase.DAY_AUTOPSY;
         }
-        Logger.getInstance().info(getClass(), "Previous round has been completed, next phase is NEW_ROUND");
+
+        // Captain has been killed in voting phase (see above)
+        if (!currentGame.getCaptain().isAlive()) {
+            Logger.getInstance().info(getClass(), "Dead captain after vote, go to CAPTAIN_ELECTION");
+            return RoundPhase.CAPTAIN_ELECTION;
+        }
+
+        Logger.getInstance().info(getClass(), "Previous round has been completed, go to NEW_ROUND");
         return RoundPhase.NEW_ROUND;
+    }
+
+    private boolean isFirstRound() {
+        return currentRound().getOrder() == 1;
+    }
+
+    private boolean dayAutopsyRequiredAndNotFinished() {
+        return !currentRound().isDayAutopsyDone() && RepositoryManager.getInstance().voteRepository().voteResult().mostVotedFor() != null;
+    }
+
+    private boolean nightAutospyRequiredAndNotFinished() {
+        return !currentRound().isNightAutopsyDone() && RepositoryManager.getInstance().nightActionRepository().killedDuringNightPhase().size() > 0;
+    }
+
+    private boolean nightPhaseNotFinished() {
+        NightStepManager nightStepManager = RepositoryManager.getInstance().nightActionRepository().nextNightStep();
+        if (nightStepManager != null) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean votingPhaseStarted() {
+        Round currentRound = currentRound();
+        return currentRound.getVotes() != null && !currentRound.getVotes().isEmpty();
+    }
+
+    private boolean nightPhaseStarted() {
+        List<NightAction> nightActions = new ArrayList<>(currentRound().getNightActions());
+        return nightActions != null && !nightActions.isEmpty();
     }
 
     public void markNightAutopsyAsDone() {

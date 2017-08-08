@@ -18,7 +18,6 @@ public class RoundPhaseToActivityManager {
 
     public static Intent nextRoundPhaseIntent(Context context) {
         RoundPhase roundPhase = RepositoryManager.getInstance().gameInformationRepository().nextRoundPhase();
-        Logger.getInstance().info(RoundPhaseToActivityManager.class, "Selecting activity for RoundPhase " + roundPhase);
         switch (roundPhase) {
             case CAPTAIN_ELECTION:
                 return new Intent(context, CaptainElectionActivity.class);
