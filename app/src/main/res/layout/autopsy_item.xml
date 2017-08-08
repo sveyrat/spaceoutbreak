@@ -16,7 +16,7 @@
         android:ellipsize="marquee"
         android:gravity="start"
         android:maxLines="1"
-        android:textSize="36sp" />
+        android:textSize="26sp" />
 
     <TextView
         android:id="@+id/role_killed_tv"

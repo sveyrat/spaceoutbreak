@@ -117,7 +117,7 @@
 
     <!-- AUTOPSY ACTIVITY -->
     <string name="autopsy_activity.activity_title">Autopsie !</string>
-    <string name="autopsy_activity.killed_name">Joueur autopsié : %1$s</string>
+    <string name="autopsy_activity.killed_name">Cadavre : %1$s</string>
     <string name="autopsy_activity.killed_role">Rôle : %1$s</string>
     <string name="autopsy_activity.killed_status">Infecté : %1$s</string>
     <string name="autopsy_activity.killed_genotype">Génotype : %1$s</string>

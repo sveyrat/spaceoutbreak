@@ -18,10 +18,7 @@
 
         </shape>
     </item>
-    <item>
-        <bitmap android:src="@mipmap/pathologist"
-            />
-    </item>
+
 
 
 </layer-list>

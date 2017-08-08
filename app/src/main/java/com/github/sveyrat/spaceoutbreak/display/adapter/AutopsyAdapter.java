@@ -37,20 +37,20 @@ public class AutopsyAdapter extends BaseAdapter {
         }
 
         TextView killedName = (TextView) playerView.findViewById(R.id.name_killed_tv);
-        killedName.setText(String.format(this.context.getResources().getString(R.string.autopsy_activity_killed_name), player.getName()));
+        killedName.setText(String.format(context.getResources().getString(R.string.autopsy_activity_killed_name), player.getName()));
 
         TextView killedRole = (TextView) playerView.findViewById(R.id.role_killed_tv);
-        killedRole.setText(String.format(this.context.getResources().getString(R.string.autopsy_activity_killed_role), player.getRole().getLabelResourceId()));
+        killedRole.setText(String.format(context.getResources().getString(R.string.autopsy_activity_killed_role), context.getResources().getText(player.getRole().getLabelResourceId())));
 
         TextView killedStatus = (TextView) playerView.findViewById(R.id.status_killed_tv);
-        if(player.isMutant()){
-            killedStatus.setText(String.format(this.context.getResources().getString(R.string.autopsy_activity_killed_status), this.context.getResources().getString(R.string.common_yes)));
-        }else{
-            killedStatus.setText(String.format(this.context.getResources().getString(R.string.autopsy_activity_killed_status), this.context.getResources().getString(R.string.common_no)));
+        if (player.isMutant()) {
+            killedStatus.setText(String.format(context.getResources().getString(R.string.autopsy_activity_killed_status), context.getResources().getString(R.string.common_yes)));
+        } else {
+            killedStatus.setText(String.format(context.getResources().getString(R.string.autopsy_activity_killed_status), context.getResources().getString(R.string.common_no)));
         }
 
         TextView killedGenotype = (TextView) playerView.findViewById(R.id.genotype_killed_tv);
-        killedGenotype.setText(String.format(this.context.getResources().getString(R.string.autopsy_activity_killed_genotype), player.getGenome().getLabelResourcesId()));
+        killedGenotype.setText(String.format(context.getResources().getString(R.string.autopsy_activity_killed_genotype), context.getResources().getText(player.getGenome().getLabelResourcesId())));
 
         return playerView;
     }
