@@ -72,4 +72,9 @@ public class MutantsMutateOrKillNightStepManager extends NightStepManager {
         nightActionRepository.mutate(mutedPlayers.get(0));
         return true;
     }
+
+    @Override
+    public int viewTitleResourceId() {
+        return Role.BASE_MUTANT.getLabelResourceId();
+    }
 }

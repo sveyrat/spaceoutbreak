@@ -6,6 +6,7 @@ import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.dao.repository.NightActionRepository;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
+import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 
 public class MutantsParalyzeNightStepManager extends NightStepManager {
 
@@ -49,5 +50,10 @@ public class MutantsParalyzeNightStepManager extends NightStepManager {
         instructions += "\n\n";
         instructions += context.getResources().getString(R.string.night_basis_action_paralyse) + " " + selectedPlayers.get(0).getName();
         return instructions;
+    }
+
+    @Override
+    public int viewTitleResourceId() {
+        return Role.BASE_MUTANT.getLabelResourceId();
     }
 }

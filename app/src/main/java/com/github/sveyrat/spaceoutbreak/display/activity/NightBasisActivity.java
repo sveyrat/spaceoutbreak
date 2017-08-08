@@ -40,6 +40,7 @@ public class NightBasisActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         nightStepManager = RepositoryManager.getInstance().nightActionRepository().nextNightStep();
+        setTitle(this.getResources().getString(R.string.night_basis_name) + " - " + this.getResources().getString(nightStepManager.viewTitleResourceId()));
 
         RepositoryManager.init(this);
         setContentView(R.layout.activity_night_basis);
@@ -107,6 +108,8 @@ public class NightBasisActivity extends AppCompatActivity {
             startActivity(nextActivityIntent);
             return;
         }
+
+        setTitle(this.getResources().getString(R.string.night_basis_name) + " - " + this.getResources().getString(nightStepManager.viewTitleResourceId()));
 
         // There are still night phases to play
         updateView();

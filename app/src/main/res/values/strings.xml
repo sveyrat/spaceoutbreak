@@ -92,7 +92,7 @@
 
 
     <!-- VOTE VIEW -->
-    <string name="vote_activity.name">Vote</string>
+    <string name="vote_activity.name">Vote contre un joueur</string>
     <string name="vote_activity.correction_button">Corriger</string>
     <string name="vote_activity.dialog_title">Vote de %1$s</string>
     <string name="vote_activity.blank_vote">Blanc</string>

@@ -119,4 +119,6 @@ public abstract class NightStepManager {
     public boolean useRoleSelection() {
         return false;
     }
+
+    public abstract int viewTitleResourceId();
 }

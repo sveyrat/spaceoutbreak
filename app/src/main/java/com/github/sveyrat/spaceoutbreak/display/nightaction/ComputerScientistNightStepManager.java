@@ -47,6 +47,11 @@ public class ComputerScientistNightStepManager extends NightStepManager {
     }
 
     @Override
+    public int viewTitleResourceId() {
+        return Role.COMPUTER_SCIENTIST.getLabelResourceId();
+    }
+
+    @Override
     public boolean autoValidate() {
         return true;
     }

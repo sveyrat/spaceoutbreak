@@ -96,6 +96,11 @@ public class HackerNightStepManager extends NightStepManager {
     }
 
     @Override
+    public int viewTitleResourceId() {
+        return Role.HACKER.getLabelResourceId();
+    }
+
+    @Override
     public void registerAutoValidatedAction() {
         RepositoryManager.getInstance().nightActionRepository().none(Role.HACKER);
     }

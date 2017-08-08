@@ -57,4 +57,9 @@ public class SpyNightStepManager extends NightStepManager {
     public void registerAutoValidatedAction() {
         RepositoryManager.getInstance().nightActionRepository().none(Role.SPY);
     }
+
+    @Override
+    public int viewTitleResourceId() {
+        return Role.SPY.getLabelResourceId();
+    }
 }

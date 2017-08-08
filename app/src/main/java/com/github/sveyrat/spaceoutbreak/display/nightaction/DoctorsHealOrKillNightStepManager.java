@@ -105,4 +105,9 @@ public class DoctorsHealOrKillNightStepManager extends NightStepManager {
     public void registerAutoValidatedAction() {
         RepositoryManager.getInstance().nightActionRepository().none(Role.DOCTOR);
     }
+
+    @Override
+    public int viewTitleResourceId() {
+        return Role.DOCTOR.getLabelResourceId();
+    }
 }

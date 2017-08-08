@@ -49,4 +49,9 @@ public class GeneticistNightStepManager extends NightStepManager {
     public void registerAutoValidatedAction() {
         RepositoryManager.getInstance().nightActionRepository().none(Role.GENETICIST);
     }
+
+    @Override
+    public int viewTitleResourceId() {
+        return Role.GENETICIST.getLabelResourceId();
+    }
 }

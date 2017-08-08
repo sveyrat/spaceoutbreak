@@ -106,11 +106,11 @@ public class NewGameSettingsActivity extends AppCompatActivity {
         RepositoryManager.getInstance().initGameRepository().initializeRoles(additionalRoles, randomize.isChecked(), genotype.isChecked());
         RepositoryManager.getInstance().nightActionRepository().newRound();
 
-        List<Player> players=  RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
+        List<Player> players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
         String message = "";
 
         for (Player player : players) {
-            message = message + player.getName() + " : " +this.getResources().getText(player.getRole().getLabelResourceId()) + "\n";
+            message = message + player.getName() + " : " + this.getResources().getText(player.getRole().getLabelResourceId()) + "\n";
         }
 
         AlertDialog.Builder adb = new AlertDialog.Builder(NewGameSettingsActivity.this);

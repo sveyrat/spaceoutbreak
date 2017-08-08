@@ -48,4 +48,9 @@ public class PsychologistNightStepManager extends NightStepManager {
     public void registerAutoValidatedAction() {
         RepositoryManager.getInstance().nightActionRepository().none(Role.PSYCHOLOGIST);
     }
+
+    @Override
+    public int viewTitleResourceId() {
+        return Role.PSYCHOLOGIST.getLabelResourceId();
+    }
 }
