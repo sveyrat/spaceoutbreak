@@ -12,6 +12,7 @@ import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 import com.github.sveyrat.spaceoutbreak.display.RoundPhaseToActivityManager;
 import com.github.sveyrat.spaceoutbreak.display.adapter.PreviousGamesAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Game;
+import com.github.sveyrat.spaceoutbreak.log.Logger;
 import com.github.sveyrat.spaceoutbreak.util.DataHolderUtil;
 
 import java.util.List;
@@ -22,6 +23,14 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable e) {
+                Logger.getInstance().error(System.class, "Uncaught exception", e);
+                finishAndRemoveTask();
+            }
+        });
+
         super.onCreate(savedInstanceState);
 
         RepositoryManager.init(this);
