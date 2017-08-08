@@ -1,7 +1,9 @@
 package com.github.sveyrat.spaceoutbreak.display.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.Toast;
 
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
+import com.github.sveyrat.spaceoutbreak.display.RoundPhaseToActivityManager;
+import com.github.sveyrat.spaceoutbreak.domain.Player;
 import com.github.sveyrat.spaceoutbreak.domain.constant.Role;
 
 import java.util.ArrayList;
@@ -102,8 +106,23 @@ public class NewGameSettingsActivity extends AppCompatActivity {
         RepositoryManager.getInstance().initGameRepository().initializeRoles(additionalRoles, randomize.isChecked(), genotype.isChecked());
         RepositoryManager.getInstance().nightActionRepository().newRound();
 
-        // TODO here there should be a step for the doctors to recognize themself, then the captain election
-        Intent nightBasisActivityIntent = new Intent(this, CaptainElectionActivity.class);
-        startActivity(nightBasisActivityIntent);
+        List<Player> players=  RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
+        String message = "";
+
+        for (Player player : players) {
+            message = message + player.getName() + " : " +this.getResources().getText(player.getRole().getLabelResourceId()) + "\n";
+        }
+
+        AlertDialog.Builder adb = new AlertDialog.Builder(NewGameSettingsActivity.this);
+        adb.setMessage(message);
+        adb.setCancelable(false);
+        adb.setPositiveButton(getResources().getString(R.string.new_game_player_input_yes), new AlertDialog.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent nextActivityIntent = RoundPhaseToActivityManager.nextRoundPhaseIntent(NewGameSettingsActivity.this);
+                startActivity(nextActivityIntent);
+                return;
+            }
+        });
+        adb.show();
     }
 }
