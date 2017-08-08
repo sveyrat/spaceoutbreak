@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.github.sveyrat.spaceoutbreak.R;
 import com.github.sveyrat.spaceoutbreak.dao.RepositoryManager;
 
+import static java.lang.System.exit;
+
 /**
  * Created by romain on 22/10/16.
  */
@@ -37,6 +39,11 @@ public class GameEndActivity extends AppCompatActivity {
     public void newGame(View view) {
         Intent newGameIntent = new Intent(this, NewGameInputPlayerActivity.class);
         startActivity(newGameIntent);
+    }
+
+    public void quit(View view) {
+        finish();
+        System.exit(0);
     }
 
     @Override

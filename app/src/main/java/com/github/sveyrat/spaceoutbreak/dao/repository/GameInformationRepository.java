@@ -180,7 +180,7 @@ public class GameInformationRepository extends AbstractRepository {
         return false;
     }
 
-    private boolean votingPhaseStarted() {
+    public boolean votingPhaseStarted() {
         Round currentRound = currentRound();
         return currentRound.getVotes() != null && !currentRound.getVotes().isEmpty();
     }

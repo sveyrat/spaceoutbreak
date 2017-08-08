@@ -119,7 +119,12 @@ public class VoteActivity extends AppCompatActivity {
         }
 
         final VoteRepository voteRepository = RepositoryManager.getInstance().voteRepository();
-        final VoteResult voteResult = voteRepository.vote(votes);
+        final VoteResult voteResult;
+        if(!RepositoryManager.getInstance().gameInformationRepository().votingPhaseStarted()) {
+            voteResult = voteRepository.vote(votes);
+        } else {
+            voteResult = voteRepository.voteResult();
+        }
 
         if (voteResult.draw()) {
             Logger.getInstance().info(getClass(), "Vote result is a draw, asking captain to make a choice...");
