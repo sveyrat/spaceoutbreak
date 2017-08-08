@@ -15,6 +15,7 @@ import com.github.sveyrat.spaceoutbreak.display.RoundPhaseToActivityManager;
 import com.github.sveyrat.spaceoutbreak.display.adapter.AutopsyAdapter;
 import com.github.sveyrat.spaceoutbreak.domain.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.sveyrat.spaceoutbreak.display.RoundPhaseToActivityManager.IS_NIGHT_AUTOPSY_INTENT_EXTRA_FIELD_NAME;
@@ -38,11 +39,12 @@ public class AutopsyActivity extends AppCompatActivity {
 
         isNight = getIntent().getBooleanExtra(IS_NIGHT_AUTOPSY_INTENT_EXTRA_FIELD_NAME, false);
 
-        if(isNight){
+        if (isNight) {
             NightActionRepository nightActionRepository = RepositoryManager.getInstance().nightActionRepository();
             killedPlayers = nightActionRepository.killedDuringNightPhase();
-        }else{
+        } else {
             VoteRepository voteRepository = RepositoryManager.getInstance().voteRepository();
+            killedPlayers = new ArrayList<>();
             killedPlayers.add(voteRepository.killedThisRound());
         }
         adapter = new AutopsyAdapter(this, killedPlayers);
@@ -53,9 +55,9 @@ public class AutopsyActivity extends AppCompatActivity {
 
     public void confirm(View view) {
         GameInformationRepository gameInformationRepository = RepositoryManager.getInstance().gameInformationRepository();
-        if(isNight){
+        if (isNight) {
             gameInformationRepository.markNightAutopsyAsDone();
-        }else{
+        } else {
             gameInformationRepository.markDayAutopsyAsDone();
         }
         Intent nextActivityIntent = RoundPhaseToActivityManager.nextRoundPhaseIntent(AutopsyActivity.this);
