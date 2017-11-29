@@ -42,6 +42,10 @@ public class VoteResult {
                 mostVotedForPlayer = resultEntry.getKey();
             }
         }
+        if(numberOfBlankVotes > maxNumberOfVotes){
+            return false;
+        }
+
         if (numberOfBlankVotes == maxNumberOfVotes) {
             return true;
         }
