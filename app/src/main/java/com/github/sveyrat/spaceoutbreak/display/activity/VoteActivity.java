@@ -34,59 +34,60 @@ import java.util.Map;
 
 public class VoteActivity extends AppCompatActivity {
 
-    private List<Player> players;
-    private CharSequence[] playersToVote;
-    private PlayerVoteAdapter adapter;
+    private List<Player> votingPlayers;
+    private List<Player> voteChoices;
+    private CharSequence[] voteChoicesAsCharSequence;
+    private PlayerVoteAdapter votingPlayersGridAdapter;
     private Map<Player, Player> votes;
-    private GridView gridView;
+    private GridView votingPlayersGrid;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         RepositoryManager.init(this);
-        players = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
-        playersToVote = putPlayerNamesInCharSequence(players);
+
+        votingPlayers = RepositoryManager.getInstance().gameInformationRepository().loadAlivePlayers();
+
+        voteChoices = new ArrayList<>();
+        // Blank vote
+        voteChoices.add(null);
+        for (Player votingPlayer : votingPlayers) {
+            voteChoices.add(votingPlayer);
+        }
+        voteChoicesAsCharSequence = putPlayerNamesInCharSequence(voteChoices);
+
         votes = new HashMap<>();
         setContentView(R.layout.activity_vote);
 
-
         if (savedInstanceState != null) {
             votes = (Map<Player, Player>) savedInstanceState.getSerializable("votes");
-            // adapter.notifyDataSetChanged();
+            // votingPlayersGridAdapter.notifyDataSetChanged();
         }
-        adapter = new PlayerVoteAdapter(this, players, votes);
-        gridView = (GridView) findViewById(R.id.vote_list_players);
-        gridView.setAdapter(adapter);
+        votingPlayersGridAdapter = new PlayerVoteAdapter(this, votingPlayers, votes);
+        votingPlayersGrid = (GridView) findViewById(R.id.vote_list_players);
+        votingPlayersGrid.setAdapter(votingPlayersGridAdapter);
 
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        votingPlayersGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, final View selectedView, int position, long id) {
-                final Player player = adapter.getItem(position);
+                final Player votingPlayer = votingPlayersGridAdapter.getItem(position);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(VoteActivity.this);
-                String message = String.format(getResources().getString(R.string.vote_activity_dialog_title), player.getName());
+                AlertDialog.Builder voteForAlertBuilder = new AlertDialog.Builder(VoteActivity.this);
+                String message = String.format(getResources().getString(R.string.vote_activity_dialog_title), votingPlayer.getName());
 
-                int tempVote = 0;
-                if (votes.containsKey(player) && votes.get(player) != null) {
-                    tempVote = getPlayerPositionInCharSequence(playersToVote, votes.get(player));
+                int previousVoteIndex = -1;
+                if (votes.containsKey(votingPlayer)) {
+                    previousVoteIndex = getPlayerPositionInCharSequence(voteChoicesAsCharSequence, votes.get(votingPlayer));
                 }
-                builder.setTitle(message)
-                        .setSingleChoiceItems(playersToVote, tempVote, new DialogInterface.OnClickListener() {
+                voteForAlertBuilder.setTitle(message)
+                        .setSingleChoiceItems(voteChoicesAsCharSequence, previousVoteIndex, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(final DialogInterface dialog, int which) {
-
-                                // The 'which' argument contains the index position
-                                // of the selected item
-                                int finalChoicePosition = which - 1;
-                                if (votes.containsKey(player)) {
-                                    votes.remove(player);
+                                if (votes.containsKey(votingPlayer)) {
+                                    votes.remove(votingPlayer);
                                 }
 
-                                if (which != 0) {
-                                    votes.put(player, players.get(finalChoicePosition));
-                                } else {
-                                    votes.put(player, null);
-                                }
+                                votes.put(votingPlayer, voteChoices.get(which));
                                 updateView();
 
                                 // Slight pause before closing AlertDialog
@@ -100,7 +101,7 @@ public class VoteActivity extends AppCompatActivity {
                             }
 
                         });
-                builder.show();
+                voteForAlertBuilder.show();
             }
         });
     }
@@ -120,7 +121,7 @@ public class VoteActivity extends AppCompatActivity {
 
         final VoteRepository voteRepository = RepositoryManager.getInstance().voteRepository();
         final VoteResult voteResult;
-        if(!RepositoryManager.getInstance().gameInformationRepository().votingPhaseStarted()) {
+        if (!RepositoryManager.getInstance().gameInformationRepository().votingPhaseStarted()) {
             voteResult = voteRepository.vote(votes);
         } else {
             voteResult = voteRepository.voteResult();
@@ -133,7 +134,7 @@ public class VoteActivity extends AppCompatActivity {
             String title = String.format(getResources().getString(R.string.vote_activity_tie_title), voteRepository.getCaptain().getName());// CF gdoc on how to get this ID here
             final List<Player> tied = voteResult.getTiedPlayers();
             final int chosenPos[] = new int[1];
-            CharSequence[] tied_names = Arrays.copyOfRange(putPlayerNamesInCharSequence(tied), 1, tied.size() + 1);
+            CharSequence[] tied_names = putPlayerNamesInCharSequence(tied);
             builder.setTitle(title)
                     .setSingleChoiceItems(tied_names, -1, new DialogInterface.OnClickListener() {
                         @Override
@@ -161,13 +162,17 @@ public class VoteActivity extends AppCompatActivity {
     }
 
     private void displayVoteResults(VoteResult voteResult) {
-
         String message = "";
-        int numberOfNullVotes = players.size() - votes.size();
+        int numberOfNullVotes = votingPlayers.size() - votes.size();
         message += getResources().getString(R.string.vote_activity_null_vote) + " : " + numberOfNullVotes + "\n";
-        message += getResources().getString(R.string.vote_activity_blank_vote) + " : " + voteResult.getNumberOfBlankVotes() + "\n";
         for (Map.Entry<Player, Integer> resultEntry : voteResult.getResults().entrySet()) {
-            message += resultEntry.getKey().getName() + " : " + resultEntry.getValue().toString();
+            String playerName;
+            if (resultEntry.getKey() == null) {
+                playerName = blankVoteLabel();
+            } else {
+                playerName = resultEntry.getKey().getName();
+            }
+            message += playerName + " : " + resultEntry.getValue().toString();
             message += "\n";
         }
 
@@ -184,21 +189,22 @@ public class VoteActivity extends AppCompatActivity {
             }
         });
         adb.show();
-        return;
     }
 
     private void updateView() {
-        adapter.setPlayers(players);
-        adapter.setVotes(votes);
-        gridView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
+        votingPlayersGridAdapter.setPlayers(votingPlayers);
+        votingPlayersGridAdapter.setVotes(votes);
+        votingPlayersGrid.setAdapter(votingPlayersGridAdapter);
+        votingPlayersGridAdapter.notifyDataSetChanged();
     }
 
     private CharSequence[] putPlayerNamesInCharSequence(List<Player> players) {
-        List<String> playerNames = new ArrayList<String>();
-        playerNames.add(getResources().getString(R.string.vote_activity_blank_vote));
+        List<String> playerNames = new ArrayList<>();
         for (Player player : players) {
+            if (player == null) {
+                playerNames.add(blankVoteLabel());
+                continue;
+            }
             playerNames.add(player.getName());
         }
         CharSequence[] playersNamesInCharSequence = playerNames.toArray(new CharSequence[players.size()]);
@@ -208,12 +214,16 @@ public class VoteActivity extends AppCompatActivity {
     private int getPlayerPositionInCharSequence(CharSequence[] names, Player player) {
         int position = 0;
         for (CharSequence s : names) {
-            if (s.equals(player.getName())) {
+            if ((player == null && s.equals(blankVoteLabel())) || s.equals(player.getName())) {
                 return position;
             }
             position++;
         }
         return -1;
+    }
+
+    private String blankVoteLabel() {
+        return getResources().getString(R.string.vote_activity_blank_vote);
     }
 
 

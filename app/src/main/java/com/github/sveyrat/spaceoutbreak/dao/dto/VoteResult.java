@@ -9,19 +9,10 @@ import java.util.Map;
 
 public class VoteResult {
 
-    private int numberOfBlankVotes;
     private Map<Player, Integer> results;
 
     public VoteResult() {
         this.results = new HashMap<>();
-    }
-
-    public int getNumberOfBlankVotes() {
-        return numberOfBlankVotes;
-    }
-
-    public void setNumberOfBlankVotes(int numberOfBlankVotes) {
-        this.numberOfBlankVotes = numberOfBlankVotes;
     }
 
     public Map<Player, Integer> getResults() {
@@ -42,16 +33,14 @@ public class VoteResult {
                 mostVotedForPlayer = resultEntry.getKey();
             }
         }
-        if(numberOfBlankVotes > maxNumberOfVotes){
-            return false;
-        }
 
-        if (numberOfBlankVotes == maxNumberOfVotes) {
-            return true;
-        }
         for (Map.Entry<Player, Integer> resultEntry : results.entrySet()) {
             Integer numberOfVotes = resultEntry.getValue();
-            if (numberOfVotes == maxNumberOfVotes && !resultEntry.getKey().equals(mostVotedForPlayer)) {
+            Player player = resultEntry.getKey();
+            if (numberOfVotes == maxNumberOfVotes && //
+                    // Player found is not the same as the already known most voted for
+                    ((player == null && mostVotedForPlayer != null)
+                            || (player != null && !player.equals(mostVotedForPlayer)))) {
                 return true;
             }
         }
@@ -59,8 +48,7 @@ public class VoteResult {
     }
 
     public List<Player> getTiedPlayers() {
-        List<Player> result = new ArrayList<Player>();
-        ;
+        List<Player> result = new ArrayList<>();
         int nbVotesMax = results.get(mostVotedFor());
         for (Map.Entry<Player, Integer> resultEntry : results.entrySet()) {
             if (resultEntry.getValue() == nbVotesMax) {
@@ -68,11 +56,6 @@ public class VoteResult {
             }
         }
         return result;
-    }
-
-
-    public void addABlankVote() {
-        numberOfBlankVotes++;
     }
 
     public void addVote(Player player) {
@@ -91,9 +74,6 @@ public class VoteResult {
                 numberOfVotesForMostVoted = resultEntry.getValue();
                 mostVotedFor = resultEntry.getKey();
             }
-        }
-        if (numberOfBlankVotes > numberOfVotesForMostVoted) {
-            return null;
         }
         return mostVotedFor;
     }

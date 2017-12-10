@@ -85,11 +85,7 @@ public class VoteRepository extends AbstractRepository {
         List<Vote> votes = new ArrayList<>(currentRound.getVotes());
         for (Vote vote : votes) {
             Player votedFor = vote.getVotedFor();
-            if (votedFor == null) {
-                voteResult.addABlankVote();
-            } else {
-                voteResult.addVote(votedFor);
-            }
+            voteResult.addVote(votedFor);
         }
         return voteResult;
     }

@@ -59,8 +59,14 @@ public class PlayerVoteAdapter extends BaseAdapter {
                 selectedImageView.setVisibility(View.VISIBLE);
             }
         }
-        TextView playerName = (TextView) playerView.findViewById(R.id.name_player_tv);
-        playerName.setText(player.getName());
+        TextView playerNameText = (TextView) playerView.findViewById(R.id.name_player_tv);
+        String playerName;
+        if (player == null) {
+            playerName = context.getResources().getString(R.string.vote_activity_blank_vote);
+        } else {
+            playerName = player.getName();
+        }
+        playerNameText.setText(playerName);
         playerView.setBackground(ContextCompat.getDrawable(context, R.drawable.small_border));
 
         return playerView;
